@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vast.ai paso a paso · Agente de codificación sobre GPU alquilada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --slate-900:#14181d;
+    --slate-800:#1c222a;
+    --slate-700:#2a323c;
+    --slate-600:#3d4854;
+    --light:#dde2e5;
+    --dim:#8b98a5;
+    --amp:#f2b33d;
+    --wire:#5aa3bb;
+    --alert:#d9544d;
+    --measure:44rem;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+
+  body{
+    margin:0;
+    background:var(--slate-900);
+    color:var(--light);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    padding:0 1.25rem 5rem;
+  }
+
+  .wrap{max-width:var(--measure);margin:0 auto}
+
+  /* ---------- cabecera ---------- */
+
+  .masthead{padding:3.5rem 0 2rem;border-bottom:1px solid var(--slate-700)}
+
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--amp);margin:0 0 1.25rem;
+  }
+
+  h1{
+    font-family:"Oswald",sans-serif;font-weight:600;
+    font-size:clamp(2rem,7.5vw,3.2rem);line-height:1.03;
+    text-transform:uppercase;margin:0 0 1rem;
+  }
+
+  h1 em{font-style:normal;color:var(--amp)}
+
+  .standfirst{font-size:1.05rem;color:var(--dim);max-width:34rem;margin:0}
+
+  /* ---------- índice ---------- */
+
+  .toc{
+    background:var(--slate-800);border:1px solid var(--slate-700);
+    border-radius:3px;padding:1.25rem;margin:2rem 0 0;
+  }
+
+  .toc p{
+    font-family:"IBM Plex Mono",monospace;font-size:.68rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--dim);
+    margin:0 0 .8rem;
+  }
+
+  .toc ol{margin:0;padding-left:1.2rem;font-size:.92rem}
+  .toc li{margin-bottom:.35rem}
+  .toc li::marker{color:var(--slate-600);font-family:"IBM Plex Mono",monospace;font-size:.8rem}
+  .toc a{color:var(--light);text-decoration:none;border-bottom:1px solid var(--slate-600)}
+  .toc a:hover{color:var(--amp);border-color:var(--amp)}
+
+  /* ---------- medidor ---------- */
+
+  .meter{
+    background:var(--slate-800);border:1px solid var(--slate-700);
+    border-radius:3px;padding:1.5rem 1.25rem;margin:1.5rem 0 0;
+  }
+
+  .meter-label{
+    font-family:"IBM Plex Mono",monospace;font-size:.68rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin:0 0 1.25rem;
+  }
+
+  .control{margin-bottom:1.4rem}
+  .control > span{display:block;font-size:.82rem;color:var(--dim);margin-bottom:.5rem}
+  .chips{display:flex;flex-wrap:wrap;gap:.4rem}
+
+  .chip{
+    font-family:"IBM Plex Mono",monospace;font-size:.78rem;
+    background:transparent;color:var(--dim);
+    border:1px solid var(--slate-600);border-radius:2px;
+    padding:.5rem .7rem;cursor:pointer;
+    transition:border-color .15s,color .15s;
+  }
+
+  .chip:hover{border-color:var(--wire);color:var(--light)}
+  .chip[aria-pressed="true"]{border-color:var(--amp);color:var(--amp);background:rgba(242,179,61,.08)}
+  .chip:focus-visible,.copy:focus-visible{outline:2px solid var(--wire);outline-offset:2px}
+
+  input[type=range]{width:100%;accent-color:var(--amp);margin:0}
+
+  .readout{
+    display:flex;align-items:baseline;gap:.6rem;
+    padding-top:1.25rem;border-top:1px solid var(--slate-700);
+  }
+
+  .readout-num{
+    font-family:"Oswald",sans-serif;font-weight:600;font-size:2.9rem;
+    line-height:1;color:var(--amp);font-variant-numeric:tabular-nums;
+  }
+
+  .readout-unit{font-size:.85rem;color:var(--dim)}
+
+  .scale{margin-top:1.4rem}
+  .track{position:relative;height:4px;background:var(--slate-700);border-radius:2px}
+  .fill{position:absolute;inset:0 auto 0 0;background:var(--amp);border-radius:2px;transition:width .2s ease}
+  .breakeven{position:absolute;top:-7px;bottom:-7px;left:33.3%;width:2px;background:var(--wire)}
+
+  .scale-legend{
+    display:flex;justify-content:space-between;
+    font-family:"IBM Plex Mono",monospace;font-size:.68rem;
+    color:var(--dim);margin-top:.7rem;
+  }
+
+  .verdict{font-size:.92rem;margin:1.1rem 0 0;padding-top:1.1rem;border-top:1px solid var(--slate-700)}
+  .verdict strong{color:var(--light)}
+
+  /* ---------- secciones ---------- */
+
+  section{padding-top:3.25rem}
+
+  h2{
+    font-family:"Oswald",sans-serif;font-weight:600;font-size:1.6rem;
+    text-transform:uppercase;margin:0 0 .35rem;
+  }
+
+  .phase{
+    font-family:"IBM Plex Mono",monospace;font-size:.68rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--amp);
+    margin:0 0 .4rem;
+  }
+
+  .rule{border:0;border-top:1px solid var(--slate-700);margin:0 0 1.5rem}
+
+  h3{font-family:"IBM Plex Sans",sans-serif;font-weight:600;font-size:1.05rem;margin:2rem 0 .5rem}
+
+  p{margin:0 0 1rem}
+  a{color:var(--wire)}
+
+  /* ---------- modos ---------- */
+
+  .mode{border-left:2px solid var(--slate-600);padding:.1rem 0 .1rem 1.1rem;margin-bottom:1.5rem}
+  .mode.pick{border-left-color:var(--amp)}
+  .mode h3{margin-top:0}
+  .mode p{margin-bottom:0;color:var(--dim);font-size:.95rem}
+
+  .tag{
+    font-family:"IBM Plex Mono",monospace;font-size:.66rem;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--amp);margin-left:.5rem;
+  }
+
+  /* ---------- pasos ---------- */
+
+  .step{
+    display:grid;grid-template-columns:2.8rem 1fr;gap:0 1rem;
+    padding:1.6rem 0;border-bottom:1px solid var(--slate-800);
+  }
+
+  .step-num{
+    font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:.9rem;
+    color:var(--slate-600);line-height:1.9;letter-spacing:.05em;
+  }
+
+  .step h3{margin:0 0 .6rem;grid-column:2;font-size:1rem}
+  .step-body{grid-column:2}
+  .step-body > *:last-child{margin-bottom:0}
+
+  .step ul{margin:0 0 1rem;padding-left:1.1rem;color:var(--dim);font-size:.94rem}
+  .step li{margin-bottom:.45rem}
+  .step li strong{color:var(--light);font-weight:500}
+
+  @media (max-width:30rem){
+    .step{grid-template-columns:1fr;gap:0}
+    .step-num{line-height:1.4;margin-bottom:.3rem}
+    .step h3,.step-body{grid-column:1}
+  }
+
+  /* ---------- campos de formulario ---------- */
+
+  dl{margin:0 0 1.25rem}
+
+  .field{
+    display:grid;grid-template-columns:11rem 1fr;gap:.3rem 1rem;
+    font-size:.9rem;padding:.6rem 0;border-bottom:1px solid var(--slate-800);
+  }
+
+  .field:first-of-type{border-top:1px solid var(--slate-800)}
+
+  .field dt{
+    font-family:"IBM Plex Mono",monospace;font-size:.78rem;
+    color:var(--wire);align-self:start;padding-top:.1rem;
+  }
+
+  .field dd{margin:0;color:var(--dim)}
+  .field dd strong{color:var(--light);font-weight:500}
+
+  @media (max-width:32rem){
+    .field{grid-template-columns:1fr;gap:.15rem}
+  }
+
+  /* ---------- código ---------- */
+
+  .code{position:relative;margin:0 0 1rem}
+
+  pre{
+    font-family:"IBM Plex Mono",monospace;font-size:.8rem;line-height:1.75;
+    background:#0e1216;border:1px solid var(--slate-700);border-radius:3px;
+    padding:1rem 3.2rem 1rem 1rem;margin:0;overflow-x:auto;color:var(--light);
+  }
+
+  pre .c{color:var(--dim)}
+  pre .k{color:var(--amp)}
+
+  .copy{
+    position:absolute;top:.55rem;right:.55rem;
+    font-family:"IBM Plex Mono",monospace;font-size:.62rem;
+    letter-spacing:.08em;text-transform:uppercase;
+    background:var(--slate-800);color:var(--dim);
+    border:1px solid var(--slate-600);border-radius:2px;
+    padding:.3rem .5rem;cursor:pointer;
+  }
+
+  .copy:hover{color:var(--amp);border-color:var(--amp)}
+
+  code:not(pre code){
+    font-family:"IBM Plex Mono",monospace;font-size:.87em;
+    background:var(--slate-800);padding:.1em .35em;border-radius:2px;color:var(--amp);
+  }
+
+  /* ---------- avisos ---------- */
+
+  .warn{
+    background:rgba(217,84,77,.07);border-left:2px solid var(--alert);
+    padding:.9rem 1rem;margin:0 0 1rem;font-size:.92rem;
+  }
+
+  .warn p{margin:0}
+
+  .warn-title{
+    font-family:"IBM Plex Mono",monospace;font-size:.64rem;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--alert);
+    display:block;margin-bottom:.35rem;
+  }
+
+  .note{
+    background:rgba(90,163,187,.07);border-left:2px solid var(--wire);
+    padding:.9rem 1rem;margin:0 0 1rem;font-size:.92rem;
+  }
+
+  .note p{margin:0}
+
+  .note-title{
+    font-family:"IBM Plex Mono",monospace;font-size:.64rem;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--wire);
+    display:block;margin-bottom:.35rem;
+  }
+
+  /* ---------- bifurcación ---------- */
+
+  .fork{border:1px solid var(--slate-700);border-radius:3px;padding:1.2rem;margin-bottom:1rem}
+  .fork.pick{border-color:var(--amp)}
+  .fork h3{margin:0 0 .5rem}
+  .fork p{margin:0;font-size:.95rem;color:var(--dim)}
+
+  .flow{
+    font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--wire);
+    margin:.7rem 0 0;overflow-x:auto;white-space:nowrap;
+  }
+
+  /* ---------- tabla ---------- */
+
+  .tablewrap{overflow-x:auto;margin:0 0 1.25rem}
+
+  table{border-collapse:collapse;width:100%;font-size:.88rem;min-width:26rem}
+
+  th{
+    text-align:left;font-family:"IBM Plex Mono",monospace;
+    font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--dim);font-weight:400;
+    padding:0 1rem .5rem 0;border-bottom:1px solid var(--slate-700);
+  }
+
+  td{padding:.65rem 1rem .65rem 0;border-bottom:1px solid var(--slate-800);color:var(--dim);vertical-align:top}
+  td:first-child{color:var(--light)}
+
+  footer{
+    margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--slate-700);
+    font-family:"IBM Plex Mono",monospace;font-size:.72rem;
+    color:var(--slate-600);line-height:1.9;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Runbook completo · Vast.ai + Ollama + Claude Code</p>
+  <h1>Alquila la GPU.<br>Monta el <em>agente</em>.<br>Mira el contador.</h1>
+  <p class="standfirst">Todos los pasos, desde crear la cuenta hasta apagar la instancia sin dejarte dinero corriendo. Verificado contra la documentación de Vast.ai, agosto de 2026.</p>
+
+  <nav class="toc">
+    <p>Recorrido</p>
+    <ol>
+      <li><a href="#modos">Elegir el modo de alquiler</a></li>
+      <li><a href="#cuenta">Cuenta y saldo</a> · pasos 1–5</li>
+      <li><a href="#clave">Clave SSH</a> · pasos 6–9</li>
+      <li><a href="#buscar">Plantilla y búsqueda de máquina</a> · pasos 10–17</li>
+      <li><a href="#conectar">Arranque y conexión</a> · pasos 18–22</li>
+      <li><a href="#instalar">Ollama y Claude Code</a> · pasos 23–29</li>
+      <li><a href="#apagar">Apagar sin dejar el contador vivo</a> · pasos 30–32</li>
+      <li><a href="#archivos">Dónde viven tus archivos</a></li>
+      <li><a href="#diagnostico">Diagnóstico</a></li>
+    </ol>
+  </nav>
+</header>
+
+<div class="meter">
+  <p class="meter-label">Medidor · ¿alquilar o suscribirse?</p>
+
+  <div class="control">
+    <span>Tarjeta y modo</span>
+    <div class="chips" id="rates">
+      <button class="chip" data-rate="0.29" aria-pressed="false">RTX 4090 interrumpible · $0.29/h</button>
+      <button class="chip" data-rate="0.40" aria-pressed="true">RTX 4090 on-demand · $0.40/h</button>
+      <button class="chip" data-rate="0.75" aria-pressed="false">A6000 48GB · $0.75/h</button>
+    </div>
+  </div>
+
+  <div class="control">
+    <span>Horas al día · <strong id="hoursOut">4</strong> · 22 días laborables</span>
+    <input type="range" id="hours" min="0.5" max="10" step="0.5" value="4" aria-label="Horas de uso al día">
+  </div>
+
+  <div class="readout">
+    <span class="readout-num" id="cost">$43</span>
+    <span class="readout-unit">al mes en GPU<br>+ disco parado</span>
+  </div>
+
+  <div class="scale" aria-hidden="true">
+    <div class="track">
+      <div class="fill" id="fill" style="width:79%"></div>
+      <div class="breakeven"></div>
+    </div>
+    <div class="scale-legend">
+      <span>$0</span>
+      <span>equilibrio · $18</span>
+      <span>$54</span>
+    </div>
+  </div>
+
+  <p class="verdict" id="verdict"></p>
+</div>
+
+<section id="modos">
+  <p class="phase">Decisión previa</p>
+  <h2>Los tres modos</h2>
+  <hr class="rule">
+
+  <div class="mode">
+    <h3>Interrumpible <span class="tag">subasta</span></h3>
+    <p>Pujas por debajo del precio de mercado y ahorras un 50% o más. El host puede reclamar la tarjeta cuando quiera: te avisa con minutos, a veces menos. El disco sobrevive; el trabajo en curso, no. Sirve para entrenar con checkpoints, no para trabajar en interactivo.</p>
+  </div>
+
+  <div class="mode pick">
+    <h3>On-demand <span class="tag">esta</span></h3>
+    <p>Garantía contractual de que el host no termina tu instancia sin motivo. Unos céntimos más por hora y te quita el babysitting. Para un agente de codificación es la única opción sensata.</p>
+  </div>
+
+  <div class="mode">
+    <h3>Reserved <span class="tag">luego</span></h3>
+    <p>Compromiso de 1 a 6 meses a cambio de hasta un 50% de descuento. Sólo tiene sentido cuando ya sabes que vas a usarlo — es decir, después de un mes de prueba, no antes.</p>
+  </div>
+
+  <div class="note">
+    <span class="note-title">Serverless no aparece aquí</span>
+    <p>Vast.ai no lo ofrece, y en RunPod tampoco te conviene: cada arranque en frío recarga 20&nbsp;GB de pesos a VRAM y un agente dispara peticiones a ráfagas. Pagarías cold starts todo el día.</p>
+  </div>
+</section>
+
+<section id="cuenta">
+  <p class="phase">Fase 1</p>
+  <h2>Cuenta y saldo</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Crea la cuenta en cloud.vast.ai</h3>
+    <div class="step-body">
+      <p>Ojo con el dominio: la consola vive en <code>cloud.vast.ai</code>, no en la home comercial. Y no la confundas con VAST Data, que es otra empresa distinta.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>Verifica el email</h3>
+    <div class="step-body">
+      <p>No es opcional: hasta que no verifiques no puedes alquilar máquina. Mira la carpeta de spam. Si no llega, lo reenvías desde <em>Settings → Resend Verification Email</em>.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">03</span>
+    <h3>Mete saldo</h3>
+    <div class="step-body">
+      <p><em>Billing → Add Credit</em>. El depósito mínimo son <strong>$5</strong>. Acepta tarjeta, BitPay y Crypto.com. Es prepago puro: no hay suscripción ni permanencia.</p>
+      <p>El saldo te aparece arriba a la derecha del panel. Para empezar, $10 sobran de largo.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">04</span>
+    <h3>Activa el autobilling</h3>
+    <div class="step-body">
+      <p>Cuando el saldo llega a cero, <strong>tus instancias se paran solas</strong>. En mitad de algo. En la página de Billing configuras un umbral de recarga automática por encima de tu gasto diario medio.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">05</span>
+    <h3>Pon una alerta de saldo bajo</h3>
+    <div class="step-body">
+      <p>En <em>Settings → Notifications</em>, con un umbral un poco por debajo del de autorecarga. Así te enteras si el cobro automático falla, en lugar de descubrirlo cuando la máquina ya se ha apagado.</p>
+    </div>
+  </div>
+</section>
+
+<section id="clave">
+  <p class="phase">Fase 2</p>
+  <h2>Clave SSH</h2>
+  <hr class="rule">
+
+  <div class="warn">
+    <span class="warn-title">Haz esto antes de alquilar nada</span>
+    <p>Las claves que añades a la cuenta se aplican sólo a instancias <strong>nuevas</strong>. Si alquilas primero y subes la clave después, esa instancia no la recibe.</p>
+  </div>
+
+  <div class="step">
+    <span class="step-num">06</span>
+    <h3>Genera el par de claves</h3>
+    <div class="step-body">
+      <div class="code">
+        <pre>ssh-keygen -t ed25519 -C "jaime@racks.group"</pre>
+        <button class="copy">Copiar</button>
+      </div>
+      <p>Te crea dos archivos en <code>~/.ssh/</code>: <code>id_ed25519</code> (privada, no sale de tu máquina nunca) y <code>id_ed25519.pub</code> (pública, la que subes). El comentario del <code>-C</code> es sólo una etiqueta para identificarla si tienes varias.</p>
+      <p>En Windows con PowerShell, mismo comando; las claves acaban en <code>C:\Users\TuUsuario\.ssh\</code>.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">07</span>
+    <h3>Copia la pública</h3>
+    <div class="step-body">
+      <div class="code">
+        <pre><span class="c"># macOS / Linux</span>
+cat ~/.ssh/id_ed25519.pub
+
+<span class="c"># Windows PowerShell</span>
+Get-Content $env:USERPROFILE\.ssh\id_ed25519.pub</pre>
+        <button class="copy">Copiar</button>
+      </div>
+      <p>Empieza por <code>ssh-ed25519</code>. Copia la línea entera, incluido el comentario del final.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">08</span>
+    <h3>Pégala en la consola</h3>
+    <div class="step-body">
+      <p>En <code>cloud.vast.ai/manage-keys/</code> → sección SSH Keys → <em>New</em>. Pega y guarda.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">09</span>
+    <h3>Opcional: instala el CLI</h3>
+    <div class="step-body">
+      <p>No hace falta para nada de esto, pero te ahorra clicks a partir de la segunda vez.</p>
+      <div class="code">
+        <pre>curl -fsSL https://vast.ai/install.sh | bash
+
+<span class="c"># Crea una API key en cloud.vast.ai/cli/ y regístrala:</span>
+vastai set api-key TU_API_KEY
+vastai show user</pre>
+        <button class="copy">Copiar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="buscar">
+  <p class="phase">Fase 3</p>
+  <h2>Plantilla y máquina</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">10</span>
+    <h3>Elige plantilla en cloud.vast.ai/templates</h3>
+    <div class="step-body">
+      <p>Busca <code>Ollama</code> si hay una plantilla mantenida. Si no, coge una base limpia de CUDA:</p>
+      <div class="code">
+        <pre>nvidia/cuda:12.4.1-devel-ubuntu22.04</pre>
+        <button class="copy">Copiar</button>
+      </div>
+      <p>La variante <code>devel</code> y no la <code>runtime</code>: trae compilador y cabeceras, que te van a hacer falta. Pulsa <em>Select</em> y te lleva a la búsqueda con esa imagen ya fijada.</p>
+      <div class="note">
+        <span class="note-title">Por qué importa la plantilla</span>
+        <p>La imagen determina cuánto tarda el arranque. Una imagen que el host ya tiene cacheada levanta en un minuto; un pull fresco puede tardar entre 10 y 60 minutos. Elegir una imagen popular es elegir arranques rápidos.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">11</span>
+    <h3>Ve a cloud.vast.ai/create</h3>
+    <div class="step-body">
+      <p>Es la pantalla de búsqueda: filtros a la izquierda, ofertas a la derecha. Cada fila es una máquina de un host distinto.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">12</span>
+    <h3>Fija el disco antes que nada</h3>
+    <div class="step-body">
+      <div class="warn">
+        <span class="warn-title">El disco es permanente</span>
+        <p>El tamaño que elijas no se puede cambiar después. Si te quedas corto, hay que crear otra instancia desde cero. Pon <strong>100 GB</strong>: el modelo son ~20 GB, más imagen, más Node, más tu repo, más margen.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">13</span>
+    <h3>Aplica los filtros</h3>
+    <div class="step-body">
+      <dl>
+        <div class="field"><dt>GPU model</dt><dd><strong>RTX 4090</strong> o <strong>RTX A6000</strong>. La 3090 vale y es más barata, pero va más lenta generando.</dd></div>
+        <div class="field"><dt># of GPUs</dt><dd><strong>1</strong>. Más de una no te sirve de nada aquí y multiplica el precio.</dd></div>
+        <div class="field"><dt>GPU RAM</dt><dd><strong>≥ 24 GB</strong>. Por debajo no entra un modelo con contexto usable.</dd></div>
+        <div class="field"><dt>Reliability</dt><dd><strong>&gt; 0.99</strong>. Es el histórico de uptime del host. No bajes de aquí.</dd></div>
+        <div class="field"><dt>Net down</dt><dd><strong>≥ 300 Mbps</strong>. Vas a bajar 20 GB de pesos pagando la GPU mientras tanto.</dd></div>
+        <div class="field"><dt>Location</dt><dd><strong>Europa</strong> si estás en Europa. La latencia se nota en un agente que dispara muchas peticiones cortas.</dd></div>
+        <div class="field"><dt>Max duration</dt><dd>Cuántos días garantiza el host la oferta. Que no sea de 1 o 2.</dd></div>
+        <div class="field"><dt>Puertos abiertos</dt><dd>Necesarios para SSH <strong>Direct</strong>. El proxy funciona en todas las máquinas pero es más lento.</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">14</span>
+    <h3>Deja el toggle en on-demand</h3>
+    <div class="step-body">
+      <p>Es el valor por defecto. Si lo cambias a interrumpible verás precios mucho mejores y una instancia que desaparece a mitad de faena. Ya sabes.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">15</span>
+    <h3>Ordena por DLPerf/$</h3>
+    <div class="step-body">
+      <p>La columna <code>DLP/$</code> es rendimiento por dólar, mejor criterio que el <code>$/hr</code> a secas: una tarjeta a $0.50 que va el doble de rápida sale más barata por trabajo hecho que una a $0.35.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">16</span>
+    <h3>Revisa el host antes de pulsar</h3>
+    <div class="step-body">
+      <ul>
+        <li>Número de alquileres completados — <strong>evita hosts casi sin historial</strong></li>
+        <li>Versión del driver de NVIDIA: cuanto más reciente, menos sorpresas con CUDA</li>
+        <li>vCPUs y RAM del sistema: al menos 8 vCPU y 32 GB</li>
+      </ul>
+      <p>Estás alquilando a particulares y pequeños proveedores, no a un datacenter. La fiabilidad varía muchísimo entre hosts y esos tres números son casi todo lo que puedes saber de antemano.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">17</span>
+    <h3>Rent</h3>
+    <div class="step-body">
+      <div class="warn">
+        <span class="warn-title">El contador arranca ya</span>
+        <p>El <strong>almacenamiento empieza a cobrarse en el momento de la creación</strong>, aunque la instancia aún esté descargando la imagen. La GPU empieza a cobrarse cuando el estado pasa a <em>running</em>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="conectar">
+  <p class="phase">Fase 4</p>
+  <h2>Arranque y conexión</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">18</span>
+    <h3>Vigila el estado en Instances</h3>
+    <div class="step-body">
+      <p>Pasa de <em>loading</em> a <em>running</em>. Si se queda en <em>exited</em> (contenedor caído), <em>unknown</em> (sin señal del host) u <em>offline</em> (host desconectado), no va a arrancar nunca: destrúyela y coge otra oferta.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">19</span>
+    <h3>Abre el panel SSH de la instancia</h3>
+    <div class="step-body">
+      <p>El icono de la llave en la tarjeta de la instancia. Ahí ves el comando de conexión, puedes elegir entre <strong>Direct</strong> y <strong>Proxy</strong>, y — si te olvidaste de subir la clave antes — puedes añadirla a esta instancia concreta sin recrearla.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">20</span>
+    <h3>Conecta reenviando el puerto</h3>
+    <div class="step-body">
+      <p>Copia el comando que te da la consola y <strong>añádele el reenvío de 11434</strong>:</p>
+      <div class="code">
+        <pre>ssh -p 20544 root@142.214.185.187 -L 11434:localhost:11434</pre>
+        <button class="copy">Copiar</button>
+      </div>
+      <p>La IP y el puerto son los tuyos, cambian en cada instancia. La primera vez te pide confirmar la huella del host: escribe <code>yes</code>.</p>
+      <p>Ese <code>-L</code> hace que <code>localhost:11434</code> en tu Mac apunte al Ollama de la instancia, por dentro del túnel cifrado. Es la alternativa segura a abrir el puerto a internet.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">21</span>
+    <h3>Ya estás dentro de tmux</h3>
+    <div class="step-body">
+      <p>Vast.ai te mete en una sesión de tmux por defecto — no tienes que lanzarlo tú. Eso significa que tus procesos sobreviven a una caída del SSH.</p>
+      <ul>
+        <li><code>Ctrl+B</code> luego <code>C</code> — ventana nueva</li>
+        <li><code>Ctrl+B</code> luego <code>N</code> — rotar entre ventanas</li>
+        <li><code>Ctrl+B</code> luego <code>D</code> — salir dejándolo todo corriendo</li>
+      </ul>
+      <p>Si algún día te estorba: <code>touch ~/.no_auto_tmux</code>.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">22</span>
+    <h3>Comprueba que la GPU está ahí</h3>
+    <div class="step-body">
+      <div class="code">
+        <pre>nvidia-smi</pre>
+        <button class="copy">Copiar</button>
+      </div>
+      <p>Tienes que ver tu tarjeta, la VRAM total y el driver. Si esto falla, el problema es del host: destruye y coge otra oferta antes de perder más tiempo.</p>
+    </div>
+  </div>
+</section>
+
+<section id="instalar">
+  <p class="phase">Fase 5</p>
+  <h2>Ollama y Claude Code</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">23</span>
+    <h3>Instala Ollama</h3>
+    <div class="step-body">
+      <div class="code">
+        <pre>curl -fsSL https://ollama.com/install.sh | sh</pre>
+        <button class="copy">Copiar</button>
+      </div>
+      <div class="note">
+        <span class="note-title">systemd is not running</span>
+        <p>Este aviso es normal y no se puede quitar: estás en un contenedor Docker, que no tiene init system. La única consecuencia es que <strong>Ollama no arranca solo</strong> — lo lanzas tú en el paso 25. No es un error pendiente.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">24</span>
+    <h3>Si avisa de que no detecta la GPU</h3>
+    <div class="step-body">
+      <p>Mensaje típico: <code>Unable to detect NVIDIA/AMD GPU. Install lspci or lshw</code>. Casi siempre es cosmético — el script busca la tarjeta con <code>lspci</code> y las imágenes CUDA vienen sin <code>pciutils</code>. Comprueba primero si la tarjeta está de verdad:</p>
+      <div class="code">
+        <pre>nvidia-smi</pre>
+        <button class="copy">Copiar</button>
+      </div>
+      <p><strong>Si muestra la tarjeta</strong>, era solo el detector. Instala las utilidades y reinstala Ollama:</p>
+      <div class="code">
+        <pre>apt-get update &amp;&amp; apt-get install -y pciutils lshw
+curl -fsSL https://ollama.com/install.sh | sh</pre>
+        <button class="copy">Copiar</button>
+      </div>
+      <div class="warn">
+        <span class="warn-title">Si nvidia-smi falla</span>
+        <p>La instancia no tiene la GPU pasada al contenedor, y eso no se arregla desde dentro. Suele ser plantilla equivocada (imagen sin CUDA) o runtime mal configurado en el host. Destruye y coge otra oferta.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">25</span>
+    <h3>Arranca el servidor con el contexto correcto</h3>
+    <div class="step-body">
+      <div class="code">
+        <pre><span class="k"># El paso que todo el mundo se salta:</span>
+export OLLAMA_CONTEXT_LENGTH=65536
+ollama serve</pre>
+        <button class="copy">Copiar</button>
+      </div>
+      <div class="warn">
+        <span class="warn-title">Fallo número uno</span>
+        <p>Ollama arranca con un contexto por defecto de 4K. Claude Code parece funcionar y se rompe a la tercera llamada a herramienta. Con 24 GB de VRAM puede que 65536 no te entre: baja a 32768 si ves errores de memoria.</p>
+      </div>
+      <div class="note">
+        <span class="note-title">La terminal se queda ocupada</span>
+        <p>No está colgado: es un servidor y vive en primer plano. Si volviera al prompt sería porque se ha caído. Abre otra ventana con <code>Ctrl+B</code>, <code>C</code> y sigue ahí. Todo lo que viene después va en la ventana nueva.</p>
+      </div>
+      <p>En las primeras líneas del log busca <code>library=cuda</code>. Si dice <code>library=cpu</code>, está corriendo en procesador y va a ir inutilizablemente lento — vuelve al paso 24.</p>
+      <p>Si prefieres el prompt libre: <code>OLLAMA_CONTEXT_LENGTH=65536 nohup ollama serve &gt; /var/log/ollama.log 2&gt;&amp;1 &amp;</code> y luego <code>tail -f /var/log/ollama.log</code> cuando quieras mirar.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">26</span>
+    <h3>Baja el modelo</h3>
+    <div class="step-body">
+      <p>Desde la ventana nueva, con el servidor ya corriendo:</p>
+      <div class="code">
+        <pre>curl http://localhost:11434
+ollama pull qwen3-coder</pre>
+        <button class="copy">Copiar</button>
+      </div>
+      <div class="warn">
+        <span class="warn-title">El orden importa</span>
+        <p><code>ollama pull</code> le habla al servidor por HTTP. Si lo lanzas antes del paso 25 te da <code>could not connect to ollama app</code>. El <code>curl</code> de la primera línea te confirma que está escuchando: debe responder <em>Ollama is running</em>.</p>
+      </div>
+      <p>Unos 20 GB. Aquí es donde se nota el filtro de velocidad de bajada del paso 13 — y donde estás pagando GPU por descargar.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">27</span>
+    <h3>Confirma que corre en GPU</h3>
+    <div class="step-body">
+      <div class="code">
+        <pre>ollama run qwen3-coder "di hola"
+ollama ps</pre>
+        <button class="copy">Copiar</button>
+      </div>
+      <p>La columna <strong>PROCESSOR</strong> tiene que decir <code>100% GPU</code>. Si dice <code>100% CPU</code> o un reparto mixto, ahí tienes el problema real — instalar sin avisos no garantiza que esté usando la tarjeta.</p>
+      <p>Un reparto mixto suele significar que el modelo más el contexto no caben en la VRAM: baja <code>OLLAMA_CONTEXT_LENGTH</code> y reinicia el servidor.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">28</span>
+    <h3>Instala Node y Claude Code</h3>
+    <div class="step-body">
+      <div class="code">
+        <pre>curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+apt install -y nodejs
+npm install -g @anthropic-ai/claude-code</pre>
+        <button class="copy">Copiar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">29</span>
+    <h3>Apunta Claude Code a tu modelo</h3>
+    <div class="step-body">
+      <div class="code">
+        <pre>export ANTHROPIC_BASE_URL=http://localhost:11434
+export ANTHROPIC_AUTH_TOKEN=ollama
+claude --model qwen3-coder</pre>
+        <button class="copy">Copiar</button>
+      </div>
+      <p>Sin proxy ni capa de traducción: desde la v0.14.0, Ollama expone un endpoint nativo compatible con la Messages API de Anthropic en <code>/v1/messages</code>.</p>
+      <p>Para no repetirlo en cada sesión, mételo en <code>~/.bashrc</code>.</p>
+    </div>
+  </div>
+</section>
+
+<section id="apagar">
+  <p class="phase">Fase 6</p>
+  <h2>Apagar sin dejar el contador vivo</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">30</span>
+    <h3>Entiende Stop contra Delete</h3>
+    <div class="step-body">
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Acción</th><th>Para de cobrar</th><th>Sigue cobrando</th><th>Conservas</th></tr></thead>
+          <tbody>
+            <tr><td>Cerrar el SSH</td><td>Nada</td><td>GPU + disco</td><td>Todo</td></tr>
+            <tr><td>Stop</td><td>GPU</td><td>Disco</td><td>Todo</td></tr>
+            <tr><td>Delete</td><td>Todo</td><td>—</td><td>Nada</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Cerrar la terminal no para nada. Es el error caro clásico: te vas el fin de semana convencido de que apagaste algo.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">31</span>
+    <h3>Decide tu ritmo</h3>
+    <div class="step-body">
+      <ul>
+        <li><strong>Uso diario</strong> → Stop al terminar. Pagas el disco (100 GB pueden ser $5–15/mes) y al día siguiente arrancas en un minuto con todo instalado.</li>
+        <li><strong>Uso esporádico</strong> → Delete. Cero coste entre sesiones, a cambio de repetir la instalación y los 20 GB de descarga.</li>
+      </ul>
+      <p>Si vas a hacer Delete, guarda antes lo que haya en la máquina: <code>git push</code>, o <code>scp -P PUERTO -r root@IP:/workspace/ ./</code>. Ojo, en <code>scp</code> la <code>-P</code> va en mayúscula; en <code>ssh</code> es minúscula.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">32</span>
+    <h3>Al volver, copia el comando otra vez</h3>
+    <div class="step-body">
+      <div class="warn">
+        <span class="warn-title">La dirección cambia</span>
+        <p>Tras un Stop y Start, la IP y el puerto de la instancia pueden ser distintos. No reutilices el comando SSH de ayer: vuelve al icono de la llave y cópialo de nuevo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="archivos">
+  <p class="phase">Arquitectura</p>
+  <h2>Dónde viven tus archivos</h2>
+  <hr class="rule">
+
+  <p>Esta decisión conviene tomarla antes de instalar nada, porque cambia el montaje entero.</p>
+
+  <div class="fork">
+    <h3>Opción A — Claude Code en el servidor</h3>
+    <p>Es lo que acabas de montar en la fase 5. El agente trabaja sobre archivos <strong>del servidor</strong>: clonas tu repo allí y haces push para recuperar el trabajo. Entorno de desarrollo remoto completo.</p>
+    <p class="flow">[ tu Mac ] ──ssh──&gt; [ instancia: claude + ollama + repo ]</p>
+  </div>
+
+  <div class="fork pick">
+    <h3>Opción B — Claude Code en tu Mac</h3>
+    <p>El agente toca <strong>tus archivos locales</strong>; sólo la inferencia viaja. En la instancia dejas nada más que Ollama (pasos 23–27) y las dos variables las exportas en tu máquina, con el túnel SSH abierto en otra pestaña.</p>
+    <p class="flow">[ tu Mac: claude + repo ] ──túnel──&gt; [ instancia: ollama ]</p>
+  </div>
+
+  <p>La B es la que quieres casi siempre. Mismos comandos del paso 29, ejecutados en tu terminal en vez de en la del servidor — el <code>-L</code> del paso 20 es lo que hace que <code>localhost:11434</code> signifique lo mismo en los dos sitios.</p>
+</section>
+
+<section id="diagnostico">
+  <p class="phase">Referencia</p>
+  <h2>Diagnóstico</h2>
+  <hr class="rule">
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Síntoma</th><th>Causa y arreglo</th></tr></thead>
+      <tbody>
+        <tr><td>Permission denied (publickey)</td><td>Clave no subida, o subida <em>después</em> de crear la instancia. Añádela desde el panel SSH de esa instancia. Comprueba también <code>chmod 600 ~/.ssh/id_ed25519</code>.</td></tr>
+        <tr><td>Conexión que no va y no sabes por qué</td><td><code>ssh -vv -p PUERTO root@IP</code> te dice exactamente en qué paso falla.</td></tr>
+        <tr><td>systemd is not running</td><td>Normal en contenedor. No se arregla ni hace falta: lanza <code>ollama serve</code> tú. Paso 23.</td></tr>
+        <tr><td>Unable to detect NVIDIA/AMD GPU</td><td>Falta <code>pciutils</code>. Comprueba con <code>nvidia-smi</code> y reinstala. Paso 24.</td></tr>
+        <tr><td><code>ollama serve</code> se queda &laquo;colgado&raquo;</td><td>No lo está: es un servidor en primer plano. Ventana nueva con <code>Ctrl+B</code>, <code>C</code>.</td></tr>
+        <tr><td>could not connect to ollama app</td><td>Lanzaste <code>pull</code> o <code>run</code> sin el servidor arrancado. Paso 25 antes que el 26.</td></tr>
+        <tr><td><code>ollama ps</code> dice 100% CPU</td><td>No está usando la tarjeta. Revisa <code>library=</code> en el log y vuelve al paso 24.</td></tr>
+        <tr><td>Claude Code se rompe tras 2–3 llamadas a herramienta</td><td><code>OLLAMA_CONTEXT_LENGTH</code> sin ajustar. Paso 25.</td></tr>
+        <tr><td>connection refused en 11434</td><td>Falta el <code>-L</code> en el SSH, o <code>ollama serve</code> no está corriendo en su ventana de tmux.</td></tr>
+        <tr><td>CUDA out of memory</td><td>Contexto demasiado grande para la VRAM. Baja a 32768, o a una cuantización menor.</td></tr>
+        <tr><td>La instancia se quedó en loading para siempre</td><td>Pull fresco de imagen grande (hasta 60 min) o host caído. Si el estado es <em>exited</em>, <em>unknown</em> u <em>offline</em>, no arrancará.</td></tr>
+        <tr><td>La instancia desapareció sola</td><td>Estabas en modo interrumpible, o te quedaste sin saldo.</td></tr>
+        <tr><td>Todo se murió al cerrar el portátil</td><td>Saliste de tmux con Ctrl+C en vez de con <code>Ctrl+B</code>, <code>D</code>.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  Pasos verificados contra docs.vast.ai · agosto de 2026 · Precios de marketplace: cambian a diario, comprueba la cifra viva antes de comprometerte.<br>
+  Modelo de referencia: qwen3-coder · Endpoint Anthropic nativo desde Ollama v0.14.0.
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var rateBtns = Array.prototype.slice.call(document.querySelectorAll('#rates .chip'));
+  var hours = document.getElementById('hours');
+  var hoursOut = document.getElementById('hoursOut');
+  var costOut = document.getElementById('cost');
+  var fill = document.getElementById('fill');
+  var verdict = document.getElementById('verdict');
+  var rate = 0.40;
+  var DISK = 8;        // coste medio del disco parado, $/mes
+  var PLAN = 18;       // suscripción de referencia
+  var DAYS = 22;
+  var SCALE_MAX = 54;  // $18 cae en el 33,3% de la barra
+
+  function render(){
+    var h = parseFloat(hours.value);
+    var total = rate * h * DAYS + DISK;
+
+    hoursOut.textContent = (h % 1 === 0) ? h : h.toFixed(1);
+    costOut.textContent = '$' + Math.round(total);
+    fill.style.width = Math.min(100, (total / SCALE_MAX) * 100) + '%';
+
+    var diff = Math.abs(Math.round(total - PLAN));
+    if (total < PLAN - 2){
+      verdict.innerHTML = 'Alquilar gana por <strong>$' + diff + ' al mes</strong>. A este volumen la GPU sale a cuenta — vigila el disco parado, que es la mitad de la factura.';
+    } else if (total > PLAN + 2){
+      verdict.innerHTML = 'La suscripción gana por <strong>$' + diff + ' al mes</strong>. A este volumen alquilar sólo compensa si lo que buscas es privacidad o aprender la infraestructura.';
+    } else {
+      verdict.innerHTML = 'Empate técnico, <strong>en torno a $' + Math.round(total) + '</strong>. Con los números igualados decide el tiempo que le vas a dedicar a mantenerlo.';
+    }
+  }
+
+  rateBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      rateBtns.forEach(function(b){ b.setAttribute('aria-pressed','false'); });
+      btn.setAttribute('aria-pressed','true');
+      rate = parseFloat(btn.dataset.rate);
+      render();
+    });
+  });
+
+  hours.addEventListener('input', render);
+  render();
+
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var code = btn.parentNode.querySelector('pre').innerText;
+      navigator.clipboard.writeText(code).then(function(){
+        btn.textContent = 'Copiado';
+        setTimeout(function(){ btn.textContent = 'Copiar'; }, 1600);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
