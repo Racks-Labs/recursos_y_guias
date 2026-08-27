@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pre-test de producto · Skill para Claude · RACKS Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --slate-900:#14181d;
+    --slate-800:#1c222a;
+    --slate-700:#2a323c;
+    --slate-600:#3d4854;
+    --light:#dde2e5;
+    --dim:#8b98a5;
+    --amp:#f2b33d;
+    --wire:#5aa3bb;
+    --alert:#d9544d;
+    --measure:44rem;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+
+  body{
+    margin:0;
+    background:var(--slate-900);
+    color:var(--light);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    padding:0 1.25rem 5rem;
+  }
+
+  .wrap{max-width:var(--measure);margin:0 auto}
+
+  /* ---------- cabecera ---------- */
+
+  .masthead{padding:3.5rem 0 2rem;border-bottom:1px solid var(--slate-700)}
+
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--amp);margin:0 0 1.25rem;
+  }
+
+  h1{
+    font-family:"Oswald",sans-serif;font-weight:600;
+    font-size:clamp(2rem,7.5vw,3.2rem);line-height:1.03;
+    text-transform:uppercase;margin:0 0 1rem;
+  }
+
+  h1 em{font-style:normal;color:var(--amp)}
+
+  .standfirst{font-size:1.05rem;color:var(--dim);max-width:34rem;margin:0}
+
+  /* ---------- índice ---------- */
+
+  .toc{
+    background:var(--slate-800);border:1px solid var(--slate-700);
+    border-radius:3px;padding:1.25rem;margin:2rem 0 0;
+  }
+
+  .toc p{
+    font-family:"IBM Plex Mono",monospace;font-size:.68rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--dim);
+    margin:0 0 .8rem;
+  }
+
+  .toc ol{margin:0;padding-left:1.2rem;font-size:.92rem}
+  .toc li{margin-bottom:.35rem}
+  .toc li::marker{color:var(--slate-600);font-family:"IBM Plex Mono",monospace;font-size:.8rem}
+  .toc a{color:var(--light);text-decoration:none;border-bottom:1px solid var(--slate-600)}
+  .toc a:hover{color:var(--amp);border-color:var(--amp)}
+
+  /* ---------- panel de arranque ---------- */
+
+  .launch{
+    background:var(--slate-800);border:1px solid var(--slate-700);
+    border-radius:3px;padding:1.5rem 1.25rem;margin:1.5rem 0 0;
+  }
+
+  .launch-label{
+    font-family:"IBM Plex Mono",monospace;font-size:.68rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin:0 0 1.1rem;
+  }
+
+  .launch p:last-child{margin-bottom:0}
+
+  .chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:0 0 1.25rem}
+
+  .chip{
+    font-family:"IBM Plex Mono",monospace;font-size:.78rem;
+    background:transparent;color:var(--dim);
+    border:1px solid var(--slate-600);border-radius:2px;
+    padding:.5rem .7rem;
+  }
+
+  .copy:focus-visible{outline:2px solid var(--wire);outline-offset:2px}
+
+  /* ---------- secciones ---------- */
+
+  section{padding-top:3.25rem}
+
+  h2{
+    font-family:"Oswald",sans-serif;font-weight:600;font-size:1.6rem;
+    text-transform:uppercase;margin:0 0 .35rem;
+  }
+
+  .phase{
+    font-family:"IBM Plex Mono",monospace;font-size:.68rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--amp);
+    margin:0 0 .4rem;
+  }
+
+  .rule{border:0;border-top:1px solid var(--slate-700);margin:0 0 1.5rem}
+
+  h3{font-family:"IBM Plex Sans",sans-serif;font-weight:600;font-size:1.05rem;margin:2rem 0 .5rem}
+
+  p{margin:0 0 1rem}
+  a{color:var(--wire)}
+
+  ul{padding-left:1.1rem}
+  li{margin-bottom:.45rem}
+
+  .lead-list{color:var(--dim);font-size:.95rem}
+  .lead-list li strong{color:var(--light);font-weight:500}
+
+  /* ---------- pasos ---------- */
+
+  .step{
+    display:grid;grid-template-columns:2.8rem 1fr;gap:0 1rem;
+    padding:1.6rem 0;border-bottom:1px solid var(--slate-800);
+  }
+
+  .step-num{
+    font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:.9rem;
+    color:var(--slate-600);line-height:1.9;letter-spacing:.05em;
+  }
+
+  .step h3{margin:0 0 .6rem;grid-column:2;font-size:1rem}
+  .step-body{grid-column:2}
+  .step-body > *:last-child{margin-bottom:0}
+
+  .step ul{margin:0 0 1rem;padding-left:1.1rem;color:var(--dim);font-size:.94rem}
+  .step li strong{color:var(--light);font-weight:500}
+
+  @media (max-width:30rem){
+    .step{grid-template-columns:1fr;gap:0}
+    .step-num{line-height:1.4;margin-bottom:.3rem}
+    .step h3,.step-body{grid-column:1}
+  }
+
+  /* ---------- campos ---------- */
+
+  dl{margin:0 0 1.25rem}
+
+  .field{
+    display:grid;grid-template-columns:11rem 1fr;gap:.3rem 1rem;
+    font-size:.9rem;padding:.6rem 0;border-bottom:1px solid var(--slate-800);
+  }
+
+  .field:first-of-type{border-top:1px solid var(--slate-800)}
+
+  .field dt{
+    font-family:"IBM Plex Mono",monospace;font-size:.78rem;
+    color:var(--wire);align-self:start;padding-top:.1rem;
+  }
+
+  .field dd{margin:0;color:var(--dim)}
+  .field dd strong{color:var(--light);font-weight:500}
+
+  @media (max-width:32rem){
+    .field{grid-template-columns:1fr;gap:.15rem}
+  }
+
+  /* ---------- código ---------- */
+
+  .code{position:relative;margin:0 0 1rem}
+
+  pre{
+    font-family:"IBM Plex Mono",monospace;font-size:.8rem;line-height:1.75;
+    background:#0e1216;border:1px solid var(--slate-700);border-radius:3px;
+    padding:1rem 1rem 1rem 1rem;margin:0;overflow-x:auto;color:var(--light);
+    white-space:pre-wrap;word-wrap:break-word;
+  }
+
+  .code pre{padding-top:2.6rem}
+
+  pre .c{color:var(--dim)}
+  pre .k{color:var(--amp)}
+
+  .copy{
+    position:absolute;top:.55rem;right:.55rem;
+    font-family:"IBM Plex Mono",monospace;font-size:.62rem;
+    letter-spacing:.08em;text-transform:uppercase;
+    background:var(--slate-800);color:var(--dim);
+    border:1px solid var(--slate-600);border-radius:2px;
+    padding:.3rem .5rem;cursor:pointer;
+  }
+
+  .copy:hover{color:var(--amp);border-color:var(--amp)}
+
+  code:not(pre code){
+    font-family:"IBM Plex Mono",monospace;font-size:.87em;
+    background:var(--slate-800);padding:.1em .35em;border-radius:2px;color:var(--amp);
+  }
+
+  /* ---------- avisos ---------- */
+
+  .warn{
+    background:rgba(217,84,77,.07);border-left:2px solid var(--alert);
+    padding:.9rem 1rem;margin:0 0 1rem;font-size:.92rem;
+  }
+
+  .warn p{margin:0}
+
+  .warn-title{
+    font-family:"IBM Plex Mono",monospace;font-size:.64rem;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--alert);
+    display:block;margin-bottom:.35rem;
+  }
+
+  .note{
+    background:rgba(90,163,187,.07);border-left:2px solid var(--wire);
+    padding:.9rem 1rem;margin:0 0 1rem;font-size:.92rem;
+  }
+
+  .note p{margin:0}
+
+  .note-title{
+    font-family:"IBM Plex Mono",monospace;font-size:.64rem;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--wire);
+    display:block;margin-bottom:.35rem;
+  }
+
+  /* ---------- tarjetas ---------- */
+
+  .fork{border:1px solid var(--slate-700);border-radius:3px;padding:1.2rem;margin-bottom:1rem}
+  .fork.pick{border-color:var(--amp)}
+  .fork h3{margin:0 0 .5rem;font-size:1rem}
+  .fork p{margin:0;font-size:.95rem;color:var(--dim)}
+  .fork p + p{margin-top:.6rem}
+
+  .verdict-card{
+    border:1px solid var(--slate-700);border-left-width:2px;
+    border-radius:3px;padding:1rem 1.1rem;margin-bottom:.8rem;
+  }
+
+  .verdict-card.go{border-left-color:var(--amp)}
+  .verdict-card.stop{border-left-color:var(--alert)}
+  .verdict-card.hold{border-left-color:var(--wire)}
+
+  .verdict-card h4{
+    font-family:"Oswald",sans-serif;font-weight:600;font-size:1rem;
+    text-transform:uppercase;letter-spacing:.02em;margin:0 0 .35rem;
+  }
+
+  .verdict-card.go h4{color:var(--amp)}
+  .verdict-card.stop h4{color:var(--alert)}
+  .verdict-card.hold h4{color:var(--wire)}
+
+  .verdict-card p{margin:0;font-size:.93rem;color:var(--dim)}
+
+  .mode{border-left:2px solid var(--slate-600);padding:.1rem 0 .1rem 1.1rem;margin-bottom:1.5rem}
+  .mode h3{margin-top:0;font-size:1rem}
+  .mode p{margin-bottom:0;color:var(--dim);font-size:.95rem}
+  .mode p + p{margin-top:.6rem}
+
+  .flow{
+    font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--wire);
+    margin:.7rem 0 0;overflow-x:auto;white-space:nowrap;
+  }
+
+  /* ---------- tabla ---------- */
+
+  .tablewrap{overflow-x:auto;margin:0 0 1.25rem}
+
+  table{border-collapse:collapse;width:100%;font-size:.88rem;min-width:26rem}
+
+  th{
+    text-align:left;font-family:"IBM Plex Mono",monospace;
+    font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--dim);font-weight:400;
+    padding:0 1rem .5rem 0;border-bottom:1px solid var(--slate-700);
+  }
+
+  td{padding:.65rem 1rem .65rem 0;border-bottom:1px solid var(--slate-800);color:var(--dim);vertical-align:top}
+  td:first-child{color:var(--light)}
+
+  footer{
+    margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--slate-700);
+    font-family:"IBM Plex Mono",monospace;font-size:.72rem;
+    color:var(--slate-600);line-height:1.9;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Skill para Claude · RACKS Group</p>
+  <h1>Pre-test<br>de <em>producto</em>.<br>Antes de gastar.</h1>
+  <p class="standfirst">Antes de crear stock, desarrollar, lanzar anuncios o perder semanas con una idea, pega aquí tu producto. Claude ordena lo que sabes, detecta qué puede frenar la compra y te dice si hay base para avanzar, qué debes cambiar o qué dato falta.</p>
+
+  <nav class="toc">
+    <p>Recorrido</p>
+    <ol>
+      <li><a href="#uso">Cómo usarla</a> · pasos 1–4</li>
+      <li><a href="#material">Qué pegar en el chat</a></li>
+      <li><a href="#principio">Principio de trabajo</a> · las cuatro categorías</li>
+      <li><a href="#reglas">Reglas obligatorias</a></li>
+      <li><a href="#salida">Formato de salida</a> · bloques 1–8</li>
+      <li><a href="#tono">Tono de la respuesta</a></li>
+      <li><a href="#bloque">Bloque completo para copiar</a></li>
+    </ol>
+  </nav>
+</header>
+
+<div class="launch">
+  <p class="launch-label">Sirve para</p>
+  <div class="chips">
+    <span class="chip">Productos físicos</span>
+    <span class="chip">Ecommerce</span>
+    <span class="chip">Servicios</span>
+    <span class="chip">Producto digital</span>
+    <span class="chip">Software</span>
+    <span class="chip">Formaciones</span>
+    <span class="chip">Nuevas ofertas</span>
+  </div>
+  <p class="launch-label">Frase de arranque</p>
+  <div class="code">
+    <pre>Analiza este producto con la Skill Pre-test de Producto.</pre>
+    <button class="copy">Copiar</button>
+  </div>
+  <p style="font-size:.92rem;color:var(--dim)">No es una clase de marketing ni un informe de consultoría. Es la lectura que harías antes de mover recursos esta semana.</p>
+</div>
+
+<section id="uso">
+  <p class="phase">Fase 1</p>
+  <h2>Cómo usarla</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Abre un chat nuevo en Claude</h3>
+    <div class="step-body">
+      <p>Nuevo, no uno en marcha. La Skill funciona mejor sin contexto previo que arrastre suposiciones de otra conversación.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>Adjunta este archivo o pega el bloque de instrucciones</h3>
+    <div class="step-body">
+      <p>Cualquiera de las dos vías vale. El bloque completo está al final de esta página, listo para copiar de una sola vez.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">03</span>
+    <h3>Pega lo que tengas</h3>
+    <div class="step-body">
+      <p>Una idea, fotos, un enlace, la ficha de producto, precio, coste, competidores, reseñas, comentarios, capturas o resultados previos. Lo que haya.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">04</span>
+    <h3>Escribe la frase de arranque</h3>
+    <div class="step-body">
+      <div class="code">
+        <pre>Analiza este producto con la Skill Pre-test de Producto.</pre>
+        <button class="copy">Copiar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="material">
+  <p class="phase">Fase 2</p>
+  <h2>Qué pegar en el chat</h2>
+  <hr class="rule">
+
+  <p>No necesitas rellenar todo. Si falta información, Claude debe decirte exactamente cuál es la ausencia importante en lugar de inventarla.</p>
+
+  <dl>
+    <div class="field"><dt>La idea</dt><dd>Qué es el producto, en tus palabras. Aunque esté a medias.</dd></div>
+    <div class="field"><dt>Fotos o capturas</dt><dd>Del producto, del competidor o de la ficha tal y como la ve el cliente.</dd></div>
+    <div class="field"><dt>Enlace o ficha</dt><dd>Página de venta, listado o borrador de ficha.</dd></div>
+    <div class="field"><dt>Precio y coste</dt><dd>Los dos si los tienes. <strong>Con precio pero sin coste, Claude no debe inventar margen.</strong></dd></div>
+    <div class="field"><dt>Competidores</dt><dd>Quién vende hoy algo parecido y a cuánto.</dd></div>
+    <div class="field"><dt>Reseñas y comentarios</dt><dd>De tu producto o del de al lado. Es donde salen los frenos reales.</dd></div>
+    <div class="field"><dt>Resultados previos</dt><dd>Ventas, tests, campañas o cualquier intento anterior.</dd></div>
+  </dl>
+
+  <div class="note">
+    <span class="note-title">Si solo tienes una idea</span>
+    <p>Pégala igual. Con material insuficiente la Skill no se bloquea: da una lectura inicial y formula las preguntas mínimas que cambiarían el veredicto.</p>
+  </div>
+</section>
+
+<section id="principio">
+  <p class="phase">Fase 3</p>
+  <h2>Principio de trabajo</h2>
+  <hr class="rule">
+
+  <p>Todo lo que entra en el análisis se clasifica en una de estas cuatro categorías. Mezclarlas es exactamente lo que produce malas decisiones de inversión.</p>
+
+  <div class="mode">
+    <h3>Hechos</h3>
+    <p>Información aportada por ti o verificable en los materiales.</p>
+  </div>
+
+  <div class="mode">
+    <h3>Señales</h3>
+    <p>Indicios razonables, pero todavía no concluyentes.</p>
+  </div>
+
+  <div class="mode">
+    <h3>Supuestos</h3>
+    <p>Lo que se está dando por cierto sin evidencia.</p>
+  </div>
+
+  <div class="mode">
+    <h3>Datos que faltan</h3>
+    <p>Información que puede cambiar la decisión.</p>
+  </div>
+
+  <div class="warn">
+    <span class="warn-title">Lo que nunca hace</span>
+    <p>No inventa demanda, ventas, margen, costes, opiniones de clientes, tendencias, competidores, resultados de mercado ni validaciones. Y no afirma que un producto <strong>se va a vender</strong> o <strong>no se va a vender</strong> con certeza: si no hay prueba suficiente, dice qué parte parece prometedora y qué no se sostiene todavía.</p>
+  </div>
+</section>
+
+<section id="reglas">
+  <p class="phase">Fase 4</p>
+  <h2>Reglas obligatorias</h2>
+  <hr class="rule">
+
+  <ul class="lead-list">
+    <li><strong>Español de España, claro</strong> — sin jerga de consultoría ni hype de IA.</li>
+    <li><strong>Directo</strong> — prioriza los 3–5 factores que más afectan a la compra real.</li>
+    <li><strong>Nada de recomendaciones vacías</strong> — ni «haz marketing», ni «diferénciate más», ni «estudia a la competencia». Hay que explicar qué comprobar y por qué.</li>
+    <li><strong>Idea atractiva ≠ demanda demostrada.</strong> No se confunden.</li>
+    <li><strong>Riesgos señalados, no resueltos</strong> — si el producto depende de normativa, salud, seguridad, propiedad intelectual, privacidad, fabricación, logística o garantías, marca el riesgo sin dar asesoramiento profesional definitivo.</li>
+    <li><strong>Precio sin costes</strong> — no se inventa margen.</li>
+    <li><strong>Sin público concreto</strong> — se dice como riesgo prioritario.</li>
+    <li><strong>Varias audiencias posibles</strong> — elige la más probable según los datos y explica por qué; las demás quedan marcadas como secundarias.</li>
+    <li><strong>Material insuficiente</strong> — no bloquea: lectura inicial más las preguntas mínimas que cambiarían el veredicto.</li>
+  </ul>
+</section>
+
+<section id="salida">
+  <p class="phase">Fase 5</p>
+  <h2>Formato de salida</h2>
+  <hr class="rule">
+
+  <p>La respuesta llega siempre con estos ocho bloques, en este orden. Si falta alguno, la Skill no se ha aplicado.</p>
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Veredicto en una frase</h3>
+    <div class="step-body">
+      <p>Una sola opción, escrita al principio, y el motivo en tres frases como máximo:</p>
+
+      <div class="verdict-card go">
+        <h4>Avanzar con cautela</h4>
+        <p>Existe una propuesta razonable y hay señales suficientes para dar un siguiente paso pequeño.</p>
+      </div>
+
+      <div class="verdict-card stop">
+        <h4>Reformular antes de invertir</h4>
+        <p>El producto, cliente, propuesta o precio tiene una debilidad crítica que hay que resolver.</p>
+      </div>
+
+      <div class="verdict-card hold">
+        <h4>Faltan datos críticos</h4>
+        <p>No se puede recomendar avanzar sin responder primero una o dos incógnitas clave.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>Qué se está intentando vender realmente</h3>
+    <div class="step-body">
+      <p>Tres líneas como máximo: el producto, el cliente más probable y el problema, deseo o fricción por el que esa persona podría pagar.</p>
+      <p>Si el problema no está claro o no parece suficientemente relevante, se dice de forma explícita.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">03</span>
+    <h3>Por qué alguien lo compraría — y por qué no</h3>
+    <div class="step-body">
+      <div class="fork">
+        <h3>Motivos de compra</h3>
+        <p>Hasta 3 razones concretas basadas <strong>solo</strong> en el material aportado.</p>
+      </div>
+      <div class="fork">
+        <h3>Frenos de compra</h3>
+        <p>Hasta 3 objeciones reales: precio, alternativa, falta de urgencia, confianza, complejidad, entrega, diferenciación u otra fricción relevante.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">04</span>
+    <h3>Lo que parece fuerte / lo que es solo una suposición</h3>
+    <div class="step-body">
+      <p><strong>Señales a favor.</strong> Solo evidencia o indicios aportados. Si no existe ninguna, la respuesta lo dice con esta frase exacta:</p>
+      <div class="code">
+        <pre>No se han aportado señales reales a favor.</pre>
+        <button class="copy">Copiar</button>
+      </div>
+      <p><strong>Supuestos que pueden romper el lanzamiento.</strong> Máximo cinco. De cada uno: qué se está asumiendo, por qué importa y qué dato lo confirmaría o descartaría.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">05</span>
+    <h3>Diferenciación y alternativas</h3>
+    <div class="step-body">
+      <ul>
+        <li>¿Qué alternativa usaría hoy el cliente si este producto no existiera?</li>
+        <li>¿Por qué elegiría este producto en vez de esa alternativa?</li>
+        <li>¿La diferencia es <strong>clara</strong>, <strong>débil</strong> o <strong>no demostrada</strong>?</li>
+      </ul>
+      <p>Una característica no es una razón de compra. Si la diferencia no se entiende en una frase, la Skill propone una formulación más clara.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">06</span>
+    <h3>Precio y viabilidad básica</h3>
+    <div class="step-body">
+      <dl>
+        <div class="field"><dt>Datos confirmados</dt><dd>Precio, coste, margen o canal, <strong>solo si los aportaste tú</strong>.</dd></div>
+        <div class="field"><dt>Riesgo económico</dt><dd>El principal, en una frase.</dd></div>
+        <div class="field"><dt>Dato que falta</dt><dd>La pregunta concreta que desbloquea la decisión antes de invertir.</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">07</span>
+    <h3>Siguiente movimiento recomendado</h3>
+    <div class="step-body">
+      <p>UNA sola recomendación, proporcionada al nivel de información disponible: el paso más pequeño, barato y reversible si hay base; qué cambiar primero si el planteamiento está mal; o el único dato a conseguir si faltan datos. Siempre con las cuatro piezas:</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Pieza</th><th>Qué responde</th></tr></thead>
+          <tbody>
+            <tr><td>Qué hacer</td><td>La acción concreta, no una intención.</td></tr>
+            <tr><td>Con quién o para quién</td><td>El público del test, no «el mercado».</td></tr>
+            <tr><td>Qué señal observar</td><td>Lo que vas a mirar para saber si funciona.</td></tr>
+            <tr><td>Qué resultado decide</td><td>Qué haría avanzar, parar o reformular.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">
+        <span class="note-title">Sin objetivos inventados</span>
+        <p>Si hace falta un umbral numérico y no hay datos para fijarlo, la respuesta escribe literalmente <code>[definir umbral con datos reales]</code> en vez de inventar una cifra.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">08</span>
+    <h3>Resumen ejecutivo final</h3>
+    <div class="step-body">
+      <p>Cierra exactamente con tres líneas:</p>
+      <div class="code">
+        <pre><span class="k">Decisión ahora:</span>
+<span class="k">Mayor riesgo:</span>
+<span class="k">Siguiente acción esta semana:</span></pre>
+        <button class="copy">Copiar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tono">
+  <p class="phase">Referencia</p>
+  <h2>Tono de la respuesta</h2>
+  <hr class="rule">
+
+  <p>Directo, preciso y útil para una persona que vende, construye o lanza productos. Sin promesas de éxito, sin frases de relleno y sin tratar al usuario como principiante.</p>
+  <p class="flow">[ material que tienes ] ──pre-test──&gt; [ avanzar · reformular · faltan datos ]</p>
+  <p>El objetivo es evitar malas inversiones y decidir con mejor criterio.</p>
+</section>
+
+<section id="bloque">
+  <p class="phase">Copiar y pegar</p>
+  <h2>Bloque completo</h2>
+  <hr class="rule">
+
+  <p>Esto es lo que se pega en el chat cuando no adjuntas el archivo. Va entero, de una vez, antes de pegar el material del producto.</p>
+
+  <div class="code">
+    <pre># INSTRUCCIONES PARA CLAUDE
+
+Actúa como un analista de producto, negocio y compra real. Tu objetivo es ayudar a una persona que quiere lanzar o mejorar un producto a tomar una decisión antes de invertir tiempo, dinero, stock, desarrollo o anuncios.
+
+No des una clase de marketing. No alargues la respuesta con teoría. Analiza el producto como si tuvieras que recomendar al equipo si debe mover recursos esta semana.
+
+## Principio de trabajo
+
+Distingue siempre entre:
+- Hechos: información aportada por el usuario o verificable en los materiales.
+- Señales: indicios razonables, pero todavía no concluyentes.
+- Supuestos: lo que se está dando por cierto sin evidencia.
+- Datos que faltan: información que puede cambiar la decisión.
+
+Nunca inventes demanda, ventas, margen, costes, opiniones de clientes, tendencias, competidores, resultados de mercado ni validaciones.
+
+No afirmes que un producto "se va a vender" o "no se va a vender" con certeza. Si no hay prueba suficiente, di claramente qué parte parece prometedora y qué no se puede sostener todavía.
+
+## Reglas obligatorias
+
+- Habla claro, en español de España, sin jerga de consultoría ni hype de IA.
+- Sé directo: prioriza los 3-5 factores que más afectan a la compra real.
+- No uses recomendaciones vacías como "haz marketing", "diferénciate más" o "estudia a la competencia". Explica qué hay que comprobar y por qué.
+- No confundas una idea atractiva con demanda demostrada.
+- Si el producto depende de normativa, salud, seguridad, propiedad intelectual, privacidad, fabricación, logística o garantías, señala el riesgo sin dar asesoramiento profesional definitivo.
+- Si el usuario aporta un precio pero no costes, no inventes margen.
+- Si no hay público concreto, dilo como riesgo prioritario.
+- Si hay varias audiencias posibles, elige la más probable según los datos y explica por qué; marca las demás como secundarias.
+- Si el material es insuficiente, no bloquees la respuesta: da una lectura inicial y formula las preguntas mínimas que cambiarían el veredicto.
+
+# FORMATO DE SALIDA OBLIGATORIO
+
+## 1. Veredicto en una frase
+Elige una sola opción y escríbela al inicio:
+- AVANZAR CON CAUTELA — existe una propuesta razonable y hay señales suficientes para dar un siguiente paso pequeño.
+- REFORMULAR ANTES DE INVERTIR — el producto, cliente, propuesta o precio tiene una debilidad crítica que hay que resolver.
+- FALTAN DATOS CRÍTICOS — no se puede recomendar avanzar sin responder primero una o dos incógnitas clave.
+Después del veredicto, explica el motivo en un máximo de 3 frases, sin matices innecesarios.
+
+## 2. Qué se está intentando vender realmente
+En 3 líneas como máximo, define: el producto, el cliente más probable y el problema, deseo o fricción por el que esa persona podría pagar. Si el problema no está claro o no parece suficientemente relevante, dilo de forma explícita.
+
+## 3. Por qué alguien lo compraría — y por qué no
+Motivos de compra: hasta 3 razones concretas basadas solo en el material aportado.
+Frenos de compra: hasta 3 objeciones reales (precio, alternativa, falta de urgencia, confianza, complejidad, entrega, diferenciación u otra fricción relevante).
+
+## 4. Lo que parece fuerte / lo que es solo una suposición
+Señales a favor: solo evidencia o indicios aportados. Si no existe, escribe: No se han aportado señales reales a favor.
+Supuestos que pueden romper el lanzamiento: máximo 5. Para cada uno, qué se está asumiendo, por qué importa y qué dato lo confirmaría o descartaría.
+
+## 5. Diferenciación y alternativas
+- ¿Qué alternativa usaría hoy el cliente si este producto no existiera?
+- ¿Por qué elegiría este producto en vez de esa alternativa?
+- ¿La diferencia es clara, débil o no demostrada?
+No confundas una característica con una razón de compra. Si la diferencia no se entiende en una frase, propón una formulación más clara.
+
+## 6. Precio y viabilidad básica
+- Datos confirmados: precio, coste, margen o canal, solo si el usuario los aportó.
+- Riesgo económico principal: una frase.
+- Dato que falta antes de invertir: la pregunta concreta que desbloquea la decisión.
+
+## 7. Siguiente movimiento recomendado
+Da UNA recomendación práctica, proporcionada al nivel de información disponible. Si hay base: el siguiente paso más pequeño, barato y reversible. Si el producto está mal planteado: qué cambiar primero. Si faltan datos: la única pregunta o dato que conviene obtener primero.
+Debe incluir: qué hacer, con quién o para quién, qué señal observar y qué resultado haría avanzar, parar o reformular.
+No inventes objetivos numéricos. Si hacen falta, escribe: [definir umbral con datos reales].
+
+## 8. Resumen ejecutivo final
+Cierra exactamente con tres líneas:
+- Decisión ahora:
+- Mayor riesgo:
+- Siguiente acción esta semana:
+
+## Tono de la respuesta
+Directo, preciso y útil para una persona que vende, construye o lanza productos. Sin promesas de éxito, sin frases de relleno y sin tratar al usuario como principiante. El objetivo es ayudarle a evitar malas inversiones y decidir con mejor criterio.</pre>
+    <button class="copy">Copiar</button>
+  </div>
+</section>
+
+<footer>
+  Skill Pre-test de Producto · RACKS Group · Para productos físicos, ecommerce, servicios, producto digital, software, formaciones y nuevas ofertas.<br>
+  La Skill ordena información y marca riesgos: no valida demanda ni sustituye asesoramiento legal, sanitario o financiero.
+</footer>
+
+</div>
+
+<script>
+(function(){
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var code = btn.parentNode.querySelector('pre').innerText;
+      navigator.clipboard.writeText(code).then(function(){
+        btn.textContent = 'Copiado';
+        setTimeout(function(){ btn.textContent = 'Copiar'; }, 1600);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
