@@ -138,7 +138,10 @@ Esqueleto mínimo:
 | `.mode`, `.fork` (+ `.pick`) | Opciones; `.pick` marca la recomendada |
 | `.tag` | Etiqueta corta junto a un `<h3>` |
 | `.tablewrap` + `<table>` | Tabla; el envoltorio la hace scrolleable en móvil |
-| `.chip`, `.btn`, `.btn--primary` | Controles |
+| `.chip`, `.btn`, `.btn--primary` | Controles; un `.chip` en `<span>` es etiqueta estática, en `<button>` es interactivo |
+| `.launch` + `.launch-label` | Panel de arranque: para qué sirve y frase con la que empezar |
+| `.verdict-card` + `.go` / `.hold` / `.stop` | Veredictos en semáforo: avanzar, esperar, parar |
+| `.lead-list` | Lista destacada, con los `<strong>` en blanco |
 | `.meter`, `.readout`, `.scale` | Medidores y calculadoras |
 | `.res-grid`, `.res-card`, `.pill` | Tarjetas del catálogo |
 | `.swatches`, `.swatch` | Muestrario de color |

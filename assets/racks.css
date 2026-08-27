@@ -263,7 +263,7 @@ section{padding-top:3rem}
    6. Tarjetas y paneles
    ========================================================================== */
 
-.card,.toc,.meter,.fork,.panel{
+.card,.toc,.meter,.fork,.panel,.launch{
   background:var(--card);
   border:1px solid var(--border);
   border-radius:var(--radius);
@@ -436,6 +436,8 @@ td:first-child{color:var(--foreground)}
   transition:border-color .15s,color .15s,background .15s;
 }
 .chip:hover,.btn:hover{border-color:var(--academy-orange);color:var(--academy-orange)}
+span.chip{cursor:default}
+span.chip:hover{border-color:var(--border);color:var(--muted-foreground)}
 .chip[aria-pressed="true"]{border-color:var(--academy-orange);color:var(--academy-orange);background:var(--orange-soft)}
 
 .btn--primary{background:var(--academy-orange);border-color:var(--academy-orange);color:var(--background);font-weight:600}
@@ -444,7 +446,7 @@ td:first-child{color:var(--foreground)}
 input[type=range]{width:100%;accent-color:var(--academy-orange);margin:0}
 
 .meter{padding:1.5rem 1.25rem;margin:1.5rem 0 0}
-.meter-label{
+.meter-label,.launch-label{
   font-family:var(--font-mono);font-size:.68rem;font-weight:500;letter-spacing:.1em;
   text-transform:uppercase;color:var(--muted-foreground);margin:0 0 1.25rem;
 }
@@ -469,6 +471,38 @@ input[type=range]{width:100%;accent-color:var(--academy-orange);margin:0}
 }
 
 .verdict{font-size:.92rem;margin:1.1rem 0 0;padding-top:1.1rem;border-top:1px solid var(--border)}
+
+/* --- panel de arranque -------------------------------------------------- */
+
+.launch{padding:1.5rem 1.25rem;margin:1.5rem 0 0}
+.launch-label{margin:0 0 1.1rem}
+.launch .chips{margin:0 0 1.25rem}
+.launch > *:last-child{margin-bottom:0}
+
+/* --- veredictos · semáforo go / hold / stop ------------------------------ */
+
+.verdict-card{
+  border:1px solid var(--border);border-left-width:2px;border-radius:var(--radius);
+  padding:1rem 1.1rem;margin-bottom:.8rem;
+}
+.verdict-card h4{
+  font-size:1rem;font-weight:600;letter-spacing:-.01em;
+  text-transform:uppercase;margin:0 0 .35rem;
+}
+.verdict-card p{margin:0;font-size:.93rem}
+.verdict-card > *:last-child{margin-bottom:0}
+
+.verdict-card.go{border-left-color:var(--academy-orange)}
+.verdict-card.go h4{color:var(--academy-orange)}
+.verdict-card.hold{border-left-color:var(--accent-blue)}
+.verdict-card.hold h4{color:var(--accent-blue)}
+.verdict-card.stop{border-left-color:var(--destructive)}
+.verdict-card.stop h4{color:var(--destructive)}
+
+/* --- lista destacada ---------------------------------------------------- */
+
+.lead-list{font-size:.95rem}
+.lead-list li strong{color:var(--foreground);font-weight:500}
 
 /* ==========================================================================
    13. Catálogo de recursos (index)

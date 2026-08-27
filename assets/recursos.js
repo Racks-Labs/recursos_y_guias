@@ -21,6 +21,15 @@
 
 window.RACKS_RESOURCES = [
   {
+    slug: 'skill-pretest-producto',
+    titulo: 'Pre-test de producto',
+    kicker: 'Skill · Producto',
+    resumen: 'Skill para Claude que ordena lo que sabes de un producto, detecta qué puede frenar la compra y dice si hay base para avanzar, qué cambiar o qué dato falta. Con el bloque de instrucciones listo para pegar en el chat.',
+    etiquetas: ['Claude', 'Producto', 'Validación'],
+    estado: 'live',
+    fecha: '2026-08'
+  },
+  {
     slug: 'vast-ollama',
     titulo: 'Vast.ai paso a paso',
     kicker: 'Runbook · Infraestructura',
