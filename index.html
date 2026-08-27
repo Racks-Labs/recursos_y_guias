@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Recursos y guías · Racks Academy</title>
+<meta name="description" content="Catálogo de recursos y guías de Racks Academy. Todos con el estilo del panel y listos para incrustar como iframe.">
+<meta property="og:title" content="Recursos y guías · Racks Academy">
+<meta property="og:description" content="Catálogo de recursos y guías, listos para incrustar como iframe.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/racks.css">
+<script>/* fija el modo antes del primer pintado */(function(){var h=document.documentElement,s=location.search;if(s.indexOf('embed=1')>-1)h.classList.add('is-embed');if(window.self!==window.top)h.classList.add('is-framed');if(s.indexOf('bg=transparent')>-1)h.classList.add('is-transparent');})();</script>
+<script defer src="assets/racks.js"></script>
+</head>
+<body data-resource-id="indice">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="watermark-r" aria-hidden="true">R</div>
+
+<header class="topbar" data-embed-hide>
+  <span class="topbar-mark" aria-hidden="true">R</span>
+  <a class="topbar-name" href="index.html">Racks Academy</a>
+  <span class="topbar-sep" aria-hidden="true">/</span>
+  <span class="topbar-here">Recursos y guías</span>
+  <span class="topbar-actions"><a class="btn" href="#incrustar">Incrustar</a></span>
+</header>
+
+<main class="shell" id="contenido">
+<div class="wrap wrap--wide">
+
+<header class="masthead">
+  <p class="eyebrow">Biblioteca · Racks Academy</p>
+  <h1>Recursos y <em>guías</em>.</h1>
+  <p class="standfirst">Runbooks y material de apoyo con el mismo estilo que el panel. Cada uno se lee suelto o se incrusta como iframe dentro de cualquier página.</p>
+</header>
+
+<section id="catalogo">
+  <p class="phase">Catálogo</p>
+  <h2>Todo lo publicado</h2>
+  <hr class="rule">
+
+  <div class="res-grid" id="grid"></div>
+
+  <noscript>
+    <div class="note">
+      <span class="note-title">Sin JavaScript</span>
+      <p>El catálogo se compone desde <code>assets/recursos.js</code>. Puedes ir directo a
+      <a href="recursos/vast-ollama.html">Vast.ai paso a paso</a>.</p>
+    </div>
+  </noscript>
+</section>
+
+<section id="incrustar">
+  <p class="phase">Integración</p>
+  <h2>Incrustar un recurso</h2>
+  <hr class="rule">
+
+  <p>Cada recurso acepta <code>?embed=1</code>. En ese modo se quitan la barra superior, la marca de agua y el margen exterior, y el documento pasa a medir exactamente lo que ocupa su contenido.</p>
+
+  <h3>Alto fijo · una línea</h3>
+  <p>Suficiente si el contenedor ya tiene una altura definida.</p>
+
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+    <pre id="snippet-simple"><span class="c">&lt;!-- basta con esto --&gt;</span>
+&lt;iframe src=<span class="k">"…/recursos/vast-ollama.html?embed=1"</span>
+        style=<span class="k">"width:100%;height:900px;border:0"</span>
+        loading=<span class="k">"lazy"</span>
+        title=<span class="k">"Vast.ai paso a paso"</span>&gt;&lt;/iframe&gt;</pre>
+  </div>
+
+  <h3>Alto automático · recomendado</h3>
+  <p>El recurso publica su altura al contenedor con <code>postMessage</code> cada vez que cambia. El contenedor sólo tiene que escucharlo.</p>
+
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+    <pre>&lt;iframe id=<span class="k">"racks"</span>
+        src=<span class="k">"…/recursos/vast-ollama.html?embed=1"</span>
+        style=<span class="k">"width:100%;height:600px;border:0;display:block"</span>
+        loading=<span class="k">"lazy"</span>
+        title=<span class="k">"Vast.ai paso a paso"</span>&gt;&lt;/iframe&gt;
+
+&lt;script&gt;
+  addEventListener(<span class="k">'message'</span>, function (e) {
+    var d = e.data;
+    <span class="c">// comprueba también e.origin si el contenedor es público</span>
+    if (d &amp;&amp; d.source === <span class="k">'racks-resource'</span> &amp;&amp; d.type === <span class="k">'resize'</span>) {
+      document.getElementById(<span class="k">'racks'</span>).style.height = d.height + <span class="k">'px'</span>;
+    }
+  });
+&lt;/script&gt;</pre>
+  </div>
+
+  <div class="note">
+    <span class="note-title">Parámetros</span>
+    <p><code>?embed=1</code> activa el modo incrustado. Añade <code>&amp;bg=transparent</code> para que el fondo lo ponga el contenedor, y <code>&amp;id=loquesea</code> si incrustas varios recursos en la misma página y necesitas distinguir de cuál viene cada mensaje de altura.</p>
+  </div>
+
+  <div class="note">
+    <span class="note-title">Si el contenedor prefiere preguntar</span>
+    <p>Enviar <code>{source:'racks-embed', type:'request-height'}</code> al iframe hace que responda con su altura en el acto. Útil tras abrir un acordeón o cambiar de pestaña en el contenedor.</p>
+  </div>
+</section>
+
+<section id="estilo">
+  <p class="phase">Sistema</p>
+  <h2>El estilo, en corto</h2>
+  <hr class="rule">
+
+  <p>Los tokens salen del panel de producción. Están en <code>assets/racks.css</code> y son la única fuente: si el panel cambia un color, se cambia ahí y todos los recursos se mueven a la vez.</p>
+
+  <div class="swatches" id="swatches"></div>
+
+  <dl>
+    <div class="field"><dt>Tipografía</dt><dd><strong>Inter</strong> para todo; monoespaciada del sistema para etiquetas, código y cifras.</dd></div>
+    <div class="field"><dt>Radio</dt><dd><strong>0,5 rem</strong> en tarjetas y paneles; 0,25 rem en fichas y botones pequeños.</dd></div>
+    <div class="field"><dt>Firma</dt><dd>Rejilla de puntos de 24 px y la <strong>R</strong> gigante en <code>#151515</code> abajo a la derecha.</dd></div>
+    <div class="field"><dt>Acento</dt><dd>Naranja único. Un elemento activo por bloque, nunca dos compitiendo.</dd></div>
+  </dl>
+
+  <p>Para escribir un recurso nuevo: copia <a href="recursos/plantilla.html">recursos/plantilla.html</a>, que trae ya montados los bloques disponibles &mdash; pasos, avisos, tablas, código con botón de copiar, fichas y controles. La referencia larga está en <a href="https://github.com/Racks-Labs/recursos_y_guias/blob/main/ESTILO.md">ESTILO.md</a>.</p>
+</section>
+
+<footer>
+  Racks Academy · Estilo derivado del panel de producción · Publicado con GitHub Pages.<br>
+  Todos los recursos son HTML estático, sin dependencias de compilación.
+</footer>
+
+</div>
+</main>
+
+<dialog class="embed-dialog" id="embedDialog">
+  <h3 id="embedTitle">Incrustar</h3>
+  <p>Pega esto donde quieras que aparezca el recurso.</p>
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+    <pre id="embedCode"></pre>
+  </div>
+  <p><button class="btn" type="button" id="embedClose">Cerrar</button></p>
+</dialog>
+
+<script src="assets/recursos.js"></script>
+<script>
+(function(){
+  var grid = document.getElementById('grid');
+  var recursos = window.RACKS_RESOURCES || [];
+
+  /* --- tarjetas del catálogo ------------------------------------------ */
+
+  function base(){
+    return location.href.replace(/index\.html.*$/, '').replace(/[?#].*$/, '').replace(/\/?$/, '/');
+  }
+
+  function card(r){
+    var href = 'recursos/' + r.slug + '.html';
+    var el = document.createElement('article');
+    el.className = 'res-card';
+
+    var estado = r.estado === 'draft'
+      ? '<span class="pill pill--draft">Borrador</span>'
+      : '<span class="pill pill--live">Publicado</span>';
+
+    el.innerHTML =
+      '<p class="res-kicker">' + r.kicker + '</p>' +
+      '<h3><a href="' + href + '">' + r.titulo + '</a></h3>' +
+      '<p>' + r.resumen + '</p>' +
+      '<div class="res-foot">' +
+        estado +
+        '<span>' + (r.etiquetas || []).join(' · ') + '</span>' +
+        '<button class="btn" type="button" data-embed="' + r.slug + '">Incrustar</button>' +
+      '</div>';
+
+    el.querySelector('[data-embed]').addEventListener('click', function(){
+      openEmbed(r, href);
+    });
+    return el;
+  }
+
+  if (grid) {
+    if (!recursos.length) {
+      grid.innerHTML = '<div class="note"><span class="note-title">Vacío</span>' +
+                       '<p>Todavía no hay recursos en <code>assets/recursos.js</code>.</p></div>';
+    } else {
+      recursos.forEach(function(r){ grid.appendChild(card(r)); });
+    }
+  }
+
+  /* --- diálogo de incrustación ---------------------------------------- */
+
+  var dialog = document.getElementById('embedDialog');
+  var codeOut = document.getElementById('embedCode');
+  var titleOut = document.getElementById('embedTitle');
+  var closeBtn = document.getElementById('embedClose');
+
+  function openEmbed(r, href){
+    var url = base() + href + '?embed=1';
+    titleOut.textContent = 'Incrustar · ' + r.titulo;
+    codeOut.textContent =
+      '<iframe id="racks-' + r.slug + '"\n' +
+      '        src="' + url + '"\n' +
+      '        style="width:100%;height:600px;border:0;display:block"\n' +
+      '        loading="lazy"\n' +
+      '        title="' + r.titulo + '"></iframe>\n\n' +
+      '<script>\n' +
+      '  addEventListener("message", function (e) {\n' +
+      '    var d = e.data;\n' +
+      '    if (d && d.source === "racks-resource" && d.type === "resize") {\n' +
+      '      document.getElementById("racks-' + r.slug + '").style.height = d.height + "px";\n' +
+      '    }\n' +
+      '  });\n' +
+      '<\/script>';
+
+    if (typeof dialog.showModal === 'function') dialog.showModal();
+    else dialog.setAttribute('open', '');
+  }
+
+  closeBtn.addEventListener('click', function(){
+    if (typeof dialog.close === 'function') dialog.close();
+    else dialog.removeAttribute('open');
+  });
+
+  /* --- muestrario de color -------------------------------------------- */
+
+  var swatches = document.getElementById('swatches');
+  if (swatches) {
+    [
+      ['#121212','Fondo'], ['#181818','Tarjeta'], ['#333','Borde'],
+      ['#9ca3af','Texto'], ['#686868','Secundario'], ['#f5911a','Acento']
+    ].forEach(function(pair){
+      var s = document.createElement('span');
+      s.className = 'swatch';
+      s.innerHTML = '<i style="background:' + pair[0] + '"></i>' +
+                    pair[1] + ' <code>' + pair[0] + '</code>';
+      swatches.appendChild(s);
+    });
+  }
+
+  /* --- la URL real, dentro del bloque de ejemplo ------------------------ */
+
+  var simple = document.getElementById('snippet-simple');
+  if (simple && recursos.length) {
+    simple.innerHTML = simple.innerHTML.replace(
+      '…/recursos/vast-ollama.html',
+      base() + 'recursos/' + recursos[0].slug + '.html'
+    );
+  }
+})();
+</script>
+</body>
+</html>

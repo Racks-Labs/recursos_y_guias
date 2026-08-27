@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+
+<!-- ▸ CAMBIAR: título, descripción y og: en cada recurso nuevo -->
+<title>Título del recurso · Recursos Racks Academy</title>
+<meta name="description" content="Una frase que explique de qué va el recurso.">
+<meta property="og:title" content="Título del recurso">
+<meta property="og:description" content="Una frase que explique de qué va el recurso.">
+<meta property="og:type" content="article">
+
+<!-- ▸ Esta plantilla vive en recursos/, así que las rutas ya son correctas:
+        copiarla a recursos/<slug>.html no exige tocar nada de aquí. -->
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/racks.css">
+<script>/* fija el modo antes del primer pintado */(function(){var h=document.documentElement,s=location.search;if(s.indexOf('embed=1')>-1)h.classList.add('is-embed');if(window.self!==window.top)h.classList.add('is-framed');if(s.indexOf('bg=transparent')>-1)h.classList.add('is-transparent');})();</script>
+<script defer src="../assets/racks.js"></script>
+</head>
+
+<body data-resource-id="slug-del-recurso">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="watermark-r" aria-hidden="true">R</div>
+
+<header class="topbar" data-embed-hide>
+  <span class="topbar-mark" aria-hidden="true">R</span>
+  <a class="topbar-name" href="../index.html">Racks Academy</a>
+  <span class="topbar-sep" aria-hidden="true">/</span>
+  <span class="topbar-here">Título corto del recurso</span>
+  <span class="topbar-actions"><a class="btn" href="../index.html">Recursos</a></span>
+</header>
+
+<main class="shell" id="contenido">
+<div class="wrap">
+
+<!-- ══════════════════════════════════════════════════════════════════
+     CABECERA
+     ══════════════════════════════════════════════════════════════════ -->
+
+<header class="masthead">
+  <p class="eyebrow">Antetítulo · categoría</p>
+  <h1>Titular corto.<br>Con una palabra en <em>naranja</em>.</h1>
+  <p class="standfirst">Entradilla de una o dos frases: qué resuelve el recurso y contra qué se ha verificado.</p>
+
+  <nav class="toc">
+    <p>Recorrido</p>
+    <ol>
+      <li><a href="#uno">Primera sección</a></li>
+      <li><a href="#dos">Segunda sección</a> · pasos 1–3</li>
+    </ol>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     BLOQUES DISPONIBLES · borra los que no uses
+     ══════════════════════════════════════════════════════════════════ -->
+
+<section id="uno">
+  <p class="phase">Fase 1</p>
+  <h2>Primera sección</h2>
+  <hr class="rule">
+
+  <p>Párrafo normal. Los <strong>énfasis fuertes</strong> quedan en blanco, los
+  <a href="#dos">enlaces</a> en naranja y el <code>código en línea</code> también.</p>
+
+  <!-- ── aviso informativo ── -->
+  <div class="note">
+    <span class="note-title">Título del aviso</span>
+    <p>Contexto que ayuda pero no bloquea.</p>
+  </div>
+
+  <!-- ── aviso de peligro ── -->
+  <div class="warn">
+    <span class="warn-title">Cuidado</span>
+    <p>Algo que cuesta dinero o rompe cosas si se pasa por alto.</p>
+  </div>
+
+  <!-- ── confirmación ── -->
+  <div class="ok">
+    <span class="ok-title">Bien</span>
+    <p>Cómo saber que el paso ha salido como tenía que salir.</p>
+  </div>
+
+  <!-- ── opciones, una recomendada con .pick ── -->
+  <div class="mode pick">
+    <h3>Opción recomendada <span class="tag">esta</span></h3>
+    <p>Por qué esta y no las otras.</p>
+  </div>
+  <div class="mode">
+    <h3>Otra opción</h3>
+    <p>Cuándo tendría sentido.</p>
+  </div>
+</section>
+
+<section id="dos">
+  <p class="phase">Fase 2</p>
+  <h2>Segunda sección</h2>
+  <hr class="rule">
+
+  <!-- ── paso numerado ── -->
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Lo que hay que hacer</h3>
+    <div class="step-body">
+      <p>Explicación del paso.</p>
+
+      <!-- ── bloque de código con botón de copiar (racks.js lo cablea solo) ── -->
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre><span class="c"># comentario</span>
+comando --con <span class="k">VALOR_A_SUSTITUIR</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>Siguiente paso</h3>
+    <div class="step-body">
+      <!-- ── ficha de campos (formularios, parámetros) ── -->
+      <dl>
+        <div class="field"><dt>Campo</dt><dd>Qué poner y por qué.</dd></div>
+        <div class="field"><dt>Otro campo</dt><dd><strong>Valor</strong> concreto.</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <!-- ── bifurcación entre caminos ── -->
+  <div class="fork pick">
+    <h3>Camino A</h3>
+    <p>Para quién es.</p>
+    <p class="flow">paso 1 → paso 2 → paso 3</p>
+  </div>
+
+  <!-- ── tabla (siempre envuelta, para que scrollee en móvil) ── -->
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Síntoma</th><th>Qué pasa</th></tr></thead>
+      <tbody>
+        <tr><td>Algo falla</td><td>Y así se arregla.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  Verificado contra … · mes de AAAA.<br>
+  Nota de vigencia: qué puede haber cambiado desde entonces.
+</footer>
+
+</div>
+</main>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     Si el recurso tiene lógica propia (calculadoras, controles), va aquí.
+     Copiar código, índice activo y altura del iframe ya los hace racks.js.
+     ══════════════════════════════════════════════════════════════════ -->
+
+</body>
+</html>

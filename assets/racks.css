@@ -1,0 +1,533 @@
+/* ==========================================================================
+   Racks Academy · Sistema de estilo para recursos y guías
+   --------------------------------------------------------------------------
+   Derivado del panel de producción https://panel-news.racks.academy
+   Los tokens de la sección 1 son los mismos que sirve el panel: si allí
+   cambia un color, se cambia aquí y todos los recursos se mueven a la vez.
+
+   Uso mínimo en un recurso nuevo:
+
+     <link rel="stylesheet" href="../assets/racks.css">
+     <script defer src="../assets/racks.js"></script>
+
+   Ver plantilla.html y ESTILO.md.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Tokens · idénticos al panel
+   ========================================================================== */
+
+:root{
+  /* --- superficies --------------------------------------------------- */
+  --deep-black:#121212;      /* fondo de página        (panel: --color-deep-black) */
+  --carbon:#181818;          /* tarjetas y paneles     (panel: --color-carbon) */
+  --carbon-hi:#1e1e1e;       /* hover sobre tarjeta */
+  --ink:#0d0d0d;             /* bloques de código, pozos */
+  --watermark:#151515;       /* marca de agua */
+
+  /* --- líneas -------------------------------------------------------- */
+  --border-grey:#333;        /* borde estándar         (panel: --color-border-grey) */
+  --border-soft:#242424;     /* separadores internos */
+
+  /* --- texto --------------------------------------------------------- */
+  --white:#fff;
+  --text-grey:#9ca3af;       /* cuerpo                 (panel: --color-text-grey) */
+  --mid-gray:#686868;        /* secundario             (panel: --color-mid-gray) */
+
+  /* --- marca --------------------------------------------------------- */
+  --academy-orange:#f5911a;  /* acento único           (panel: --color-academy-orange) */
+  --orange-soft:rgba(245,145,26,.10);
+  --orange-line:rgba(245,145,26,.35);
+
+  /* --- semánticos · mismos valores que el panel (Tailwind v4) --------- */
+  --green:#05df72;   --green:oklch(79.2% .209 151.711);
+  --red:#ff6467;     --red:oklch(70.4% .191 22.216);
+  --blue:#51a2ff;    --blue:oklch(70.7% .165 254.624);
+  --purple:#c27aff;  --purple:oklch(71.4% .203 305.504);
+  --yellow:#ffdf20;  --yellow:oklch(85.2% .199 91.936);
+
+  --green-soft:rgba(5,223,114,.08);
+  --red-soft:rgba(255,100,103,.08);
+  --blue-soft:rgba(81,162,255,.08);
+
+  /* --- tipografía ---------------------------------------------------- */
+  --font-body:"Inter",ui-sans-serif,system-ui,sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+
+  /* --- geometría ----------------------------------------------------- */
+  --radius:.5rem;            /* panel: --radius-lg */
+  --radius-sm:.25rem;
+  --measure:46rem;           /* ancho de lectura de un recurso */
+  --shell:74rem;             /* ancho del catálogo */
+  --gutter:1.25rem;
+}
+
+/* ==========================================================================
+   2. Base
+   ========================================================================== */
+
+*,*::before,*::after{box-sizing:border-box}
+
+html{
+  background:var(--deep-black);
+  color-scheme:dark;
+  -webkit-text-size-adjust:100%;
+  tab-size:4;
+  scroll-behavior:smooth;
+  scroll-padding-top:5rem;
+}
+
+body{
+  margin:0;
+  background:var(--deep-black);
+  color:var(--text-grey);
+  font-family:var(--font-body);
+  font-size:1rem;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-wrap:break-word;
+}
+
+::selection{background:var(--academy-orange);color:var(--deep-black)}
+
+:focus-visible{outline:2px solid var(--academy-orange);outline-offset:2px;border-radius:2px}
+
+img,svg,video{max-width:100%;height:auto}
+
+/* --- fondos de firma del panel ----------------------------------------- */
+
+.dot-grid{
+  background-image:radial-gradient(var(--border-grey) 1px,transparent 1px);
+  background-size:24px 24px;
+}
+
+.watermark-r{
+  position:fixed;right:-5vh;bottom:-10vh;
+  z-index:0;pointer-events:none;user-select:none;-webkit-user-select:none;
+  color:var(--watermark);
+  font-family:var(--font-body);font-weight:900;font-size:40vh;line-height:1;
+}
+@media (min-width:48rem){.watermark-r{font-size:70vh;right:-8vh}}
+
+/* ==========================================================================
+   3. Estructura
+   ========================================================================== */
+
+.shell{position:relative;z-index:1;padding:0 var(--gutter) 5rem}
+.wrap{max-width:var(--measure);margin:0 auto}
+.wrap--wide{max-width:var(--shell)}
+
+/* --- barra superior ---------------------------------------------------- */
+
+.topbar{
+  position:sticky;top:0;z-index:20;
+  display:flex;align-items:center;gap:.75rem;
+  padding:.7rem var(--gutter);
+  background:rgba(18,18,18,.85);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border-grey);
+}
+
+.topbar-mark{
+  display:grid;place-items:center;flex:0 0 auto;
+  width:1.65rem;height:1.65rem;border-radius:var(--radius-sm);
+  background:var(--academy-orange);color:var(--deep-black);
+  font-weight:900;font-size:1rem;line-height:1;
+}
+
+.topbar-name{
+  color:var(--white);font-weight:600;font-size:.9rem;
+  letter-spacing:-.01em;text-decoration:none;white-space:nowrap;flex:0 0 auto;
+}
+.topbar-name:hover{color:var(--academy-orange)}
+
+.topbar-sep{color:var(--border-grey);flex:0 0 auto}
+.topbar-here{font-size:.85rem;color:var(--mid-gray);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.topbar-actions{margin-left:auto;display:flex;align-items:center;gap:.5rem;flex:0 0 auto}
+
+/* en pantallas estrechas la miga de pan sobra: manda el nombre y la acción */
+@media (max-width:30rem){
+  .topbar-sep,.topbar-here{display:none}
+  .topbar-actions .btn{font-size:.72rem;padding:.4rem .6rem}
+}
+
+/* ==========================================================================
+   4. Tipografía
+   ========================================================================== */
+
+h1,h2,h3,h4{color:var(--white);font-weight:700;letter-spacing:-.02em;line-height:1.2}
+
+h1{
+  font-size:clamp(2rem,6vw,3rem);font-weight:800;letter-spacing:-.04em;
+  line-height:1.05;margin:0 0 1rem;
+}
+h1 em{font-style:normal;color:var(--academy-orange)}
+
+h2{font-size:clamp(1.4rem,3.4vw,1.85rem);letter-spacing:-.03em;margin:0 0 .4rem}
+h3{font-size:1.05rem;font-weight:600;margin:2rem 0 .5rem}
+
+p{margin:0 0 1rem}
+strong{color:var(--white);font-weight:600}
+em{color:var(--text-grey)}
+small{font-size:.85em}
+
+a{color:var(--academy-orange);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:var(--orange-line)}
+a:hover{text-decoration-color:var(--academy-orange)}
+
+ul,ol{margin:0 0 1rem;padding-left:1.15rem}
+li{margin-bottom:.4rem}
+li::marker{color:var(--mid-gray)}
+li strong{color:var(--white);font-weight:500}
+
+hr,.rule{border:0;border-top:1px solid var(--border-grey);margin:0 0 1.5rem}
+
+/* --- etiquetas monoespaciadas (eyebrow, fase, label) ------------------- */
+
+.eyebrow,.phase,.label{
+  font-family:var(--font-mono);
+  font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--academy-orange);
+  margin:0 0 1rem;
+}
+.phase{margin:0 0 .4rem}
+.label{color:var(--mid-gray);margin:0 0 .9rem}
+
+.standfirst{font-size:1.05rem;color:var(--text-grey);max-width:36rem;margin:0}
+
+.meta{
+  font-family:var(--font-mono);font-size:.72rem;color:var(--mid-gray);
+  margin:1.25rem 0 0;display:flex;flex-wrap:wrap;gap:.35rem .9rem;
+}
+
+/* ==========================================================================
+   5. Cabecera y secciones
+   ========================================================================== */
+
+.masthead{padding:3.25rem 0 2rem;border-bottom:1px solid var(--border-grey)}
+section{padding-top:3rem}
+
+/* ==========================================================================
+   6. Tarjetas y paneles
+   ========================================================================== */
+
+.card,.toc,.meter,.fork,.panel{
+  background:var(--carbon);
+  border:1px solid var(--border-grey);
+  border-radius:var(--radius);
+}
+
+.card,.panel{padding:1.25rem}
+.card > *:last-child,.panel > *:last-child{margin-bottom:0}
+
+/* --- índice ------------------------------------------------------------ */
+
+.toc{padding:1.25rem;margin:2rem 0 0}
+.toc > p:first-child{
+  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--mid-gray);margin:0 0 .8rem;
+}
+.toc ol{margin:0;padding-left:1.3rem;font-size:.92rem}
+.toc li{margin-bottom:.35rem}
+.toc li::marker{font-family:var(--font-mono);font-size:.8rem;color:var(--border-grey)}
+.toc a{color:var(--text-grey);text-decoration:none;border-bottom:1px solid var(--border-grey)}
+.toc a:hover,.toc a.is-active{color:var(--academy-orange);border-color:var(--academy-orange)}
+
+/* --- bifurcación / opciones ------------------------------------------- */
+
+.fork{padding:1.2rem;margin-bottom:1rem}
+.fork.pick{border-color:var(--academy-orange);background:linear-gradient(0deg,var(--orange-soft),var(--orange-soft)),var(--carbon)}
+.fork h3{margin:0 0 .5rem}
+.fork p{margin:0;font-size:.95rem;color:var(--text-grey)}
+
+.flow{
+  font-family:var(--font-mono);font-size:.72rem;color:var(--blue);
+  margin:.7rem 0 0;overflow-x:auto;white-space:nowrap;
+}
+
+/* --- modo (lista con filo izquierdo) ----------------------------------- */
+
+.mode{border-left:2px solid var(--border-grey);padding:.1rem 0 .1rem 1.1rem;margin-bottom:1.5rem}
+.mode.pick{border-left-color:var(--academy-orange)}
+.mode h3{margin-top:0}
+.mode p{margin-bottom:0;font-size:.95rem}
+
+.tag{
+  font-family:var(--font-mono);font-size:.66rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--academy-orange);margin-left:.5rem;
+}
+
+/* ==========================================================================
+   7. Pasos
+   ========================================================================== */
+
+.step{
+  display:grid;grid-template-columns:2.8rem 1fr;gap:0 1rem;
+  padding:1.6rem 0;border-bottom:1px solid var(--border-soft);
+}
+.step-num{
+  font-family:var(--font-mono);font-weight:600;font-size:.9rem;
+  color:var(--mid-gray);line-height:1.9;letter-spacing:.05em;
+}
+.step h3{grid-column:2;margin:0 0 .6rem;font-size:1rem}
+.step-body{grid-column:2;min-width:0}
+.step-body > *:last-child{margin-bottom:0}
+.step ul{margin:0 0 1rem;padding-left:1.1rem;font-size:.94rem}
+
+@media (max-width:30rem){
+  .step{grid-template-columns:1fr;gap:0}
+  .step-num{line-height:1.4;margin-bottom:.3rem;color:var(--academy-orange)}
+  .step h3,.step-body{grid-column:1}
+}
+
+/* ==========================================================================
+   8. Listas de campos (dl)
+   ========================================================================== */
+
+dl{margin:0 0 1.25rem}
+
+.field{
+  display:grid;grid-template-columns:11rem 1fr;gap:.3rem 1rem;
+  font-size:.9rem;padding:.6rem 0;border-bottom:1px solid var(--border-soft);
+}
+.field:first-of-type{border-top:1px solid var(--border-soft)}
+.field dt{font-family:var(--font-mono);font-size:.78rem;color:var(--academy-orange);align-self:start;padding-top:.1rem}
+.field dd{margin:0;min-width:0}
+.field dd strong{color:var(--white);font-weight:500}
+
+@media (max-width:32rem){.field{grid-template-columns:1fr;gap:.15rem}}
+
+/* ==========================================================================
+   9. Código
+   ========================================================================== */
+
+.code{position:relative;margin:0 0 1rem}
+
+pre{
+  font-family:var(--font-mono);font-size:.8rem;line-height:1.75;
+  background:var(--ink);border:1px solid var(--border-grey);border-radius:var(--radius);
+  padding:1rem 3.4rem 1rem 1rem;margin:0;overflow-x:auto;color:var(--white);
+}
+pre .c{color:var(--mid-gray)}   /* comentario */
+pre .k{color:var(--academy-orange)}   /* palabra clave / valor a sustituir */
+
+.copy{
+  position:absolute;top:.55rem;right:.55rem;
+  font-family:var(--font-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--carbon);color:var(--mid-gray);
+  border:1px solid var(--border-grey);border-radius:var(--radius-sm);
+  padding:.3rem .5rem;cursor:pointer;
+  transition:color .15s,border-color .15s;
+}
+.copy:hover{color:var(--academy-orange);border-color:var(--academy-orange)}
+.copy.is-done{color:var(--green);border-color:var(--green)}
+
+code:not(pre code){
+  font-family:var(--font-mono);font-size:.87em;
+  background:var(--carbon);border:1px solid var(--border-soft);
+  padding:.05em .35em;border-radius:var(--radius-sm);color:var(--academy-orange);
+}
+
+/* ==========================================================================
+   10. Avisos
+   ========================================================================== */
+
+.note,.warn,.ok{
+  border-left:2px solid var(--blue);
+  background:var(--blue-soft);
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  padding:.9rem 1rem;margin:0 0 1rem;font-size:.92rem;
+}
+.note > *:last-child,.warn > *:last-child,.ok > *:last-child{margin-bottom:0}
+
+.warn{border-left-color:var(--red);background:var(--red-soft)}
+.ok{border-left-color:var(--green);background:var(--green-soft)}
+
+.note-title,.warn-title,.ok-title{
+  display:block;margin-bottom:.35rem;
+  font-family:var(--font-mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--blue);
+}
+.warn-title{color:var(--red)}
+.ok-title{color:var(--green)}
+
+/* ==========================================================================
+   11. Tablas
+   ========================================================================== */
+
+.tablewrap{overflow-x:auto;margin:0 0 1.25rem;-webkit-overflow-scrolling:touch}
+
+table{border-collapse:collapse;width:100%;font-size:.88rem;min-width:26rem}
+th{
+  text-align:left;font-family:var(--font-mono);font-size:.66rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--mid-gray);font-weight:400;
+  padding:0 1rem .5rem 0;border-bottom:1px solid var(--border-grey);
+}
+td{padding:.65rem 1rem .65rem 0;border-bottom:1px solid var(--border-soft);vertical-align:top}
+td:first-child{color:var(--white)}
+
+/* ==========================================================================
+   12. Controles · chips, botones, rangos, medidor
+   ========================================================================== */
+
+.chips{display:flex;flex-wrap:wrap;gap:.4rem}
+
+.chip,.btn{
+  font-family:var(--font-mono);font-size:.78rem;
+  background:transparent;color:var(--mid-gray);
+  border:1px solid var(--border-grey);border-radius:var(--radius-sm);
+  padding:.5rem .7rem;cursor:pointer;text-decoration:none;
+  transition:border-color .15s,color .15s,background .15s;
+}
+.chip:hover,.btn:hover{border-color:var(--academy-orange);color:var(--academy-orange)}
+.chip[aria-pressed="true"]{border-color:var(--academy-orange);color:var(--academy-orange);background:var(--orange-soft)}
+
+.btn--primary{background:var(--academy-orange);border-color:var(--academy-orange);color:var(--deep-black);font-weight:600}
+.btn--primary:hover{background:#ffa235;border-color:#ffa235;color:var(--deep-black)}
+
+input[type=range]{width:100%;accent-color:var(--academy-orange);margin:0}
+
+.meter{padding:1.5rem 1.25rem;margin:1.5rem 0 0}
+.meter-label{
+  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--mid-gray);margin:0 0 1.25rem;
+}
+
+.control{margin-bottom:1.4rem}
+.control > span{display:block;font-size:.82rem;color:var(--mid-gray);margin-bottom:.5rem}
+
+.readout{display:flex;align-items:baseline;gap:.6rem;padding-top:1.25rem;border-top:1px solid var(--border-grey)}
+.readout-num{
+  font-weight:800;font-size:2.9rem;line-height:1;letter-spacing:-.04em;
+  color:var(--academy-orange);font-variant-numeric:tabular-nums;
+}
+.readout-unit{font-size:.85rem;color:var(--mid-gray)}
+
+.scale{margin-top:1.4rem}
+.track{position:relative;height:4px;background:var(--border-grey);border-radius:2px}
+.fill{position:absolute;inset:0 auto 0 0;background:var(--academy-orange);border-radius:2px;transition:width .2s ease}
+.breakeven{position:absolute;top:-7px;bottom:-7px;left:33.3%;width:2px;background:var(--blue)}
+.scale-legend{
+  display:flex;justify-content:space-between;
+  font-family:var(--font-mono);font-size:.68rem;color:var(--mid-gray);margin-top:.7rem;
+}
+
+.verdict{font-size:.92rem;margin:1.1rem 0 0;padding-top:1.1rem;border-top:1px solid var(--border-grey)}
+
+/* ==========================================================================
+   13. Catálogo de recursos (index)
+   ========================================================================== */
+
+.res-grid{
+  display:grid;gap:1rem;margin:2rem 0 0;
+  grid-template-columns:repeat(auto-fill,minmax(19rem,1fr));
+}
+
+.res-card{
+  display:flex;flex-direction:column;
+  background:var(--carbon);border:1px solid var(--border-grey);border-radius:var(--radius);
+  padding:1.25rem;transition:border-color .15s,background .15s;
+}
+.res-card:hover{border-color:var(--academy-orange);background:var(--carbon-hi)}
+
+.res-card h3{margin:0 0 .5rem;font-size:1.1rem;letter-spacing:-.02em}
+.res-card h3 a{color:var(--white);text-decoration:none}
+.res-card:hover h3 a{color:var(--academy-orange)}
+.res-card p{font-size:.92rem;margin:0 0 1rem}
+
+.res-kicker{
+  font-family:var(--font-mono);font-size:.66rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--academy-orange);margin:0 0 .6rem;
+}
+
+.res-foot{
+  margin-top:auto;padding-top:.9rem;border-top:1px solid var(--border-soft);
+  display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
+  font-family:var(--font-mono);font-size:.68rem;color:var(--mid-gray);
+}
+.res-foot .btn{margin-left:auto;font-size:.66rem;padding:.35rem .55rem;letter-spacing:.08em;text-transform:uppercase}
+
+.pill{
+  font-family:var(--font-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid var(--border-grey);border-radius:999px;padding:.15rem .5rem;color:var(--mid-gray);
+}
+.pill--live{color:var(--green);border-color:rgba(5,223,114,.4)}
+.pill--draft{color:var(--yellow);border-color:rgba(255,223,32,.4)}
+
+/* --- muestrario de color ------------------------------------------------ */
+
+.swatches{display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 1.5rem}
+
+.swatch{
+  display:inline-flex;align-items:center;gap:.45rem;
+  border:1px solid var(--border-grey);border-radius:var(--radius-sm);
+  padding:.35rem .6rem;font-size:.75rem;color:var(--text-grey);
+}
+.swatch i{
+  width:.85rem;height:.85rem;border-radius:2px;
+  border:1px solid rgba(255,255,255,.14);flex:0 0 auto;
+}
+.swatch code{font-size:.7rem}
+
+/* --- diálogo de incrustación ------------------------------------------- */
+
+dialog.embed-dialog{
+  background:var(--carbon);color:var(--text-grey);
+  border:1px solid var(--border-grey);border-radius:var(--radius);
+  padding:1.25rem;max-width:40rem;width:calc(100% - 2rem);
+}
+dialog.embed-dialog::backdrop{background:rgba(0,0,0,.7)}
+dialog.embed-dialog h3{margin-top:0}
+
+/* ==========================================================================
+   14. Pie
+   ========================================================================== */
+
+footer{
+  margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--border-grey);
+  font-family:var(--font-mono);font-size:.72rem;color:var(--mid-gray);line-height:1.9;
+}
+footer a{color:var(--mid-gray)}
+footer a:hover{color:var(--academy-orange)}
+
+/* ==========================================================================
+   15. Modo incrustado · ?embed=1
+   --------------------------------------------------------------------------
+   racks.js marca <html> con .is-embed (parámetro) y .is-framed (dentro de un
+   iframe). El objetivo es que el recurso quede a ras del contenedor y que la
+   altura del documento sea exactamente la del contenido.
+   ========================================================================== */
+
+.is-embed body{background:transparent}
+.is-embed .shell{padding-top:0;padding-bottom:2.5rem}
+.is-embed .masthead{padding-top:1.75rem}
+.is-embed .watermark-r{display:none}
+.is-embed .topbar{position:static;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+.is-embed [data-embed-hide]{display:none !important}
+.is-embed footer{margin-top:2.5rem}
+
+/* fondo transparente a petición: ?bg=transparent */
+.is-transparent,.is-transparent body{background:transparent}
+
+/* nunca estirar el documento dentro de un iframe: rompe la altura automática */
+.is-framed body{min-height:0}
+
+/* ==========================================================================
+   16. Accesibilidad y utilidades
+   ========================================================================== */
+
+.skip-link{
+  position:absolute;left:-9999px;top:0;z-index:50;
+  background:var(--academy-orange);color:var(--deep-black);
+  padding:.5rem .9rem;border-radius:0 0 var(--radius-sm) 0;font-weight:600;
+}
+.skip-link:focus{left:0}
+
+.visually-hidden{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important;animation:none !important;scroll-behavior:auto !important}
+}
