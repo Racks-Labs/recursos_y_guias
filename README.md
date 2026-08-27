@@ -1,6 +1,7 @@
 # Recursos y guías · Racks Academy
 
-Recursos en HTML estático con el estilo del panel de producción, publicados en
+Recursos en HTML estático con el estilo del sistema de producción de Racks
+(Inter + JetBrains Mono, esquinas rectas, acento naranja), publicados en
 GitHub Pages y listos para incrustar como iframe en cualquier página.
 
 - **Índice:** `index.html` — catálogo, generador de código de incrustación y

@@ -1,53 +1,96 @@
 # Estilo Racks Academy · recursos y guías
 
-Este repositorio publica recursos en HTML estático con el mismo lenguaje visual
-que el panel de producción (`panel-news.racks.academy`). Todo vive en
-`assets/racks.css` y `assets/racks.js`. No hay compilación: se edita el HTML y
-GitHub Pages lo sirve.
+Este repositorio publica recursos en HTML estático con el lenguaje visual del
+sistema de producción de Racks — el tema oscuro de `learn.racks.university` y
+el panel `panel-news.racks.academy`. Todo vive en `assets/racks.css` y
+`assets/racks.js`. No hay compilación: se edita el HTML y GitHub Pages lo sirve.
+
+Tres cosas definen la casa: **Inter y JetBrains Mono**, **esquinas rectas** y
+**un solo acento naranja**.
 
 ---
 
 ## 1. Tokens
 
-Copiados del panel. Si allí cambia un color, se cambia en `assets/racks.css`
-y todos los recursos se mueven a la vez.
+Son los del sistema de producción: el tema oscuro de `learn.racks.university`
+y el panel `panel-news.racks.academy`. No son aproximaciones — están copiados
+de la hoja compilada que sirven esas aplicaciones. Si allí cambia un valor, se
+cambia en `assets/racks.css` y todos los recursos se mueven a la vez.
 
-| Token             | Valor     | Uso                                   | En el panel               |
-|-------------------|-----------|---------------------------------------|---------------------------|
-| `--deep-black`    | `#121212` | Fondo de página                       | `--color-deep-black`      |
-| `--carbon`        | `#181818` | Tarjetas, paneles, índice             | `--color-carbon`          |
-| `--ink`           | `#0d0d0d` | Bloques de código                     | derivado                  |
-| `--watermark`     | `#151515` | La «R» gigante del fondo              | `.watermark-r`            |
-| `--border-grey`   | `#333`    | Borde estándar                        | `--color-border-grey`     |
-| `--border-soft`   | `#242424` | Separadores dentro de una tarjeta     | derivado                  |
-| `--text-grey`     | `#9ca3af` | Texto de cuerpo                       | `--color-text-grey`       |
-| `--mid-gray`      | `#686868` | Texto secundario, etiquetas           | `--color-mid-gray`        |
-| `--white`         | `#fff`    | Titulares y énfasis                   | `--color-white`           |
-| `--academy-orange`| `#f5911a` | Acento único                          | `--color-academy-orange`  |
+### Superficies y líneas
 
-Semánticos (mismos valores que el panel, en `oklch` con respaldo en hex):
-`--green`, `--red`, `--blue`, `--purple`, `--yellow`.
+| Token              | Valor     | Uso                                  |
+|--------------------|-----------|--------------------------------------|
+| `--surface-deep`   | `#0a0a0a` | Pozos: bloques de código             |
+| `--background`     | `#121212` | Fondo de página                      |
+| `--card`           | `#171717` | Tarjetas, paneles, índice            |
+| `--surface-raised` | `#1a1a1a` | Tarjeta en hover                     |
+| `--muted`          | `#262626` | Relleno apagado, código en línea     |
+| `--border`         | `#333`    | Borde estándar                       |
+| `--line`           | `#292929` | Separadores dentro de una tarjeta    |
+| `--watermark`      | `#171717` | La «R» del fondo                     |
 
-Geometría: `--radius: .5rem` (panel `--radius-lg`), `--radius-sm: .25rem`,
-`--measure: 46rem` para lectura, `--shell: 74rem` para el catálogo.
+### Texto
 
-Tipografía: **Inter** en todo (300–900, desde Google Fonts) y la monoespaciada
-del sistema (`ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas`) para
-etiquetas, código y cifras — igual que `--font-mono` en el panel.
+| Token                | Valor     | Uso                        |
+|----------------------|-----------|----------------------------|
+| `--foreground`       | `#f7f7f7` | Titulares y énfasis        |
+| `--card-foreground`  | `#ededed` | Texto dentro de código     |
+| `--text-secondary`   | `#c7c7c7` | Cuerpo                     |
+| `--muted-foreground` | `#9ca3b0` | Secundario, etiquetas      |
+| `--mid-gray`         | `#696969` | Apoyo, numeración de pasos |
 
-Firmas heredadas del panel: `::selection` naranja sobre negro, la clase
-`.dot-grid` (rejilla de puntos de 24 px) y `.watermark-r`.
+### Marca y semánticos
+
+| Token                    | Valor     | Uso                        |
+|--------------------------|-----------|----------------------------|
+| `--academy-orange`       | `#f5911a` | Acento único               |
+| `--academy-orange-dark`  | `#d87c00` | Hover del botón primario   |
+| `--accent-green`         | `#10b77f` | `.ok`, estado publicado    |
+| `--accent-blue`          | `#468af6` | `.note`, flujos            |
+| `--accent-purple`        | `#9a72f8` | Reservado                  |
+| `--warning`              | `#fbba23` | `.caution`, borrador       |
+| `--destructive`          | `#ef4d4d` | `.warn`                    |
+
+### Tipografía
+
+```css
+--font-sans: Inter, "Helvetica Neue", Arial, sans-serif;
+--font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+```
+
+**Inter** para el texto y **JetBrains Mono** para código, etiquetas en
+mayúsculas, numeración de pasos y cifras. Son las dos fuentes de la casa: no
+se sustituye la mono por la del sistema, porque se nota en todo el documento.
+Se cargan desde Google Fonts en el `<head>` de cada recurso.
+
+### Geometría
+
+```css
+--radius: 0;        /* el sistema es de esquina recta, en todo */
+--measure: 46rem;   /* ancho de lectura de un recurso */
+--shell: 74rem;     /* ancho del catálogo */
+```
+
+El radio **es cero**: tarjetas, botones, fichas, bloques de código y píldoras.
+Redondear una esquina es salirse del sistema.
+
+### Firmas de la casa
+
+- `::selection` naranja sobre el fondo de página.
+- `.watermark-r`: la **R** de 400 px, peso 800, en `#171717`, abajo a la
+  derecha. Se oculta en modo incrustado y al imprimir.
+- `.dot-grid`: rejilla de puntos de 24 px.
+- Barra de scroll fina, en `--line` sobre transparente.
 
 ### Reglas de uso
 
 - **Un acento por bloque.** El naranja marca lo activo o lo importante; dos
   elementos naranjas compitiendo en la misma tarjeta anulan el efecto.
-- **Jerarquía por color, no por tamaño:** blanco = titular o dato, gris =
-  cuerpo, gris medio = apoyo.
-- El rojo y el verde son sólo para estado (`.warn`, `.ok`, `.pill--live`),
-  nunca decorativos.
-
----
+- **Jerarquía por color, no por tamaño:** `#f7f7f7` titular o dato, `#c7c7c7`
+  cuerpo, `#9ca3b0` apoyo, `#696969` lo prescindible.
+- El rojo, el verde y el ámbar son sólo para estado (`.warn`, `.ok`,
+  `.caution`, `.pill--*`), nunca decorativos.
 
 ## 2. Estructura de un recurso
 
@@ -88,7 +131,7 @@ Esqueleto mínimo:
 | `.toc` | Índice; `racks.js` marca la sección visible con `.is-active` |
 | `.phase` | Antetítulo de sección, sobre el `<h2>` |
 | `.step` + `.step-num` + `.step-body` | Paso numerado |
-| `.note` / `.warn` / `.ok` (+ `*-title`) | Aviso informativo, de peligro, de confirmación |
+| `.note` / `.warn` / `.ok` / `.caution` (+ `*-title`) | Aviso informativo, de peligro, de confirmación, de precaución |
 | `.code` + `.copy` + `<pre>` | Bloque de código con botón de copiar |
 | `pre .c` / `pre .k` | Comentario / valor a sustituir dentro del código |
 | `.field` (`<dt>`/`<dd>`) | Ficha de campos y parámetros |
@@ -102,6 +145,10 @@ Esqueleto mínimo:
 
 `racks.js` cablea solo los `.copy` y el índice: no hace falta escribir JS para
 eso en cada recurso.
+
+Hay hoja de impresión: al imprimir o exportar a PDF, el recurso sale en tinta
+negra sobre blanco, sin barra ni marca de agua, y con la URL detrás de cada
+enlace externo — el mismo criterio que learn.racks.university con sus guías.
 
 ---
 

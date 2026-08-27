@@ -1,64 +1,115 @@
 /* ==========================================================================
    Racks Academy · Sistema de estilo para recursos y guías
    --------------------------------------------------------------------------
-   Derivado del panel de producción https://panel-news.racks.academy
-   Los tokens de la sección 1 son los mismos que sirve el panel: si allí
-   cambia un color, se cambia aquí y todos los recursos se mueven a la vez.
+   Tokens tomados del sistema de producción: learn.racks.university (tema
+   oscuro) y el panel panel-news.racks.academy. No son aproximaciones: son
+   los mismos valores que sirven esas aplicaciones.
 
-   Uso mínimo en un recurso nuevo:
+   Tres cosas que definen la casa y conviene no tocar:
+     · Inter para texto, JetBrains Mono para código y etiquetas.
+     · Esquinas rectas. El radio del sistema es 0.
+     · Un solo acento, el naranja #f5911a.
 
+   Uso en un recurso nuevo:
      <link rel="stylesheet" href="../assets/racks.css">
      <script defer src="../assets/racks.js"></script>
 
-   Ver plantilla.html y ESTILO.md.
+   Ver recursos/plantilla.html y ESTILO.md.
    ========================================================================== */
 
 /* ==========================================================================
-   1. Tokens · idénticos al panel
+   0. Fuentes · auto-alojadas, igual que learn.racks.university
+   --------------------------------------------------------------------------
+   Son los mismos subconjuntos variables que sirve producción, copiados a
+   assets/fonts/. Auto-alojarlas evita que un recurso incrustado en otra web
+   dependa de un tercero para pintarse con la tipografía correcta.
+   Inter y JetBrains Mono: SIL Open Font License 1.1 (ver fonts/LICENCIAS.md).
+   ========================================================================== */
+
+@font-face{
+  font-family:"Inter";font-style:normal;font-weight:100 900;font-display:swap;
+  src:url("fonts/inter-latin.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,
+    U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,
+    U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Inter";font-style:normal;font-weight:100 900;font-display:swap;
+  src:url("fonts/inter-latin-ext.woff2") format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,
+    U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,
+    U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+@font-face{
+  font-family:"JetBrains Mono";font-style:normal;font-weight:100 800;font-display:swap;
+  src:url("fonts/jetbrains-mono-latin.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,
+    U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,
+    U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"JetBrains Mono";font-style:normal;font-weight:100 800;font-display:swap;
+  src:url("fonts/jetbrains-mono-latin-ext.woff2") format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,
+    U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,
+    U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* ==========================================================================
+   1. Tokens · idénticos a learn.racks.university (tema oscuro)
    ========================================================================== */
 
 :root{
-  /* --- superficies --------------------------------------------------- */
-  --deep-black:#121212;      /* fondo de página        (panel: --color-deep-black) */
-  --carbon:#181818;          /* tarjetas y paneles     (panel: --color-carbon) */
-  --carbon-hi:#1e1e1e;       /* hover sobre tarjeta */
-  --ink:#0d0d0d;             /* bloques de código, pozos */
-  --watermark:#151515;       /* marca de agua */
+  /* --- superficies ---------------------------------------------------- */
+  --surface-deep:#0a0a0a;      /* pozos: bloques de código */
+  --background:#121212;        /* fondo de página */
+  --card:#171717;              /* tarjetas y paneles */
+  --surface-raised:#1a1a1a;    /* tarjeta elevada / hover */
+  --muted:#262626;             /* relleno apagado */
+  --secondary:#333;
 
-  /* --- líneas -------------------------------------------------------- */
-  --border-grey:#333;        /* borde estándar         (panel: --color-border-grey) */
-  --border-soft:#242424;     /* separadores internos */
+  /* --- líneas --------------------------------------------------------- */
+  --border:#333;               /* borde estándar */
+  --line:#292929;              /* separadores internos */
+  --input:#6b6b6b;             /* borde de campo activo */
 
-  /* --- texto --------------------------------------------------------- */
-  --white:#fff;
-  --text-grey:#9ca3af;       /* cuerpo                 (panel: --color-text-grey) */
-  --mid-gray:#686868;        /* secundario             (panel: --color-mid-gray) */
+  /* --- texto ---------------------------------------------------------- */
+  --foreground:#f7f7f7;        /* titulares y énfasis */
+  --card-foreground:#ededed;
+  --text-secondary:#c7c7c7;    /* cuerpo */
+  --muted-foreground:#9ca3b0;  /* secundario */
+  --mid-gray:#696969;          /* apoyo, numeración */
 
-  /* --- marca --------------------------------------------------------- */
-  --academy-orange:#f5911a;  /* acento único           (panel: --color-academy-orange) */
+  /* --- marca ---------------------------------------------------------- */
+  --academy-orange:#f5911a;
+  --academy-orange-dark:#d87c00;
+  --academy-orange-ink:#412402;
   --orange-soft:rgba(245,145,26,.10);
-  --orange-line:rgba(245,145,26,.35);
+  --orange-line:rgba(245,145,26,.38);
+  --watermark:#171717;
 
-  /* --- semánticos · mismos valores que el panel (Tailwind v4) --------- */
-  --green:#05df72;   --green:oklch(79.2% .209 151.711);
-  --red:#ff6467;     --red:oklch(70.4% .191 22.216);
-  --blue:#51a2ff;    --blue:oklch(70.7% .165 254.624);
-  --purple:#c27aff;  --purple:oklch(71.4% .203 305.504);
-  --yellow:#ffdf20;  --yellow:oklch(85.2% .199 91.936);
+  /* --- semánticos ----------------------------------------------------- */
+  --accent-green:#10b77f;
+  --accent-blue:#468af6;
+  --accent-purple:#9a72f8;
+  --warning:#fbba23;
+  --destructive:#ef4d4d;
+  --destructive-hover:#f05b5b;
 
-  --green-soft:rgba(5,223,114,.08);
-  --red-soft:rgba(255,100,103,.08);
-  --blue-soft:rgba(81,162,255,.08);
+  --green-soft:rgba(16,183,127,.09);
+  --blue-soft:rgba(70,138,246,.09);
+  --red-soft:rgba(239,77,77,.09);
+  --warning-soft:rgba(251,186,35,.09);
 
-  /* --- tipografía ---------------------------------------------------- */
-  --font-body:"Inter",ui-sans-serif,system-ui,sans-serif;
-  --font-mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  /* --- tipografía ----------------------------------------------------- */
+  --font-sans:Inter,"Helvetica Neue",Arial,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
 
-  /* --- geometría ----------------------------------------------------- */
-  --radius:.5rem;            /* panel: --radius-lg */
-  --radius-sm:.25rem;
-  --measure:46rem;           /* ancho de lectura de un recurso */
-  --shell:74rem;             /* ancho del catálogo */
+  /* --- geometría · el sistema es de esquina recta ---------------------- */
+  --radius:0;
+  --measure:46rem;             /* ancho de lectura de un recurso */
+  --shell:74rem;               /* ancho del catálogo */
   --gutter:1.25rem;
 }
 
@@ -69,19 +120,21 @@
 *,*::before,*::after{box-sizing:border-box}
 
 html{
-  background:var(--deep-black);
+  background:var(--background);
   color-scheme:dark;
   -webkit-text-size-adjust:100%;
   tab-size:4;
   scroll-behavior:smooth;
   scroll-padding-top:5rem;
+  scrollbar-width:thin;
+  scrollbar-color:var(--line) transparent;
 }
 
 body{
   margin:0;
-  background:var(--deep-black);
-  color:var(--text-grey);
-  font-family:var(--font-body);
+  background:var(--background);
+  color:var(--text-secondary);
+  font-family:var(--font-sans);
   font-size:1rem;
   line-height:1.7;
   -webkit-font-smoothing:antialiased;
@@ -89,26 +142,26 @@ body{
   overflow-wrap:break-word;
 }
 
-::selection{background:var(--academy-orange);color:var(--deep-black)}
+::selection{background:var(--academy-orange);color:var(--background)}
 
-:focus-visible{outline:2px solid var(--academy-orange);outline-offset:2px;border-radius:2px}
+:focus-visible{outline:2px solid var(--academy-orange);outline-offset:2px}
 
 img,svg,video{max-width:100%;height:auto}
 
-/* --- fondos de firma del panel ----------------------------------------- */
+/* --- firmas de la casa -------------------------------------------------- */
 
 .dot-grid{
-  background-image:radial-gradient(var(--border-grey) 1px,transparent 1px);
+  background-image:radial-gradient(var(--border) 1px,transparent 1px);
   background-size:24px 24px;
 }
 
 .watermark-r{
-  position:fixed;right:-5vh;bottom:-10vh;
+  position:fixed;right:-40px;bottom:-80px;
   z-index:0;pointer-events:none;user-select:none;-webkit-user-select:none;
   color:var(--watermark);
-  font-family:var(--font-body);font-weight:900;font-size:40vh;line-height:1;
+  font-family:var(--font-sans);font-weight:800;font-size:400px;line-height:1;
 }
-@media (min-width:48rem){.watermark-r{font-size:70vh;right:-8vh}}
+@media (max-width:48rem){.watermark-r{font-size:260px;bottom:-50px;right:-24px}}
 
 /* ==========================================================================
    3. Estructura
@@ -118,7 +171,7 @@ img,svg,video{max-width:100%;height:auto}
 .wrap{max-width:var(--measure);margin:0 auto}
 .wrap--wide{max-width:var(--shell)}
 
-/* --- barra superior ---------------------------------------------------- */
+/* --- barra superior ----------------------------------------------------- */
 
 .topbar{
   position:sticky;top:0;z-index:20;
@@ -126,23 +179,23 @@ img,svg,video{max-width:100%;height:auto}
   padding:.7rem var(--gutter);
   background:rgba(18,18,18,.85);
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--border-grey);
+  border-bottom:1px solid var(--border);
 }
 
 .topbar-mark{
   display:grid;place-items:center;flex:0 0 auto;
-  width:1.65rem;height:1.65rem;border-radius:var(--radius-sm);
-  background:var(--academy-orange);color:var(--deep-black);
-  font-weight:900;font-size:1rem;line-height:1;
+  width:1.65rem;height:1.65rem;
+  background:var(--academy-orange);color:var(--background);
+  font-weight:800;font-size:1rem;line-height:1;
 }
 
 .topbar-name{
-  color:var(--white);font-weight:600;font-size:.9rem;
+  color:var(--foreground);font-weight:600;font-size:.9rem;
   letter-spacing:-.01em;text-decoration:none;white-space:nowrap;flex:0 0 auto;
 }
 .topbar-name:hover{color:var(--academy-orange)}
 
-.topbar-sep{color:var(--border-grey);flex:0 0 auto}
+.topbar-sep{color:var(--border);flex:0 0 auto}
 .topbar-here{font-size:.85rem;color:var(--mid-gray);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .topbar-actions{margin-left:auto;display:flex;align-items:center;gap:.5rem;flex:0 0 auto}
 
@@ -156,7 +209,7 @@ img,svg,video{max-width:100%;height:auto}
    4. Tipografía
    ========================================================================== */
 
-h1,h2,h3,h4{color:var(--white);font-weight:700;letter-spacing:-.02em;line-height:1.2}
+h1,h2,h3,h4{color:var(--foreground);font-weight:700;letter-spacing:-.02em;line-height:1.2}
 
 h1{
   font-size:clamp(2rem,6vw,3rem);font-weight:800;letter-spacing:-.04em;
@@ -168,9 +221,8 @@ h2{font-size:clamp(1.4rem,3.4vw,1.85rem);letter-spacing:-.03em;margin:0 0 .4rem}
 h3{font-size:1.05rem;font-weight:600;margin:2rem 0 .5rem}
 
 p{margin:0 0 1rem}
-strong{color:var(--white);font-weight:600}
-em{color:var(--text-grey)}
-small{font-size:.85em}
+strong{color:var(--foreground);font-weight:600}
+em{color:var(--text-secondary)}
 
 a{color:var(--academy-orange);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:var(--orange-line)}
 a:hover{text-decoration-color:var(--academy-orange)}
@@ -178,22 +230,22 @@ a:hover{text-decoration-color:var(--academy-orange)}
 ul,ol{margin:0 0 1rem;padding-left:1.15rem}
 li{margin-bottom:.4rem}
 li::marker{color:var(--mid-gray)}
-li strong{color:var(--white);font-weight:500}
+li strong{color:var(--foreground);font-weight:500}
 
-hr,.rule{border:0;border-top:1px solid var(--border-grey);margin:0 0 1.5rem}
+hr,.rule{border:0;border-top:1px solid var(--border);margin:0 0 1.5rem}
 
-/* --- etiquetas monoespaciadas (eyebrow, fase, label) ------------------- */
+/* --- etiquetas en mono (eyebrow, fase, label) --------------------------- */
 
 .eyebrow,.phase,.label{
   font-family:var(--font-mono);
-  font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+  font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
   color:var(--academy-orange);
   margin:0 0 1rem;
 }
 .phase{margin:0 0 .4rem}
-.label{color:var(--mid-gray);margin:0 0 .9rem}
+.label{color:var(--muted-foreground);margin:0 0 .9rem}
 
-.standfirst{font-size:1.05rem;color:var(--text-grey);max-width:36rem;margin:0}
+.standfirst{font-size:1.05rem;color:var(--text-secondary);max-width:36rem;margin:0}
 
 .meta{
   font-family:var(--font-mono);font-size:.72rem;color:var(--mid-gray);
@@ -204,7 +256,7 @@ hr,.rule{border:0;border-top:1px solid var(--border-grey);margin:0 0 1.5rem}
    5. Cabecera y secciones
    ========================================================================== */
 
-.masthead{padding:3.25rem 0 2rem;border-bottom:1px solid var(--border-grey)}
+.masthead{padding:3.25rem 0 2rem;border-bottom:1px solid var(--border)}
 section{padding-top:3rem}
 
 /* ==========================================================================
@@ -212,48 +264,48 @@ section{padding-top:3rem}
    ========================================================================== */
 
 .card,.toc,.meter,.fork,.panel{
-  background:var(--carbon);
-  border:1px solid var(--border-grey);
+  background:var(--card);
+  border:1px solid var(--border);
   border-radius:var(--radius);
 }
 
 .card,.panel{padding:1.25rem}
 .card > *:last-child,.panel > *:last-child{margin-bottom:0}
 
-/* --- índice ------------------------------------------------------------ */
+/* --- índice ------------------------------------------------------------- */
 
 .toc{padding:1.25rem;margin:2rem 0 0}
 .toc > p:first-child{
-  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--mid-gray);margin:0 0 .8rem;
+  font-family:var(--font-mono);font-size:.68rem;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted-foreground);margin:0 0 .8rem;
 }
 .toc ol{margin:0;padding-left:1.3rem;font-size:.92rem}
 .toc li{margin-bottom:.35rem}
-.toc li::marker{font-family:var(--font-mono);font-size:.8rem;color:var(--border-grey)}
-.toc a{color:var(--text-grey);text-decoration:none;border-bottom:1px solid var(--border-grey)}
+.toc li::marker{font-family:var(--font-mono);font-size:.78rem;color:var(--mid-gray)}
+.toc a{color:var(--text-secondary);text-decoration:none;border-bottom:1px solid var(--border)}
 .toc a:hover,.toc a.is-active{color:var(--academy-orange);border-color:var(--academy-orange)}
 
-/* --- bifurcación / opciones ------------------------------------------- */
+/* --- bifurcación / opciones --------------------------------------------- */
 
 .fork{padding:1.2rem;margin-bottom:1rem}
-.fork.pick{border-color:var(--academy-orange);background:linear-gradient(0deg,var(--orange-soft),var(--orange-soft)),var(--carbon)}
+.fork.pick{border-color:var(--academy-orange);background:linear-gradient(0deg,var(--orange-soft),var(--orange-soft)),var(--card)}
 .fork h3{margin:0 0 .5rem}
-.fork p{margin:0;font-size:.95rem;color:var(--text-grey)}
+.fork p{margin:0;font-size:.95rem;color:var(--text-secondary)}
 
 .flow{
-  font-family:var(--font-mono);font-size:.72rem;color:var(--blue);
+  font-family:var(--font-mono);font-size:.72rem;color:var(--accent-blue);
   margin:.7rem 0 0;overflow-x:auto;white-space:nowrap;
 }
 
-/* --- modo (lista con filo izquierdo) ----------------------------------- */
+/* --- modo (lista con filo izquierdo) ------------------------------------ */
 
-.mode{border-left:2px solid var(--border-grey);padding:.1rem 0 .1rem 1.1rem;margin-bottom:1.5rem}
+.mode{border-left:2px solid var(--border);padding:.1rem 0 .1rem 1.1rem;margin-bottom:1.5rem}
 .mode.pick{border-left-color:var(--academy-orange)}
 .mode h3{margin-top:0}
 .mode p{margin-bottom:0;font-size:.95rem}
 
 .tag{
-  font-family:var(--font-mono);font-size:.66rem;letter-spacing:.1em;
+  font-family:var(--font-mono);font-size:.66rem;font-weight:500;letter-spacing:.08em;
   text-transform:uppercase;color:var(--academy-orange);margin-left:.5rem;
 }
 
@@ -263,11 +315,11 @@ section{padding-top:3rem}
 
 .step{
   display:grid;grid-template-columns:2.8rem 1fr;gap:0 1rem;
-  padding:1.6rem 0;border-bottom:1px solid var(--border-soft);
+  padding:1.6rem 0;border-bottom:1px solid var(--line);
 }
 .step-num{
   font-family:var(--font-mono);font-weight:600;font-size:.9rem;
-  color:var(--mid-gray);line-height:1.9;letter-spacing:.05em;
+  color:var(--mid-gray);line-height:1.9;letter-spacing:.03em;
 }
 .step h3{grid-column:2;margin:0 0 .6rem;font-size:1rem}
 .step-body{grid-column:2;min-width:0}
@@ -288,12 +340,12 @@ dl{margin:0 0 1.25rem}
 
 .field{
   display:grid;grid-template-columns:11rem 1fr;gap:.3rem 1rem;
-  font-size:.9rem;padding:.6rem 0;border-bottom:1px solid var(--border-soft);
+  font-size:.9rem;padding:.6rem 0;border-bottom:1px solid var(--line);
 }
-.field:first-of-type{border-top:1px solid var(--border-soft)}
+.field:first-of-type{border-top:1px solid var(--line)}
 .field dt{font-family:var(--font-mono);font-size:.78rem;color:var(--academy-orange);align-self:start;padding-top:.1rem}
 .field dd{margin:0;min-width:0}
-.field dd strong{color:var(--white);font-weight:500}
+.field dd strong{color:var(--foreground);font-weight:500}
 
 @media (max-width:32rem){.field{grid-template-columns:1fr;gap:.15rem}}
 
@@ -305,51 +357,55 @@ dl{margin:0 0 1.25rem}
 
 pre{
   font-family:var(--font-mono);font-size:.8rem;line-height:1.75;
-  background:var(--ink);border:1px solid var(--border-grey);border-radius:var(--radius);
-  padding:1rem 3.4rem 1rem 1rem;margin:0;overflow-x:auto;color:var(--white);
+  background:var(--surface-deep);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1rem 3.4rem 1rem 1rem;margin:0;overflow-x:auto;color:var(--card-foreground);
 }
-pre .c{color:var(--mid-gray)}   /* comentario */
-pre .k{color:var(--academy-orange)}   /* palabra clave / valor a sustituir */
+pre .c{color:var(--mid-gray)}          /* comentario */
+pre .k{color:var(--academy-orange)}    /* valor a sustituir */
 
 .copy{
   position:absolute;top:.55rem;right:.55rem;
-  font-family:var(--font-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
-  background:var(--carbon);color:var(--mid-gray);
-  border:1px solid var(--border-grey);border-radius:var(--radius-sm);
+  font-family:var(--font-mono);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--card);color:var(--muted-foreground);
+  border:1px solid var(--border);border-radius:var(--radius);
   padding:.3rem .5rem;cursor:pointer;
   transition:color .15s,border-color .15s;
 }
 .copy:hover{color:var(--academy-orange);border-color:var(--academy-orange)}
-.copy.is-done{color:var(--green);border-color:var(--green)}
+.copy.is-done{color:var(--accent-green);border-color:var(--accent-green)}
 
 code:not(pre code){
   font-family:var(--font-mono);font-size:.87em;
-  background:var(--carbon);border:1px solid var(--border-soft);
-  padding:.05em .35em;border-radius:var(--radius-sm);color:var(--academy-orange);
+  background:var(--muted);border:1px solid var(--line);
+  padding:.05em .35em;border-radius:var(--radius);color:var(--academy-orange);
 }
 
 /* ==========================================================================
    10. Avisos
    ========================================================================== */
 
-.note,.warn,.ok{
-  border-left:2px solid var(--blue);
+.note,.warn,.ok,.caution{
+  border-left:2px solid var(--accent-blue);
   background:var(--blue-soft);
-  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  border-radius:var(--radius);
   padding:.9rem 1rem;margin:0 0 1rem;font-size:.92rem;
 }
-.note > *:last-child,.warn > *:last-child,.ok > *:last-child{margin-bottom:0}
+.note > *:last-child,.warn > *:last-child,
+.ok > *:last-child,.caution > *:last-child{margin-bottom:0}
 
-.warn{border-left-color:var(--red);background:var(--red-soft)}
-.ok{border-left-color:var(--green);background:var(--green-soft)}
+.warn{border-left-color:var(--destructive);background:var(--red-soft)}
+.ok{border-left-color:var(--accent-green);background:var(--green-soft)}
+.caution{border-left-color:var(--warning);background:var(--warning-soft)}
 
-.note-title,.warn-title,.ok-title{
+.note-title,.warn-title,.ok-title,.caution-title{
   display:block;margin-bottom:.35rem;
-  font-family:var(--font-mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--blue);
+  font-family:var(--font-mono);font-size:.64rem;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent-blue);
 }
-.warn-title{color:var(--red)}
-.ok-title{color:var(--green)}
+.warn-title{color:var(--destructive)}
+.ok-title{color:var(--accent-green)}
+.caution-title{color:var(--warning)}
 
 /* ==========================================================================
    11. Tablas
@@ -359,12 +415,12 @@ code:not(pre code){
 
 table{border-collapse:collapse;width:100%;font-size:.88rem;min-width:26rem}
 th{
-  text-align:left;font-family:var(--font-mono);font-size:.66rem;
-  letter-spacing:.1em;text-transform:uppercase;color:var(--mid-gray);font-weight:400;
-  padding:0 1rem .5rem 0;border-bottom:1px solid var(--border-grey);
+  text-align:left;font-family:var(--font-mono);font-size:.66rem;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground);
+  padding:0 1rem .5rem 0;border-bottom:1px solid var(--border);
 }
-td{padding:.65rem 1rem .65rem 0;border-bottom:1px solid var(--border-soft);vertical-align:top}
-td:first-child{color:var(--white)}
+td{padding:.65rem 1rem .65rem 0;border-bottom:1px solid var(--line);vertical-align:top}
+td:first-child{color:var(--foreground)}
 
 /* ==========================================================================
    12. Controles · chips, botones, rangos, medidor
@@ -374,29 +430,29 @@ td:first-child{color:var(--white)}
 
 .chip,.btn{
   font-family:var(--font-mono);font-size:.78rem;
-  background:transparent;color:var(--mid-gray);
-  border:1px solid var(--border-grey);border-radius:var(--radius-sm);
+  background:transparent;color:var(--muted-foreground);
+  border:1px solid var(--border);border-radius:var(--radius);
   padding:.5rem .7rem;cursor:pointer;text-decoration:none;
   transition:border-color .15s,color .15s,background .15s;
 }
 .chip:hover,.btn:hover{border-color:var(--academy-orange);color:var(--academy-orange)}
 .chip[aria-pressed="true"]{border-color:var(--academy-orange);color:var(--academy-orange);background:var(--orange-soft)}
 
-.btn--primary{background:var(--academy-orange);border-color:var(--academy-orange);color:var(--deep-black);font-weight:600}
-.btn--primary:hover{background:#ffa235;border-color:#ffa235;color:var(--deep-black)}
+.btn--primary{background:var(--academy-orange);border-color:var(--academy-orange);color:var(--background);font-weight:600}
+.btn--primary:hover{background:var(--academy-orange-dark);border-color:var(--academy-orange-dark);color:var(--background)}
 
 input[type=range]{width:100%;accent-color:var(--academy-orange);margin:0}
 
 .meter{padding:1.5rem 1.25rem;margin:1.5rem 0 0}
 .meter-label{
-  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--mid-gray);margin:0 0 1.25rem;
+  font-family:var(--font-mono);font-size:.68rem;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted-foreground);margin:0 0 1.25rem;
 }
 
 .control{margin-bottom:1.4rem}
-.control > span{display:block;font-size:.82rem;color:var(--mid-gray);margin-bottom:.5rem}
+.control > span{display:block;font-size:.82rem;color:var(--muted-foreground);margin-bottom:.5rem}
 
-.readout{display:flex;align-items:baseline;gap:.6rem;padding-top:1.25rem;border-top:1px solid var(--border-grey)}
+.readout{display:flex;align-items:baseline;gap:.6rem;padding-top:1.25rem;border-top:1px solid var(--border)}
 .readout-num{
   font-weight:800;font-size:2.9rem;line-height:1;letter-spacing:-.04em;
   color:var(--academy-orange);font-variant-numeric:tabular-nums;
@@ -404,15 +460,15 @@ input[type=range]{width:100%;accent-color:var(--academy-orange);margin:0}
 .readout-unit{font-size:.85rem;color:var(--mid-gray)}
 
 .scale{margin-top:1.4rem}
-.track{position:relative;height:4px;background:var(--border-grey);border-radius:2px}
-.fill{position:absolute;inset:0 auto 0 0;background:var(--academy-orange);border-radius:2px;transition:width .2s ease}
-.breakeven{position:absolute;top:-7px;bottom:-7px;left:33.3%;width:2px;background:var(--blue)}
+.track{position:relative;height:4px;background:var(--secondary)}
+.fill{position:absolute;inset:0 auto 0 0;background:var(--academy-orange);transition:width .2s ease}
+.breakeven{position:absolute;top:-7px;bottom:-7px;left:33.3%;width:2px;background:var(--accent-blue)}
 .scale-legend{
   display:flex;justify-content:space-between;
   font-family:var(--font-mono);font-size:.68rem;color:var(--mid-gray);margin-top:.7rem;
 }
 
-.verdict{font-size:.92rem;margin:1.1rem 0 0;padding-top:1.1rem;border-top:1px solid var(--border-grey)}
+.verdict{font-size:.92rem;margin:1.1rem 0 0;padding-top:1.1rem;border-top:1px solid var(--border)}
 
 /* ==========================================================================
    13. Catálogo de recursos (index)
@@ -425,34 +481,35 @@ input[type=range]{width:100%;accent-color:var(--academy-orange);margin:0}
 
 .res-card{
   display:flex;flex-direction:column;
-  background:var(--carbon);border:1px solid var(--border-grey);border-radius:var(--radius);
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
   padding:1.25rem;transition:border-color .15s,background .15s;
 }
-.res-card:hover{border-color:var(--academy-orange);background:var(--carbon-hi)}
+.res-card:hover{border-color:var(--academy-orange);background:var(--surface-raised)}
 
 .res-card h3{margin:0 0 .5rem;font-size:1.1rem;letter-spacing:-.02em}
-.res-card h3 a{color:var(--white);text-decoration:none}
+.res-card h3 a{color:var(--foreground);text-decoration:none}
 .res-card:hover h3 a{color:var(--academy-orange)}
 .res-card p{font-size:.92rem;margin:0 0 1rem}
 
 .res-kicker{
-  font-family:var(--font-mono);font-size:.66rem;letter-spacing:.12em;
+  font-family:var(--font-mono);font-size:.66rem;font-weight:500;letter-spacing:.1em;
   text-transform:uppercase;color:var(--academy-orange);margin:0 0 .6rem;
 }
 
 .res-foot{
-  margin-top:auto;padding-top:.9rem;border-top:1px solid var(--border-soft);
+  margin-top:auto;padding-top:.9rem;border-top:1px solid var(--line);
   display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
   font-family:var(--font-mono);font-size:.68rem;color:var(--mid-gray);
 }
-.res-foot .btn{margin-left:auto;font-size:.66rem;padding:.35rem .55rem;letter-spacing:.08em;text-transform:uppercase}
+.res-foot .btn{margin-left:auto;font-size:.66rem;padding:.35rem .55rem;letter-spacing:.06em;text-transform:uppercase}
 
 .pill{
-  font-family:var(--font-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
-  border:1px solid var(--border-grey);border-radius:999px;padding:.15rem .5rem;color:var(--mid-gray);
+  font-family:var(--font-mono);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:.15rem .5rem;color:var(--muted-foreground);
 }
-.pill--live{color:var(--green);border-color:rgba(5,223,114,.4)}
-.pill--draft{color:var(--yellow);border-color:rgba(255,223,32,.4)}
+.pill--live{color:var(--accent-green);border-color:rgba(16,183,127,.45)}
+.pill--draft{color:var(--warning);border-color:rgba(251,186,35,.45)}
 
 /* --- muestrario de color ------------------------------------------------ */
 
@@ -460,20 +517,20 @@ input[type=range]{width:100%;accent-color:var(--academy-orange);margin:0}
 
 .swatch{
   display:inline-flex;align-items:center;gap:.45rem;
-  border:1px solid var(--border-grey);border-radius:var(--radius-sm);
-  padding:.35rem .6rem;font-size:.75rem;color:var(--text-grey);
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:.35rem .6rem;font-size:.75rem;color:var(--text-secondary);
 }
 .swatch i{
-  width:.85rem;height:.85rem;border-radius:2px;
+  width:.85rem;height:.85rem;
   border:1px solid rgba(255,255,255,.14);flex:0 0 auto;
 }
 .swatch code{font-size:.7rem}
 
-/* --- diálogo de incrustación ------------------------------------------- */
+/* --- diálogo de incrustación -------------------------------------------- */
 
 dialog.embed-dialog{
-  background:var(--carbon);color:var(--text-grey);
-  border:1px solid var(--border-grey);border-radius:var(--radius);
+  background:var(--card);color:var(--text-secondary);
+  border:1px solid var(--border);border-radius:var(--radius);
   padding:1.25rem;max-width:40rem;width:calc(100% - 2rem);
 }
 dialog.embed-dialog::backdrop{background:rgba(0,0,0,.7)}
@@ -484,7 +541,7 @@ dialog.embed-dialog h3{margin-top:0}
    ========================================================================== */
 
 footer{
-  margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--border-grey);
+  margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--border);
   font-family:var(--font-mono);font-size:.72rem;color:var(--mid-gray);line-height:1.9;
 }
 footer a{color:var(--mid-gray)}
@@ -494,8 +551,8 @@ footer a:hover{color:var(--academy-orange)}
    15. Modo incrustado · ?embed=1
    --------------------------------------------------------------------------
    racks.js marca <html> con .is-embed (parámetro) y .is-framed (dentro de un
-   iframe). El objetivo es que el recurso quede a ras del contenedor y que la
-   altura del documento sea exactamente la del contenido.
+   iframe). El recurso queda a ras del contenedor y el documento mide
+   exactamente lo que ocupa su contenido.
    ========================================================================== */
 
 .is-embed body{background:transparent}
@@ -513,13 +570,38 @@ footer a:hover{color:var(--academy-orange)}
 .is-framed body{min-height:0}
 
 /* ==========================================================================
-   16. Accesibilidad y utilidades
+   16. Impresión
+   --------------------------------------------------------------------------
+   Mismo criterio que learn.racks.university con sus guías: tinta negra sobre
+   blanco, sin cromo, y la URL detrás de cada enlace externo.
+   ========================================================================== */
+
+@media print{
+  html,body{background:#fff !important;color:#000 !important}
+  .topbar,.watermark-r,.copy,.skip-link,.chips,input[type=range],
+  .scale,.readout,dialog{display:none !important}
+  .shell{padding:0}
+  .wrap,.wrap--wide{max-width:none}
+  h1,h2,h3,h4,strong,td:first-child{color:#000 !important}
+  a{color:#000 !important;text-decoration:underline}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:.85em;word-break:break-all}
+  .card,.toc,.meter,.fork,.panel,pre,.res-card{
+    background:#fff !important;border:1px solid #bbb !important;color:#000 !important;
+  }
+  .note,.warn,.ok,.caution{background:#fff !important;border-left:3px solid #666 !important}
+  .step,.field,td,th{border-color:#ddd !important}
+  .step,section,.card,.toc{break-inside:avoid}
+  h2,h3{break-after:avoid}
+}
+
+/* ==========================================================================
+   17. Accesibilidad y utilidades
    ========================================================================== */
 
 .skip-link{
   position:absolute;left:-9999px;top:0;z-index:50;
-  background:var(--academy-orange);color:var(--deep-black);
-  padding:.5rem .9rem;border-radius:0 0 var(--radius-sm) 0;font-weight:600;
+  background:var(--academy-orange);color:var(--background);
+  padding:.5rem .9rem;font-weight:600;
 }
 .skip-link:focus{left:0}
 

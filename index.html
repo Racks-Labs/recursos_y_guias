@@ -10,9 +10,8 @@
 <meta property="og:description" content="Catálogo de recursos y guías, listos para incrustar como iframe.">
 <meta property="og:type" content="website">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/racks.css">
 <script>/* fija el modo antes del primer pintado */(function(){var h=document.documentElement,s=location.search;if(s.indexOf('embed=1')>-1)h.classList.add('is-embed');if(window.self!==window.top)h.classList.add('is-framed');if(s.indexOf('bg=transparent')>-1)h.classList.add('is-transparent');})();</script>
 <script defer src="assets/racks.js"></script>
@@ -111,15 +110,15 @@
   <h2>El estilo, en corto</h2>
   <hr class="rule">
 
-  <p>Los tokens salen del panel de producción. Están en <code>assets/racks.css</code> y son la única fuente: si el panel cambia un color, se cambia ahí y todos los recursos se mueven a la vez.</p>
+  <p>Los tokens son los del sistema de producción &mdash; el tema oscuro de <code>learn.racks.university</code> y el panel. Están en <code>assets/racks.css</code> y son la única fuente: si allí cambia un color, se cambia ahí y todos los recursos se mueven a la vez.</p>
 
   <div class="swatches" id="swatches"></div>
 
   <dl>
-    <div class="field"><dt>Tipografía</dt><dd><strong>Inter</strong> para todo; monoespaciada del sistema para etiquetas, código y cifras.</dd></div>
-    <div class="field"><dt>Radio</dt><dd><strong>0,5 rem</strong> en tarjetas y paneles; 0,25 rem en fichas y botones pequeños.</dd></div>
-    <div class="field"><dt>Firma</dt><dd>Rejilla de puntos de 24 px y la <strong>R</strong> gigante en <code>#151515</code> abajo a la derecha.</dd></div>
-    <div class="field"><dt>Acento</dt><dd>Naranja único. Un elemento activo por bloque, nunca dos compitiendo.</dd></div>
+    <div class="field"><dt>Tipografía</dt><dd><strong>Inter</strong> para el texto y <strong>JetBrains Mono</strong> para código, etiquetas y cifras. Las dos, las de la casa.</dd></div>
+    <div class="field"><dt>Esquinas</dt><dd><strong>Rectas.</strong> El radio del sistema es <code>0</code> en todo: tarjetas, botones, código y fichas.</dd></div>
+    <div class="field"><dt>Firma</dt><dd>La <strong>R</strong> de 400 px en <code>#171717</code> abajo a la derecha, y la rejilla de puntos de 24 px.</dd></div>
+    <div class="field"><dt>Acento</dt><dd>Naranja único, <code>#f5911a</code>. Un elemento activo por bloque, nunca dos compitiendo.</dd></div>
   </dl>
 
   <p>Para escribir un recurso nuevo: copia <a href="recursos/plantilla.html">recursos/plantilla.html</a>, que trae ya montados los bloques disponibles &mdash; pasos, avisos, tablas, código con botón de copiar, fichas y controles. La referencia larga está en <a href="https://github.com/Racks-Labs/recursos_y_guias/blob/main/ESTILO.md">ESTILO.md</a>.</p>
@@ -228,8 +227,8 @@
   var swatches = document.getElementById('swatches');
   if (swatches) {
     [
-      ['#121212','Fondo'], ['#181818','Tarjeta'], ['#333','Borde'],
-      ['#9ca3af','Texto'], ['#686868','Secundario'], ['#f5911a','Acento']
+      ['#121212','Fondo'], ['#171717','Tarjeta'], ['#0a0a0a','Código'], ['#333','Borde'],
+      ['#f7f7f7','Titular'], ['#c7c7c7','Texto'], ['#9ca3b0','Secundario'], ['#f5911a','Acento']
     ].forEach(function(pair){
       var s = document.createElement('span');
       s.className = 'swatch';
