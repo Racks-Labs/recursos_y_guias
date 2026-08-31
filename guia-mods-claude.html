@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tu primer mod con Claude · la guía</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --slate-900:#14181d;
+    --slate-800:#1c222a;
+    --slate-700:#2a323c;
+    --slate-600:#3d4854;
+    --light:#dde2e5;
+    --dim:#8b98a5;
+    --amp:#72c585;
+    --wire:#5aa3bb;
+    --alert:#d9544d;
+    --measure:44rem;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--slate-900);color:var(--light);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:16px;line-height:1.65;
+    padding:0 1.25rem 5rem;
+  }
+  .wrap{max-width:var(--measure);margin:0 auto}
+  .masthead{padding:3.5rem 0 2rem;border-bottom:1px solid var(--slate-700)}
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--amp);margin:0 0 1.25rem;
+  }
+  h1{
+    font-family:"Oswald",sans-serif;font-weight:600;
+    font-size:clamp(2rem,7.5vw,3.2rem);line-height:1.08;text-transform:uppercase;
+    margin:0 0 1.25rem;
+  }
+  h1 em{font-style:normal;color:var(--amp)}
+  .standfirst{font-size:1.05rem;color:var(--dim);max-width:36rem;margin:0}
+  .toc{
+    background:var(--slate-800);border:1px solid var(--slate-700);
+    border-radius:3px;padding:1.25rem;margin:2rem 0 0;
+  }
+  .toc p{
+    font-family:"IBM Plex Mono",monospace;font-size:.68rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin:0 0 .8rem;
+  }
+  .toc ol{margin:0;padding-left:1.2rem;font-size:.92rem}
+  .toc li{margin-bottom:.35rem}
+  .toc li::marker{color:var(--slate-600);font-family:"IBM Plex Mono",monospace;font-size:.8rem}
+  .toc a{color:var(--light);text-decoration:none;border-bottom:1px solid var(--slate-600)}
+  .toc a:hover{color:var(--amp);border-color:var(--amp)}
+  section{padding-top:3.25rem}
+  h2{
+    font-family:"Oswald",sans-serif;font-weight:600;font-size:1.6rem;
+    text-transform:uppercase;margin:0 0 .35rem;
+  }
+  .phase{
+    font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--amp);margin:0 0 .4rem;
+  }
+  .rule{border:0;border-top:1px solid var(--slate-700);margin:0 0 1.5rem}
+  h3{font-family:"IBM Plex Sans",sans-serif;font-weight:600;font-size:1.05rem;margin:2rem 0 .5rem}
+  p{margin:0 0 1rem}
+  a{color:var(--wire)}
+  .step{
+    display:grid;grid-template-columns:2.8rem 1fr;gap:0 1rem;
+    padding:1.6rem 0;border-bottom:1px solid var(--slate-800);
+  }
+  .step-num{
+    font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:.9rem;
+    color:var(--slate-600);line-height:1.9;letter-spacing:.05em;
+  }
+  .step h3{margin:0 0 .6rem;grid-column:2;font-size:1rem}
+  .step-body{grid-column:2}
+  .step-body > *:last-child{margin-bottom:0}
+  .step ul{margin:0 0 1rem;padding-left:1.1rem;color:var(--dim);font-size:.94rem}
+  .step li{margin-bottom:.45rem}
+  .step li strong{color:var(--light);font-weight:500}
+  @media (max-width:30rem){
+    .step{grid-template-columns:1fr;gap:0}
+    .step-num{line-height:1.4;margin-bottom:.3rem}
+    .step h3,.step-body{grid-column:1}
+  }
+  .code{position:relative;margin:0 0 1rem}
+  pre{
+    font-family:"IBM Plex Mono",monospace;font-size:.8rem;line-height:1.75;
+    background:#0e1216;border:1px solid var(--slate-700);border-radius:3px;
+    padding:1rem 3.2rem 1rem 1rem;margin:0;overflow-x:auto;color:var(--light);
+  }
+  pre .c{color:var(--dim)}
+  pre .k{color:var(--amp)}
+  .copy{
+    position:absolute;top:.55rem;right:.55rem;
+    font-family:"IBM Plex Mono",monospace;font-size:.62rem;
+    letter-spacing:.08em;text-transform:uppercase;
+    background:var(--slate-800);color:var(--dim);
+    border:1px solid var(--slate-600);border-radius:2px;
+    padding:.3rem .5rem;cursor:pointer;
+  }
+  .copy:hover{color:var(--amp);border-color:var(--amp)}
+  .copy:focus-visible{outline:2px solid var(--wire);outline-offset:2px}
+  code:not(pre code){
+    font-family:"IBM Plex Mono",monospace;font-size:.87em;
+    background:var(--slate-800);padding:.1em .35em;border-radius:2px;color:var(--amp);
+  }
+  .warn{
+    background:rgba(217,84,77,.07);border-left:2px solid var(--alert);
+    padding:.9rem 1rem;margin:0 0 1rem;font-size:.92rem;
+  }
+  .warn p{margin:0}
+  .warn-title{
+    font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--alert);display:block;margin-bottom:.35rem;
+  }
+  .note{
+    background:rgba(90,163,187,.07);border-left:2px solid var(--wire);
+    padding:.9rem 1rem;margin:0 0 1rem;font-size:.92rem;
+  }
+  .note p{margin:0}
+  .note-title{
+    font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--wire);display:block;margin-bottom:.35rem;
+  }
+  .ruta{border:1px solid var(--slate-700);border-radius:3px;padding:1.2rem;margin-bottom:1rem}
+  .ruta.pick{border-color:var(--amp)}
+  .ruta h3{margin:0 0 .5rem}
+  .ruta p{margin:0;font-size:.95rem;color:var(--dim)}
+  .tag{
+    font-family:"IBM Plex Mono",monospace;font-size:.66rem;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--amp);margin-left:.5rem;
+  }
+  .limits{margin:0 0 1rem;padding-left:1.1rem;color:var(--dim);font-size:.94rem}
+  .limits li{margin-bottom:.45rem}
+  .limits li strong{color:var(--light);font-weight:500}
+  .tablewrap{overflow-x:auto;margin:0 0 1.25rem}
+  table{border-collapse:collapse;width:100%;font-size:.88rem;min-width:26rem}
+  th{
+    text-align:left;font-family:"IBM Plex Mono",monospace;
+    font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--dim);font-weight:400;
+    padding:0 1rem .5rem 0;border-bottom:1px solid var(--slate-700);
+  }
+  td{padding:.65rem 1rem .65rem 0;border-bottom:1px solid var(--slate-800);color:var(--dim);vertical-align:top}
+  td:first-child{color:var(--light)}
+  footer{
+    margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--slate-700);
+    font-family:"IBM Plex Mono",monospace;font-size:.72rem;
+    color:var(--slate-600);line-height:1.9;
+  }
+  footer a{color:var(--dim)}
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Guía · modding con IA</p>
+  <h1>Tu primer <em>mod</em>,<br>sin saber programar.</h1>
+  <p class="standfirst">Hasta ahora, jugabas con los mods que otros habían hecho. Con Claude, describes el mod que quieres y lo tienes esta tarde: hecho a tu medida, para tu partida. Esta es la ruta completa, con los prompts exactos.</p>
+
+  <nav class="toc">
+    <p>Recorrido</p>
+    <ol>
+      <li><a href="#idea">La idea que lo cambia todo</a></li>
+      <li><a href="#preparar">Preparar el equipo</a> · pasos 1–2</li>
+      <li><a href="#elegir">Elegir juego: las tres rutas</a></li>
+      <li><a href="#minecraft">Ruta A · tu primer mod de Minecraft</a> · pasos 3–7</li>
+      <li><a href="#stardew">Ruta B · Stardew Valley con SMAPI</a></li>
+      <li><a href="#ajeno">Ruta C · ajustar un mod que ya existe</a></li>
+      <li><a href="#metodo">El método para cualquier juego</a></li>
+      <li><a href="#reglas">Lo que no se hace</a></li>
+    </ol>
+  </nav>
+</header>
+
+<section id="idea">
+  <p class="phase">Punto de partida</p>
+  <h2>La idea que lo cambia todo</h2>
+  <hr class="rule">
+
+  <p>Un mod no es magia: son archivos. Texturas, tablas de números, scripts, código. Y resulta que leer y escribir archivos es exactamente lo que mejor hace Claude Code.</p>
+
+  <p>Eso rompe la limitación de siempre. Ya no dependes de que a alguien en Nexus Mods se le haya ocurrido tu idea: <strong>el mod que quieres tú, con tus números y tus manías, te lo puede escribir Claude mientras se lo describes</strong>. Mods personalizados, de uno en uno, para cada persona.</p>
+
+  <p>Lo único que pones tú es lo que ninguna IA tiene: saber qué haría mejor tu juego favorito.</p>
+</section>
+
+<section id="preparar">
+  <p class="phase">Preparación</p>
+  <h2>Preparar el equipo</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Instala Claude Code</h3>
+    <div class="step-body">
+      <div class="code"><pre>curl -fsSL https://claude.ai/install.sh | bash</pre><button class="copy">Copiar</button></div>
+      <p>En Windows, desde PowerShell: <code>irm https://claude.ai/install.ps1 | iex</code>. Arranca con <code>claude</code> y entra con tu cuenta de Claude. Es la terminal, sí. No muerde: le escribes en español normal y ejecuta él.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>Crea una carpeta para el mod y ábrela con Claude</h3>
+    <div class="step-body">
+      <div class="code"><pre>mkdir mi-primer-mod
+cd mi-primer-mod
+claude</pre><button class="copy">Copiar</button></div>
+      <p>Trabaja siempre en una carpeta propia, nunca directamente sobre los archivos del juego. El mod se desarrolla aquí y se instala después.</p>
+    </div>
+  </div>
+</section>
+
+<section id="elegir">
+  <p class="phase">Decisión</p>
+  <h2>Elegir juego: las tres rutas</h2>
+  <hr class="rule">
+
+  <p>No todos los juegos se dejan modificar igual. Para el primer mod, elige por facilidad, no por amor:</p>
+
+  <div class="ruta pick">
+    <h3>Ruta A · Minecraft <span class="tag">empieza aquí</span></h3>
+    <p>Los datapacks son archivos de texto que el juego carga sin instalar nada más. Cero compilación, resultado en media hora, y es el formato que Claude domina con los ojos cerrados.</p>
+  </div>
+
+  <div class="ruta">
+    <h3>Ruta B · Stardew Valley</h3>
+    <p>El escalón siguiente: mods en C# sobre SMAPI, el cargador de mods estándar. Aquí ya se compila, pero Claude escribe el código y tú solo juegas para probar.</p>
+  </div>
+
+  <div class="ruta">
+    <h3>Ruta C · el mod de otro, a tu medida</h3>
+    <p>No partes de cero: coges un mod de código abierto que casi hace lo que quieres y Claude te lo ajusta. Vale para cualquier juego con comunidad en GitHub.</p>
+  </div>
+
+  <div class="note">
+    <span class="note-title">¿Y mi juego favorito?</span>
+    <p>La regla del pulgar: si el juego tiene cargador de mods conocido (Forge, Fabric, SMAPI, BepInEx, Melon Loader) o mods en Lua (Balatro, Teardown), la ruta existe. Pregúntaselo a Claude tal cual: «¿cómo se hacen mods para X y cuál es el camino más corto para empezar?».</p>
+  </div>
+</section>
+
+<section id="minecraft">
+  <p class="phase">Ruta A · práctica</p>
+  <h2>Tu primer mod de Minecraft</h2>
+  <hr class="rule">
+
+  <p>Objetivo de ejemplo: un datapack que hace que los creepers suelten diamantes al explotar (cámbialo por lo que quieras: la estructura de trabajo es la misma). Java Edition, sin instalar nada aparte del juego.</p>
+
+  <div class="step">
+    <span class="step-num">03</span>
+    <h3>Descríbele el mod a Claude</h3>
+    <div class="step-body">
+      <div class="code"><pre>Quiero hacer un datapack de Minecraft Java 1.21. Cuando un creeper
+muere, debe soltar entre 1 y 3 diamantes. Crea la estructura completa
+del datapack en esta carpeta, explícame qué hace cada archivo en una
+línea, y dime exactamente dónde copiarlo y cómo activarlo en el juego.</pre><button class="copy">Copiar</button></div>
+      <p>Fíjate en las tres partes del prompt: qué quieres, para qué versión, y qué te tiene que entregar (estructura + explicación + instalación). Esa plantilla sirve para cualquier mod.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">04</span>
+    <h3>Deja que pregunte</h3>
+    <div class="step-body">
+      <p>Si Claude te pregunta cosas (¿solo creepers que explotan o también los que mueren a espada?), contéstale: cada respuesta es una decisión de diseño de tu mod. Si no pregunta y tú tienes dudas, pregunta tú: «¿qué opciones tengo para el número de diamantes?».</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">05</span>
+    <h3>Instálalo</h3>
+    <div class="step-body">
+      <div class="code"><pre><span class="c"># la carpeta del datapack va dentro del mundo donde quieras usarlo:</span>
+<span class="c"># .minecraft/saves/TuMundo/datapacks/</span>
+<span class="c"># y dentro del juego:</span>
+/reload</pre><button class="copy">Copiar</button></div>
+      <p>Claude te habrá dado la ruta exacta para tu sistema. Copias la carpeta, ejecutas <code>/reload</code> dentro del mundo, y a probar.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">06</span>
+    <h3>Cierra el bucle: prueba, cuenta, corrige</h3>
+    <div class="step-body">
+      <div class="code"><pre>He probado el datapack. Los creepers que explotan solos no sueltan
+nada; los que mato a mano, sí. Quiero que funcione en los dos casos.
+Investiga por qué pasa y arréglalo.</pre><button class="copy">Copiar</button></div>
+      <p>Este es el paso que separa a los que terminan mods de los que no: <strong>contarle a Claude lo que has visto en el juego</strong>, con detalle, y dejar que investigue. No hace falta que sepas por qué falla. Hace falta que describas bien el síntoma.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">07</span>
+    <h3>Guarda cada versión que funcione</h3>
+    <div class="step-body">
+      <div class="code"><pre>Esto funciona. Haz commit con git de esta versión antes de que
+sigamos añadiendo cosas.</pre><button class="copy">Copiar</button></div>
+      <p>Git es la máquina del tiempo: cuando una idea nueva rompa el mod (pasará), vuelves a la última versión buena en un segundo. Claude se encarga de los comandos.</p>
+    </div>
+  </div>
+</section>
+
+<section id="stardew">
+  <p class="phase">Ruta B · práctica</p>
+  <h2>Stardew Valley con SMAPI</h2>
+  <hr class="rule">
+
+  <p>Aquí el mod es un proyecto de C# que se compila. Suena a mucho; con Claude, la diferencia práctica con el datapack es una herramienta más instalada y un comando más. El prompt inicial:</p>
+
+  <div class="code"><pre>Quiero hacer mi primer mod de Stardew Valley con SMAPI. La idea: que
+los regalos que le gustan a cada aldeano se marquen con un icono en el
+inventario cuando hablo con él. Pasos que quiero que hagas:
+1. Dime qué necesito tener instalado (juego aparte) y verifica qué
+   tengo ya en este ordenador.
+2. Monta el proyecto con la plantilla oficial de SMAPI.
+3. Escribe el mod, compílalo y dime dónde queda el resultado.
+4. Explícame cómo probarlo y qué mirar en la consola de SMAPI si falla.</pre><button class="copy">Copiar</button></div>
+
+  <p>La consola de SMAPI escupe los errores del mod al arrancar el juego: cuando algo falle, copia ese texto y pégaselo a Claude tal cual. Un error pegado entero vale más que tres frases describiéndolo.</p>
+
+  <div class="note">
+    <span class="note-title">El patrón que estás aprendiendo</span>
+    <p>Datapack o C#, da igual: el bucle es siempre describir → probar en el juego → contar el síntoma o pegar el error → dejar que Claude investigue. Los juegos cambian; el bucle, no.</p>
+  </div>
+</section>
+
+<section id="ajeno">
+  <p class="phase">Ruta C · práctica</p>
+  <h2>Ajustar un mod que ya existe</h2>
+  <hr class="rule">
+
+  <p>La ruta más infravalorada. Miles de mods son código abierto: si uno casi hace lo que quieres, no aprendas su código — clónalo y que Claude lo ajuste a tu gusto.</p>
+
+  <div class="code"><pre><span class="c"># dentro de tu carpeta de trabajo</span>
+git clone URL-DEL-MOD
+cd nombre-del-mod
+claude</pre><button class="copy">Copiar</button></div>
+
+  <div class="code"><pre>Este es un mod de [juego] que hace [lo que hace]. Antes de tocar nada:
+1. Léete el proyecto y explícame en cinco líneas cómo está montado.
+2. Dime qué licencia tiene y qué me permite hacer.
+Después quiero cambiar esto: [tu ajuste]. Propón el cambio más pequeño
+posible que lo consiga.</pre><button class="copy">Copiar</button></div>
+
+  <p>Las dos primeras órdenes no son decorativas. La explicación te da el mapa del proyecto en tu idioma, y la licencia te dice si puedes modificarlo y compartirlo (la mayoría de mods open source, sí; compartirlo modificado, según la licencia; venderlo, casi nunca).</p>
+</section>
+
+<section id="metodo">
+  <p class="phase">Método</p>
+  <h2>El método para cualquier juego</h2>
+  <hr class="rule">
+
+  <div class="tablewrap">
+    <table>
+      <tr><th>Fase</th><th>Qué haces</th><th>Qué hace Claude</th></tr>
+      <tr><td>Explorar</td><td>«¿Cómo se moddea este juego?»</td><td>Investiga cargadores, formatos y el camino más corto</td></tr>
+      <tr><td>Diseñar</td><td>Describes el mod con tus palabras</td><td>Pregunta lo que falta y propone el alcance mínimo</td></tr>
+      <tr><td>Construir</td><td>Nada</td><td>Escribe archivos, compila si toca, te da la instalación</td></tr>
+      <tr><td>Probar</td><td>Juegas y cuentas lo que ves</td><td>Investiga los síntomas y corrige</td></tr>
+      <tr><td>Guardar</td><td>«Esto funciona, haz commit»</td><td>Versiona, y puedes volver atrás cuando algo se rompa</td></tr>
+    </table>
+  </div>
+
+  <p>Y cuando el mod crezca: pídele a Claude que se escriba una skill con las reglas de tu proyecto («cómo se compila, cómo se prueba, qué estilo siguen los textos»). A partir de ahí, cada sesión nueva arranca sabiéndoselas. Esa parte está contada en la guía de skills — palabra SKILLS en cualquier reel.</p>
+</section>
+
+<section id="reglas">
+  <p class="phase">Límites</p>
+  <h2>Lo que no se hace</h2>
+  <hr class="rule">
+
+  <div class="warn">
+    <span class="warn-title">Mods sí · piratería no</span>
+    <p>Todo lo de esta guía parte de un juego comprado y de mods sobre tu copia legal. Saltarse protecciones, jugar online con copias piratas o revender trabajo ajeno no es modding, y además es la vía rápida para un baneo.</p>
+  </div>
+
+  <ul class="limits">
+    <li><strong>Online competitivo, ni tocarlo.</strong> Los mods son para tu partida y tus servidores. En multijugador con anticheat, un mod inocente también banea.</li>
+    <li><strong>Respeta las licencias.</strong> Antes de publicar un mod basado en otro, la licencia decide. Claude te la resume, pero la decisión es tuya.</li>
+    <li><strong>Copia de seguridad de las partidas</strong> antes de probar mods que tocan los guardados. Treinta segundos que un día valdrán una partida de cien horas.</li>
+  </ul>
+</section>
+
+<footer>
+  <p>Guía viva · agosto de 2026 · escrita para acompañar a los reels de @jaime</p>
+  <p>¿Configurar Claude Code a fondo? Escribe SKILLS en cualquier reel. ¿Montar tu primera app? Escribe APP.</p>
+</footer>
+
+</div>
+<script>
+(function(){
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var code = btn.parentNode.querySelector('pre').innerText;
+      navigator.clipboard.writeText(code).then(function(){
+        btn.textContent = 'Copiado';
+        setTimeout(function(){ btn.textContent = 'Copiar'; }, 1600);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

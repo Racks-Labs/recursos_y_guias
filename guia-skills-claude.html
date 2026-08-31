@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skills y configuración de Claude Code · la guía</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --slate-900:#14181d;
+    --slate-800:#1c222a;
+    --slate-700:#2a323c;
+    --slate-600:#3d4854;
+    --light:#dde2e5;
+    --dim:#8b98a5;
+    --amp:#f2b33d;
+    --wire:#5aa3bb;
+    --alert:#d9544d;
+    --measure:44rem;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--slate-900);color:var(--light);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:16px;line-height:1.65;
+    padding:0 1.25rem 5rem;
+  }
+  .wrap{max-width:var(--measure);margin:0 auto}
+  .masthead{padding:3.5rem 0 2rem;border-bottom:1px solid var(--slate-700)}
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--amp);margin:0 0 1.25rem;
+  }
+  h1{
+    font-family:"Oswald",sans-serif;font-weight:600;
+    font-size:clamp(2rem,7.5vw,3.2rem);line-height:1.08;text-transform:uppercase;
+    margin:0 0 1.25rem;
+  }
+  h1 em{font-style:normal;color:var(--amp)}
+  .standfirst{font-size:1.05rem;color:var(--dim);max-width:36rem;margin:0}
+  .toc{
+    background:var(--slate-800);border:1px solid var(--slate-700);
+    border-radius:3px;padding:1.25rem;margin:2rem 0 0;
+  }
+  .toc p{
+    font-family:"IBM Plex Mono",monospace;font-size:.68rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin:0 0 .8rem;
+  }
+  .toc ol{margin:0;padding-left:1.2rem;font-size:.92rem}
+  .toc li{margin-bottom:.35rem}
+  .toc li::marker{color:var(--slate-600);font-family:"IBM Plex Mono",monospace;font-size:.8rem}
+  .toc a{color:var(--light);text-decoration:none;border-bottom:1px solid var(--slate-600)}
+  .toc a:hover{color:var(--amp);border-color:var(--amp)}
+  section{padding-top:3.25rem}
+  h2{
+    font-family:"Oswald",sans-serif;font-weight:600;font-size:1.6rem;
+    text-transform:uppercase;margin:0 0 .35rem;
+  }
+  .phase{
+    font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--amp);margin:0 0 .4rem;
+  }
+  .rule{border:0;border-top:1px solid var(--slate-700);margin:0 0 1.5rem}
+  h3{font-family:"IBM Plex Sans",sans-serif;font-weight:600;font-size:1.05rem;margin:2rem 0 .5rem}
+  p{margin:0 0 1rem}
+  a{color:var(--wire)}
+  .step{
+    display:grid;grid-template-columns:2.8rem 1fr;gap:0 1rem;
+    padding:1.6rem 0;border-bottom:1px solid var(--slate-800);
+  }
+  .step-num{
+    font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:.9rem;
+    color:var(--slate-600);line-height:1.9;letter-spacing:.05em;
+  }
+  .step h3{margin:0 0 .6rem;grid-column:2;font-size:1rem}
+  .step-body{grid-column:2}
+  .step-body > *:last-child{margin-bottom:0}
+  .step ul{margin:0 0 1rem;padding-left:1.1rem;color:var(--dim);font-size:.94rem}
+  .step li{margin-bottom:.45rem}
+  .step li strong{color:var(--light);font-weight:500}
+  @media (max-width:30rem){
+    .step{grid-template-columns:1fr;gap:0}
+    .step-num{line-height:1.4;margin-bottom:.3rem}
+    .step h3,.step-body{grid-column:1}
+  }
+  .code{position:relative;margin:0 0 1rem}
+  pre{
+    font-family:"IBM Plex Mono",monospace;font-size:.8rem;line-height:1.75;
+    background:#0e1216;border:1px solid var(--slate-700);border-radius:3px;
+    padding:1rem 3.2rem 1rem 1rem;margin:0;overflow-x:auto;color:var(--light);
+  }
+  pre .c{color:var(--dim)}
+  pre .k{color:var(--amp)}
+  .copy{
+    position:absolute;top:.55rem;right:.55rem;
+    font-family:"IBM Plex Mono",monospace;font-size:.62rem;
+    letter-spacing:.08em;text-transform:uppercase;
+    background:var(--slate-800);color:var(--dim);
+    border:1px solid var(--slate-600);border-radius:2px;
+    padding:.3rem .5rem;cursor:pointer;
+  }
+  .copy:hover{color:var(--amp);border-color:var(--amp)}
+  .copy:focus-visible{outline:2px solid var(--wire);outline-offset:2px}
+  code:not(pre code){
+    font-family:"IBM Plex Mono",monospace;font-size:.87em;
+    background:var(--slate-800);padding:.1em .35em;border-radius:2px;color:var(--amp);
+  }
+  .warn{
+    background:rgba(217,84,77,.07);border-left:2px solid var(--alert);
+    padding:.9rem 1rem;margin:0 0 1rem;font-size:.92rem;
+  }
+  .warn p{margin:0}
+  .warn-title{
+    font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--alert);display:block;margin-bottom:.35rem;
+  }
+  .note{
+    background:rgba(90,163,187,.07);border-left:2px solid var(--wire);
+    padding:.9rem 1rem;margin:0 0 1rem;font-size:.92rem;
+  }
+  .note p{margin:0}
+  .note-title{
+    font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--wire);display:block;margin-bottom:.35rem;
+  }
+  .truco{border-left:2px solid var(--slate-600);padding:.1rem 0 .1rem 1.1rem;margin-bottom:1.5rem}
+  .truco.pick{border-left-color:var(--amp)}
+  .truco h3{margin-top:0}
+  .truco p{margin-bottom:0;color:var(--dim);font-size:.95rem}
+  .truco p strong{color:var(--light);font-weight:500}
+  .tag{
+    font-family:"IBM Plex Mono",monospace;font-size:.66rem;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--amp);margin-left:.5rem;
+  }
+  .tablewrap{overflow-x:auto;margin:0 0 1.25rem}
+  table{border-collapse:collapse;width:100%;font-size:.88rem;min-width:26rem}
+  th{
+    text-align:left;font-family:"IBM Plex Mono",monospace;
+    font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--dim);font-weight:400;
+    padding:0 1rem .5rem 0;border-bottom:1px solid var(--slate-700);
+  }
+  td{padding:.65rem 1rem .65rem 0;border-bottom:1px solid var(--slate-800);color:var(--dim);vertical-align:top}
+  td:first-child{color:var(--light)}
+  footer{
+    margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--slate-700);
+    font-family:"IBM Plex Mono",monospace;font-size:.72rem;
+    color:var(--slate-600);line-height:1.9;
+  }
+  footer a{color:var(--dim)}
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Guía · Claude Code a fondo</p>
+  <h1>Los trucos del creador.<br>Y las <em>skills</em> que lo cambian todo.</h1>
+  <p class="standfirst">Cómo configurar Claude Code igual que la gente que lo construye, cómo instalar skills hechas por la comunidad y cómo escribir la tuya. Todo copiable, todo en español.</p>
+
+  <nav class="toc">
+    <p>Recorrido</p>
+    <ol>
+      <li><a href="#instalar">Instalar Claude Code en dos minutos</a></li>
+      <li><a href="#trucos">Los seis trucos del creador</a></li>
+      <li><a href="#que-es-skill">Qué es una skill (de verdad)</a></li>
+      <li><a href="#instalar-skill">Instalar una skill hecha</a></li>
+      <li><a href="#tu-skill">Escribir tu propia skill</a></li>
+      <li><a href="#claude-md">CLAUDE.md: la memoria del proyecto</a></li>
+      <li><a href="#errores">Los errores que comete todo el mundo</a></li>
+    </ol>
+  </nav>
+</header>
+
+<section id="instalar">
+  <p class="phase">Antes de nada</p>
+  <h2>Instalar Claude Code en dos minutos</h2>
+  <hr class="rule">
+
+  <p>Claude Code es Claude dentro de tu terminal, con permiso para leer y escribir archivos y ejecutar comandos. Si ya lo tienes, salta a los trucos.</p>
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Instala el programa</h3>
+    <div class="step-body">
+      <div class="code"><pre>curl -fsSL https://claude.ai/install.sh | bash</pre><button class="copy">Copiar</button></div>
+      <p>En Windows, desde PowerShell: <code>irm https://claude.ai/install.ps1 | iex</code>. Si prefieres npm: <code>npm install -g @anthropic-ai/claude-code</code>.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>Arranca y entra con tu cuenta</h3>
+    <div class="step-body">
+      <div class="code"><pre>claude</pre><button class="copy">Copiar</button></div>
+      <p>La primera vez te abre el navegador para entrar con tu cuenta de Claude (los planes de pago incluyen Claude Code sin coste extra). Y listo: ya puedes escribirle en la terminal como le escribirías en el chat.</p>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="note-title">El modelo importa</span>
+    <p>Para el día a día, Opus 5 va sobrado. Cambias de modelo con <code>/model</code> dentro de la sesión.</p>
+  </div>
+</section>
+
+<section id="trucos">
+  <p class="phase">Configuración</p>
+  <h2>Los seis trucos del creador</h2>
+  <hr class="rule">
+
+  <p>El creador de Claude Code contó públicamente cómo lo configura él. Son seis ajustes, y ninguno es cosmético: cada uno quita una fricción concreta. Según tu versión, alguno puede llegar primero al canal beta; si no te aparece, actualiza con <code>claude update</code>.</p>
+
+  <div class="truco">
+    <h3>1 · Modo automático de permisos</h3>
+    <p>Por defecto, Claude Code te pide permiso antes de cada comando. El modo automático mete un clasificador en medio: decide al momento si el comando es seguro y, si lo es, lo ejecuta sin preguntar. <strong>Se acabó darle a aceptar cada diez segundos.</strong> Cambias de modo de permisos con Mayús+Tab dentro de la sesión.</p>
+  </div>
+
+  <div class="truco">
+    <h3>2 · /fewer-permission-prompts</h3>
+    <p>Escanea tu historial de sesiones, detecta los permisos que apruebas siempre (los mismos comandos, una vez tras otra) y te propone una lista para dejarlos aprobados de una vez en la configuración del proyecto. Lo ejecutas una vez y las sesiones siguientes van solas.</p>
+  </div>
+
+  <div class="truco">
+    <h3>3 · Resúmenes al volver</h3>
+    <p>Si te alejas un rato del ordenador mientras Claude trabaja, al volver te encuentras un resumen: qué ha hecho y qué viene ahora. Sigues por donde ibas sin releer cuarenta líneas de terminal.</p>
+  </div>
+
+  <div class="truco">
+    <h3>4 · Modo foco</h3>
+    <p>Oculta el trabajo intermedio (las búsquedas, los comandos, el ruido) y te enseña solo el resultado. Para sesiones largas donde no quieres supervisar cada paso, es la diferencia entre mirar una terminal y leer un informe.</p>
+  </div>
+
+  <div class="truco">
+    <h3>5 · Niveles de esfuerzo</h3>
+    <p>Con <code>/effort</code> eliges cuánto piensa el modelo antes de actuar. Alto para el día a día; el máximo, para los problemas de verdad duros. Más esfuerzo es más lento y más caro en tokens: se sube cuando el problema lo pide, no por defecto.</p>
+  </div>
+
+  <div class="truco pick">
+    <h3>6 · Darle una forma de verificarse <span class="tag">el importante</span></h3>
+    <p>Es el truco que más calidad añade y no es un ajuste: es un hábito. Dale siempre a Claude una manera de comprobar su propio trabajo antes de entregártelo: unos tests que pueda ejecutar, una captura de la app funcionando, un comando que valide el resultado. <strong>Un agente que se corrige solo vale por dos.</strong> Pídelo tal cual: «antes de darlo por terminado, ejecuta los tests y arregla lo que falle».</p>
+  </div>
+</section>
+
+<section id="que-es-skill">
+  <p class="phase">Skills · concepto</p>
+  <h2>Qué es una skill (de verdad)</h2>
+  <hr class="rule">
+
+  <p>Una skill es una carpeta con un archivo de instrucciones dentro. Nada más. El archivo se llama <code>SKILL.md</code> y le enseña a Claude un oficio: cómo quieres que haga una tarea concreta, con tus reglas, tus pasos y tus ejemplos.</p>
+
+  <p>La diferencia con un prompt suelto es que la skill <strong>vive en disco y se dispara sola</strong>: cuando tu petición encaja con la descripción de la skill, Claude la carga y sigue sus instrucciones. También puedes invocarla a mano escribiendo <code>/nombre-de-la-skill</code>.</p>
+
+  <div class="tablewrap">
+    <table>
+      <tr><th>Dónde vive</th><th>Alcance</th></tr>
+      <tr><td><code>~/.claude/skills/&lt;nombre&gt;/</code></td><td>Personal: disponible en todos tus proyectos</td></tr>
+      <tr><td><code>.claude/skills/&lt;nombre&gt;/</code></td><td>De proyecto: viaja con el repo y la usa todo el equipo</td></tr>
+    </table>
+  </div>
+
+  <p>De esto va la locura que viste en el reel: alguien escribe una skill que le enseña a Claude a generar piezas de ingeniería, la sube a GitHub, y cualquiera se la instala. El conocimiento de un experto, empaquetado en una carpeta.</p>
+</section>
+
+<section id="instalar-skill">
+  <p class="phase">Skills · usar</p>
+  <h2>Instalar una skill hecha</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Encuentra la skill</h3>
+    <div class="step-body">
+      <p>El punto de partida es el repositorio oficial de Anthropic, <a href="https://github.com/anthropics/skills">github.com/anthropics/skills</a>, con skills listas para documentos, hojas de cálculo, PDFs y más. A partir de ahí, GitHub: busca «claude skill» y el tema que quieras. La del reel, la que convierte descripciones en piezas de ingeniería exportables a SolidWorks y Fusion, se llama <strong>text-to-cad</strong> y la encuentras buscándola tal cual en GitHub. Antes de instalar nada, léete el <code>SKILL.md</code>: son instrucciones que Claude va a seguir en tu máquina.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>Cópiala a tu carpeta de skills</h3>
+    <div class="step-body">
+      <div class="code"><pre><span class="c"># ejemplo: clonar el repo oficial y copiar una skill concreta</span>
+git clone https://github.com/anthropics/skills /tmp/skills
+cp -r /tmp/skills/document-skills/pdf ~/.claude/skills/pdf</pre><button class="copy">Copiar</button></div>
+      <p>Eso es todo. No hay registro, no hay tienda, no hay build: una carpeta en su sitio.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">03</span>
+    <h3>Compruébala</h3>
+    <div class="step-body">
+      <p>Abre una sesión nueva de <code>claude</code> y pídele algo que encaje con la skill, o invócala directa con <code>/pdf</code>. Si no se dispara sola, el problema casi siempre es la descripción (lo vemos en los errores, abajo).</p>
+    </div>
+  </div>
+</section>
+
+<section id="tu-skill">
+  <p class="phase">Skills · crear</p>
+  <h2>Escribir tu propia skill</h2>
+  <hr class="rule">
+
+  <p>Aquí está el truco que casi nadie usa: no hace falta encontrar la skill perfecta, porque te la puedes escribir. O mejor: <strong>pedirle a Claude que se la escriba él</strong>. Una skill útil sale de una frase como esta:</p>
+
+  <div class="code"><pre>Crea una skill en ~/.claude/skills/notas-de-parche que convierta la lista
+de cambios de mi mod en notas de parche listas para publicar: tono directo,
+agrupadas en Nuevo / Cambiado / Arreglado, con los números exactos de cada
+ajuste, y una versión corta de tres líneas para Discord.</pre><button class="copy">Copiar</button></div>
+
+  <p>La anatomía de lo que genera (y que puedes escribir a mano en cinco minutos):</p>
+
+  <div class="code"><pre><span class="c"># ~/.claude/skills/notas-de-parche/SKILL.md</span>
+---
+name: notas-de-parche
+description: Convierte una lista de cambios de un mod o un juego en notas
+  de parche publicables. Usar cuando pidan notas de parche, changelog o
+  resumen de versión.
+---
+
+Recibes una lista de cambios en bruto y devuelves dos piezas:
+
+1. Notas de parche completas, agrupadas en Nuevo / Cambiado / Arreglado.
+   Cada línea dice el cambio y el número exacto (antes → después).
+2. Versión corta: tres líneas para Discord, sin tecnicismos.
+
+Reglas: tono directo, nada de "se ha procedido a", los nombres de los
+objetos del juego siempre en cursiva.</pre><button class="copy">Copiar</button></div>
+
+  <div class="step">
+    <span class="step-num">→</span>
+    <h3>Las tres reglas de una skill que funciona</h3>
+    <div class="step-body">
+      <ul>
+        <li><strong>La descripción decide si se dispara.</strong> Es lo único que Claude lee para elegir skill: escribe en ella las palabras con las que TÚ pides la tarea («notas de parche», «changelog»).</li>
+        <li><strong>Instrucciones, no teoría.</strong> El cuerpo son órdenes y ejemplos, como se las darías a alguien nuevo en el equipo. Si tienes un buen y un mal ejemplo, mételos: valen más que diez reglas.</li>
+        <li><strong>Los archivos de apoyo van en la carpeta.</strong> Una plantilla, un script, una referencia larga: se guardan junto al <code>SKILL.md</code> y se citan desde él. Así la skill carga ligera y tira de los archivos solo cuando los necesita.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="claude-md">
+  <p class="phase">Memoria</p>
+  <h2>CLAUDE.md: la memoria del proyecto</h2>
+  <hr class="rule">
+
+  <p>Las skills enseñan oficios; <code>CLAUDE.md</code> enseña tu proyecto. Es un archivo en la raíz del repo que Claude lee al empezar cada sesión: qué es el proyecto, cómo se ejecuta, qué reglas de la casa hay. Se genera un primer borrador con <code>/init</code> y se poda a mano.</p>
+
+  <div class="code"><pre><span class="c"># CLAUDE.md — ejemplo mínimo y suficiente</span>
+Mod de Stardew Valley con SMAPI. C# en src/, se compila con `dotnet build`.
+El resultado se copia solo a la carpeta Mods del juego.
+
+Reglas:
+- Los textos visibles en el juego, siempre en español de España.
+- Antes de dar nada por hecho: compilar y arrancar el juego una vez.</pre><button class="copy">Copiar</button></div>
+
+  <div class="note">
+    <span class="note-title">Corto funciona mejor</span>
+    <p>CLAUDE.md se carga entero en cada sesión. Veinte líneas que se cumplen valen más que doscientas que diluyen lo importante.</p>
+  </div>
+</section>
+
+<section id="errores">
+  <p class="phase">Diagnóstico</p>
+  <h2>Los errores que comete todo el mundo</h2>
+  <hr class="rule">
+
+  <div class="tablewrap">
+    <table>
+      <tr><th>Síntoma</th><th>Causa y arreglo</th></tr>
+      <tr><td>La skill no se dispara sola</td><td>La descripción no contiene las palabras con las que pides la tarea. Reescríbela con tus frases reales y prueba en una sesión nueva.</td></tr>
+      <tr><td>Se dispara la skill equivocada</td><td>Dos descripciones se pisan. Haz cada una más concreta: «notas de parche de mods de Stardew» en vez de «escribir notas».</td></tr>
+      <tr><td>Claude ignora partes del SKILL.md</td><td>El archivo es demasiado largo o mezcla teoría con órdenes. Deja las órdenes arriba y mueve la referencia larga a archivos de apoyo.</td></tr>
+      <tr><td>Cada sesión repite los mismos errores</td><td>Eso no es una skill: es memoria de proyecto. Va en CLAUDE.md, que se carga siempre.</td></tr>
+      <tr><td>Aprueba permisos sin parar</td><td>Ejecuta /fewer-permission-prompts y revisa la lista que propone antes de aceptarla.</td></tr>
+    </table>
+  </div>
+
+  <div class="warn">
+    <span class="warn-title">Skills ajenas, con lupa</span>
+    <p>Una skill son instrucciones que Claude ejecuta en tu máquina, con tus permisos. Instala solo de fuentes que puedas leer, y léelas. Si un SKILL.md pide descargar y ejecutar cosas raras, ahí se acaba la instalación.</p>
+  </div>
+</section>
+
+<footer>
+  <p>Guía viva · agosto de 2026 · escrita para acompañar a los reels de @jaime</p>
+  <p>¿Te va más hacer mods? Escribe MOD en cualquier reel. ¿Montar tu primera app? Escribe APP.</p>
+</footer>
+
+</div>
+<script>
+(function(){
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var code = btn.parentNode.querySelector('pre').innerText;
+      navigator.clipboard.writeText(code).then(function(){
+        btn.textContent = 'Copiado';
+        setTimeout(function(){ btn.textContent = 'Copiar'; }, 1600);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

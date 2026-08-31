@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>De idea a app con Claude · la guía</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --slate-900:#14181d;
+    --slate-800:#1c222a;
+    --slate-700:#2a323c;
+    --slate-600:#3d4854;
+    --light:#dde2e5;
+    --dim:#8b98a5;
+    --amp:#64b1d1;
+    --wire:#f2b33d;
+    --alert:#d9544d;
+    --measure:44rem;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--slate-900);color:var(--light);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:16px;line-height:1.65;
+    padding:0 1.25rem 5rem;
+  }
+  .wrap{max-width:var(--measure);margin:0 auto}
+  .masthead{padding:3.5rem 0 2rem;border-bottom:1px solid var(--slate-700)}
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--amp);margin:0 0 1.25rem;
+  }
+  h1{
+    font-family:"Oswald",sans-serif;font-weight:600;
+    font-size:clamp(2rem,7.5vw,3.2rem);line-height:1.08;text-transform:uppercase;
+    margin:0 0 1.25rem;
+  }
+  h1 em{font-style:normal;color:var(--amp)}
+  .standfirst{font-size:1.05rem;color:var(--dim);max-width:36rem;margin:0}
+  .toc{
+    background:var(--slate-800);border:1px solid var(--slate-700);
+    border-radius:3px;padding:1.25rem;margin:2rem 0 0;
+  }
+  .toc p{
+    font-family:"IBM Plex Mono",monospace;font-size:.68rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin:0 0 .8rem;
+  }
+  .toc ol{margin:0;padding-left:1.2rem;font-size:.92rem}
+  .toc li{margin-bottom:.35rem}
+  .toc li::marker{color:var(--slate-600);font-family:"IBM Plex Mono",monospace;font-size:.8rem}
+  .toc a{color:var(--light);text-decoration:none;border-bottom:1px solid var(--slate-600)}
+  .toc a:hover{color:var(--amp);border-color:var(--amp)}
+  section{padding-top:3.25rem}
+  h2{
+    font-family:"Oswald",sans-serif;font-weight:600;font-size:1.6rem;
+    text-transform:uppercase;margin:0 0 .35rem;
+  }
+  .phase{
+    font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--amp);margin:0 0 .4rem;
+  }
+  .rule{border:0;border-top:1px solid var(--slate-700);margin:0 0 1.5rem}
+  h3{font-family:"IBM Plex Sans",sans-serif;font-weight:600;font-size:1.05rem;margin:2rem 0 .5rem}
+  p{margin:0 0 1rem}
+  a{color:var(--amp)}
+  .step{
+    display:grid;grid-template-columns:2.8rem 1fr;gap:0 1rem;
+    padding:1.6rem 0;border-bottom:1px solid var(--slate-800);
+  }
+  .step-num{
+    font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:.9rem;
+    color:var(--slate-600);line-height:1.9;letter-spacing:.05em;
+  }
+  .step h3{margin:0 0 .6rem;grid-column:2;font-size:1rem}
+  .step-body{grid-column:2}
+  .step-body > *:last-child{margin-bottom:0}
+  .step ul{margin:0 0 1rem;padding-left:1.1rem;color:var(--dim);font-size:.94rem}
+  .step li{margin-bottom:.45rem}
+  .step li strong{color:var(--light);font-weight:500}
+  @media (max-width:30rem){
+    .step{grid-template-columns:1fr;gap:0}
+    .step-num{line-height:1.4;margin-bottom:.3rem}
+    .step h3,.step-body{grid-column:1}
+  }
+  .code{position:relative;margin:0 0 1rem}
+  pre{
+    font-family:"IBM Plex Mono",monospace;font-size:.8rem;line-height:1.75;
+    background:#0e1216;border:1px solid var(--slate-700);border-radius:3px;
+    padding:1rem 3.2rem 1rem 1rem;margin:0;overflow-x:auto;color:var(--light);
+  }
+  pre .c{color:var(--dim)}
+  pre .k{color:var(--amp)}
+  .copy{
+    position:absolute;top:.55rem;right:.55rem;
+    font-family:"IBM Plex Mono",monospace;font-size:.62rem;
+    letter-spacing:.08em;text-transform:uppercase;
+    background:var(--slate-800);color:var(--dim);
+    border:1px solid var(--slate-600);border-radius:2px;
+    padding:.3rem .5rem;cursor:pointer;
+  }
+  .copy:hover{color:var(--amp);border-color:var(--amp)}
+  .copy:focus-visible{outline:2px solid var(--amp);outline-offset:2px}
+  code:not(pre code){
+    font-family:"IBM Plex Mono",monospace;font-size:.87em;
+    background:var(--slate-800);padding:.1em .35em;border-radius:2px;color:var(--amp);
+  }
+  .warn{
+    background:rgba(217,84,77,.07);border-left:2px solid var(--alert);
+    padding:.9rem 1rem;margin:0 0 1rem;font-size:.92rem;
+  }
+  .warn p{margin:0}
+  .warn-title{
+    font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--alert);display:block;margin-bottom:.35rem;
+  }
+  .note{
+    background:rgba(100,177,209,.07);border-left:2px solid var(--amp);
+    padding:.9rem 1rem;margin:0 0 1rem;font-size:.92rem;
+  }
+  .note p{margin:0}
+  .note-title{
+    font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--amp);display:block;margin-bottom:.35rem;
+  }
+  .via{border:1px solid var(--slate-700);border-radius:3px;padding:1.2rem;margin-bottom:1rem}
+  .via.pick{border-color:var(--amp)}
+  .via h3{margin:0 0 .5rem}
+  .via p{margin:0;font-size:.95rem;color:var(--dim)}
+  .tag{
+    font-family:"IBM Plex Mono",monospace;font-size:.66rem;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--amp);margin-left:.5rem;
+  }
+  .tablewrap{overflow-x:auto;margin:0 0 1.25rem}
+  table{border-collapse:collapse;width:100%;font-size:.88rem;min-width:26rem}
+  th{
+    text-align:left;font-family:"IBM Plex Mono",monospace;
+    font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--dim);font-weight:400;
+    padding:0 1rem .5rem 0;border-bottom:1px solid var(--slate-700);
+  }
+  td{padding:.65rem 1rem .65rem 0;border-bottom:1px solid var(--slate-800);color:var(--dim);vertical-align:top}
+  td:first-child{color:var(--light)}
+  footer{
+    margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--slate-700);
+    font-family:"IBM Plex Mono",monospace;font-size:.72rem;
+    color:var(--slate-600);line-height:1.9;
+  }
+  footer a{color:var(--dim)}
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Guía · construir con IA</p>
+  <h1>De idea a <em>app</em>,<br>sin saber programar.</h1>
+  <p class="standfirst">Describes lo que quieres. Claude lo construye, tú lo pruebas y le pides cambios como se los pedirías a una persona. Esta es la ruta entera: de la carpeta vacía a la app publicada con enlace propio, esta misma semana.</p>
+
+  <nav class="toc">
+    <p>Recorrido</p>
+    <ol>
+      <li><a href="#cambio">Lo que ha cambiado</a></li>
+      <li><a href="#preparar">Instalar Claude Code</a> · pasos 1–2</li>
+      <li><a href="#metodo">El método: describir, probar, pedir</a> · pasos 3–6</li>
+      <li><a href="#publicar">Publicarla gratis con enlace propio</a> · pasos 7–8</li>
+      <li><a href="#movil">¿Y en el móvil?</a></li>
+      <li><a href="#juegos">¿Y un juego?</a></li>
+      <li><a href="#errores">Los cinco errores del principiante</a></li>
+    </ol>
+  </nav>
+</header>
+
+<section id="cambio">
+  <p class="phase">Punto de partida</p>
+  <h2>Lo que ha cambiado</h2>
+  <hr class="rule">
+
+  <p>Hasta hace nada, entre tu idea y una app funcionando había años de aprender a programar o miles de euros de encargo. Eso es lo que se ha caído: <strong>Claude Code escribe el código mientras tú describes la app</strong>, la ejecuta en tu ordenador, y corrige lo que le digas mirando el resultado.</p>
+
+  <p>Tu trabajo ya no es programar. Es saber qué quieres, contarlo claro y probar sin piedad. Que no es poco: es exactamente la parte que la IA no puede poner.</p>
+</section>
+
+<section id="preparar">
+  <p class="phase">Preparación</p>
+  <h2>Instalar Claude Code</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Instala y entra</h3>
+    <div class="step-body">
+      <div class="code"><pre>curl -fsSL https://claude.ai/install.sh | bash</pre><button class="copy">Copiar</button></div>
+      <p>En Windows, desde PowerShell: <code>irm https://claude.ai/install.ps1 | iex</code>. Después escribe <code>claude</code>, entra con tu cuenta, y ya tienes a Claude dentro de la terminal, con manos para crear archivos y ejecutar cosas.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>Una carpeta por app</h3>
+    <div class="step-body">
+      <div class="code"><pre>mkdir mi-app
+cd mi-app
+claude</pre><button class="copy">Copiar</button></div>
+      <p>Carpeta vacía, sesión nueva. Todo lo que Claude construya vive aquí dentro.</p>
+    </div>
+  </div>
+</section>
+
+<section id="metodo">
+  <p class="phase">Construcción</p>
+  <h2>El método: describir, probar, pedir</h2>
+  <hr class="rule">
+
+  <p>De ejemplo, una app real y útil para cualquier jugador: un gestor de backlog, la lista de juegos pendientes. Cambia el ejemplo por tu idea; el método no cambia.</p>
+
+  <div class="step">
+    <span class="step-num">03</span>
+    <h3>Describe la app como si fuera para un amigo</h3>
+    <div class="step-body">
+      <div class="code"><pre>Quiero una app web para gestionar mi backlog de juegos. Debe permitir:
+añadir un juego con nombre, plataforma y horas estimadas; marcarlo como
+jugando, terminado o abandonado; y ver el total de horas pendientes.
+Todo se guarda en el navegador: sin cuentas, sin servidor.
+Estética oscura, tipo Steam.
+Antes de escribir código, hazme las preguntas que necesites y
+proponme el plan.</pre><button class="copy">Copiar</button></div>
+      <p>La última frase es la importante. Con «pregunta y propón el plan», las decisiones de diseño se toman antes de construir, no después de haber construido lo que no era.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">04</span>
+    <h3>Pide poco para empezar</h3>
+    <div class="step-body">
+      <p>Si tu idea tiene diez funciones, empieza con tres. Una app pequeña que funciona hoy y crece mañana gana siempre a una app enorme que nunca llega a funcionar. Las otras siete funciones no se pierden: se piden después, una a una, sobre algo que ya ves moverse.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">05</span>
+    <h3>Ábrela y prueba sin piedad</h3>
+    <div class="step-body">
+      <p>Claude te dirá cómo verla (normalmente un comando y una dirección local en el navegador). Prueba como un usuario cabreado: añade un juego sin nombre, mete quinientas horas, recarga la página a ver si se borra todo. Cada cosa rara que encuentres, se la cuentas:</p>
+      <div class="code"><pre>Al añadir un juego sin nombre se crea una tarjeta vacía. No debería
+dejarme. Y al recargar la página se pierde el filtro que tenía puesto.
+Arregla las dos cosas y compruébalas antes de decirme que están.</pre><button class="copy">Copiar</button></div>
+      <p>Fíjate en el remate: <strong>«compruébalas antes de decirme que están»</strong>. Pedir la verificación es el truco número uno para que lo entregado funcione a la primera.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">06</span>
+    <h3>Guarda cada versión buena</h3>
+    <div class="step-body">
+      <div class="code"><pre>Esto funciona. Haz commit de esta versión con git.</pre><button class="copy">Copiar</button></div>
+      <p>Cuando un cambio rompa la app (pasará), se vuelve a la última versión buena en segundos. Claude maneja git por ti; tú solo marca los momentos de «esto funciona».</p>
+    </div>
+  </div>
+</section>
+
+<section id="publicar">
+  <p class="phase">Publicación</p>
+  <h2>Publicarla gratis con enlace propio</h2>
+  <hr class="rule">
+
+  <p>Una app en tu ordenador está bien. Una app con enlace que puedes mandar por WhatsApp es otra cosa. Para una app como la del ejemplo (todo en el navegador, sin servidor), publicar es gratis y son dos pasos.</p>
+
+  <div class="step">
+    <span class="step-num">07</span>
+    <h3>Súbela a GitHub</h3>
+    <div class="step-body">
+      <div class="code"><pre>Quiero publicar esta app. Crea el repositorio en GitHub y súbela.
+Si me falta algo por instalar o configurar, guíame paso a paso.</pre><button class="copy">Copiar</button></div>
+      <p>Necesitas una cuenta gratuita de GitHub. Del resto (instalar la herramienta <code>gh</code>, autenticarte, crear el repo) te va guiando Claude.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">08</span>
+    <h3>Activa GitHub Pages</h3>
+    <div class="step-body">
+      <div class="code"><pre>Activa GitHub Pages en este repositorio y dame la URL pública.
+Comprueba que la app carga bien en esa URL.</pre><button class="copy">Copiar</button></div>
+      <p>Resultado: <code>tuusuario.github.io/mi-app</code>, gratis y para siempre. Para apps con servidor o base de datos, el equivalente es Vercel: también tiene plan gratuito y a Claude le pides el despliegue igual, con las mismas palabras.</p>
+    </div>
+  </div>
+</section>
+
+<section id="movil">
+  <p class="phase">Móvil</p>
+  <h2>¿Y en el móvil?</h2>
+  <hr class="rule">
+
+  <div class="via pick">
+    <h3>Vía corta · app web instalable <span class="tag">empieza aquí</span></h3>
+    <p>Pídele a Claude que convierta tu app web en PWA: «hazla instalable como PWA, con su icono». Desde el navegador del móvil, «añadir a pantalla de inicio», y ya tienes tu app con icono, a pantalla completa, sin pasar por ninguna tienda. Para el noventa por ciento de ideas, esto es todo lo que hace falta.</p>
+  </div>
+
+  <div class="via">
+    <h3>Vía larga · app nativa de iPhone</h3>
+    <p>Existir, existe: Claude Code escribe apps nativas de iOS, y con Mac y Xcode las pruebas en tu iPhone. Sin Mac, herramientas como <a href="https://github.com/MobAI-App/ios-builder">ios-builder</a> compilan en un Mac en la nube desde Windows o Linux con un comando. Es la vía para cuando la idea necesite de verdad cosas del sistema (notificaciones serias, widgets, sensores); si no las necesita, la PWA te ahorra semanas.</p>
+  </div>
+</section>
+
+<section id="juegos">
+  <p class="phase">Juegos</p>
+  <h2>¿Y un juego?</h2>
+  <hr class="rule">
+
+  <p>El mismo método hace juegos de navegador. Cambia el prompt inicial y poco más:</p>
+
+  <div class="code"><pre>Quiero un juego de navegador en un solo archivo HTML: una nave que
+esquiva asteroides, controlada con las flechas. Puntuación por tiempo,
+récord guardado en el navegador, y que se juegue igual de bien en el
+móvil con el dedo. Empieza por la versión mínima jugable.</pre><button class="copy">Copiar</button></div>
+
+  <p>«La versión mínima jugable» es la clave: primero que la nave se mueva y algo te mate. Los power-ups, los niveles y la música se piden después, uno a uno, probando entre medias. Un juego se itera aún más que una app: aquí «probar sin piedad» significa jugar, que es la mejor parte del trabajo.</p>
+
+  <p>Y la misma ola llega a los motores grandes: ya hay plugins de IA dentro de Unreal Engine que montan niveles enteros desde una descripción. El patrón es idéntico al de esta guía: describes, el agente construye, tú juzgas el resultado.</p>
+</section>
+
+<section id="errores">
+  <p class="phase">Diagnóstico</p>
+  <h2>Los cinco errores del principiante</h2>
+  <hr class="rule">
+
+  <div class="tablewrap">
+    <table>
+      <tr><th>Error</th><th>Qué hacer en su lugar</th></tr>
+      <tr><td>Pedir la app entera en un prompt</td><td>Versión mínima primero; el resto, una función por petición, probando entre medias.</td></tr>
+      <tr><td>Aceptar «ya está» sin abrir la app</td><td>Probar siempre. Y pedir que Claude verifique antes de entregar: «compruébalo antes de decirme que está».</td></tr>
+      <tr><td>Describir el fallo a medias</td><td>Qué hiciste, qué esperabas, qué pasó. Si hay mensaje de error, se pega entero, sin resumir.</td></tr>
+      <tr><td>No guardar versiones</td><td>«Haz commit» en cada versión que funcione. Volver atrás cuesta segundos; reconstruir, tardes.</td></tr>
+      <tr><td>Empezar de cero cada sesión</td><td>Pide un CLAUDE.md con las reglas del proyecto. Cada sesión nueva arranca sabiendo cómo va tu app.</td></tr>
+    </table>
+  </div>
+
+  <div class="warn">
+    <span class="warn-title">Claves y pagos, con cabeza</span>
+    <p>Si tu app usa servicios de pago o claves de API, esas claves no se escriben dentro del código que subes a GitHub. Pídeselo así a Claude: «gestiona las claves fuera del código y comprueba que no hay ninguna en el repositorio».</p>
+  </div>
+</section>
+
+<footer>
+  <p>Guía viva · agosto de 2026 · escrita para acompañar a los reels de @jaime</p>
+  <p>¿Hacerle mods a tus juegos? Escribe MOD en cualquier reel. ¿Claude Code a fondo? Escribe SKILLS.</p>
+</footer>
+
+</div>
+<script>
+(function(){
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var code = btn.parentNode.querySelector('pre').innerText;
+      navigator.clipboard.writeText(code).then(function(){
+        btn.textContent = 'Copiado';
+        setTimeout(function(){ btn.textContent = 'Copiar'; }, 1600);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
