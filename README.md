@@ -13,7 +13,8 @@ GitHub Pages y listos para incrustar como iframe en cualquier página.
 - **Sistema:** `assets/racks.css` (tokens y bloques) y `assets/racks.js`
   (copiar código, índice activo, altura automática dentro de un iframe).
 - **Punto de partida:** `recursos/plantilla.html`.
-- **Referencia:** [ESTILO.md](ESTILO.md).
+- **Referencia:** [ESTILO.md](ESTILO.md) para el sistema visual,
+  [CLAUDE.md](CLAUDE.md) para cómo se publica un recurso nuevo.
 
 ## Incrustar
 
