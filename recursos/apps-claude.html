@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>De idea a app con Claude · Recursos Racks Academy</title>
+<meta name="description" content="La ruta entera para construir una app con Claude Code sin saber programar: describir, probar, pedir cambios y publicarla gratis con enlace propio. Con móvil y juegos incluidos.">
+<meta property="og:title" content="De idea a app, sin saber programar">
+<meta property="og:description" content="Describes lo que quieres. Claude lo construye, tú lo pruebas y le pides cambios. De la carpeta vacía a la app publicada.">
+<meta property="og:type" content="article">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/racks.css">
+<script>/* fija el modo antes del primer pintado */(function(){var h=document.documentElement,s=location.search;if(s.indexOf('embed=1')>-1)h.classList.add('is-embed');if(window.self!==window.top)h.classList.add('is-framed');if(s.indexOf('bg=transparent')>-1)h.classList.add('is-transparent');})();</script>
+<script defer src="../assets/racks.js"></script>
+</head>
+
+<body data-resource-id="apps-claude">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="watermark-r" aria-hidden="true">R</div>
+
+<header class="topbar" data-embed-hide>
+  <span class="topbar-mark" aria-hidden="true">R</span>
+  <a class="topbar-name" href="../index.html">Racks Academy</a>
+  <span class="topbar-sep" aria-hidden="true">/</span>
+  <span class="topbar-here">De idea a app con Claude</span>
+</header>
+
+<main class="shell" id="contenido">
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Guía · construir con IA</p>
+  <h1>De idea a <em>app</em>,<br>sin saber programar.</h1>
+  <p class="standfirst">Describes lo que quieres. Claude lo construye, tú lo pruebas y le pides cambios como se los pedirías a una persona. Esta es la ruta entera: de la carpeta vacía a la app publicada con enlace propio, esta misma semana.</p>
+
+  <nav class="toc">
+    <p>Recorrido</p>
+    <ol>
+      <li><a href="#cambio">Lo que ha cambiado</a></li>
+      <li><a href="#preparar">Instalar Claude Code</a> · pasos 1–2</li>
+      <li><a href="#metodo">El método: describir, probar, pedir</a> · pasos 3–6</li>
+      <li><a href="#publicar">Publicarla gratis con enlace propio</a> · pasos 7–8</li>
+      <li><a href="#movil">¿Y en el móvil?</a></li>
+      <li><a href="#juegos">¿Y un juego?</a></li>
+      <li><a href="#errores">Los cinco errores del principiante</a></li>
+    </ol>
+  </nav>
+</header>
+
+<section id="cambio">
+  <p class="phase">Punto de partida</p>
+  <h2>Lo que ha cambiado</h2>
+  <hr class="rule">
+
+  <p>Hasta hace nada, entre tu idea y una app funcionando había años de aprender a programar o miles de euros de encargo. Eso es lo que se ha caído: <strong>Claude Code escribe el código mientras tú describes la app</strong>, la ejecuta en tu ordenador, y corrige lo que le digas mirando el resultado.</p>
+
+  <p>Tu trabajo ya no es programar. Es saber qué quieres, contarlo claro y probar sin piedad. Que no es poco: es exactamente la parte que la IA no puede poner.</p>
+</section>
+
+<section id="preparar">
+  <p class="phase">Preparación</p>
+  <h2>Instalar Claude Code</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Instala y entra</h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>curl -fsSL https://claude.ai/install.sh | bash</pre>
+      </div>
+      <p>En Windows, desde PowerShell: <code>irm https://claude.ai/install.ps1 | iex</code>. Después escribe <code>claude</code>, entra con tu cuenta, y ya tienes a Claude dentro de la terminal, con manos para crear archivos y ejecutar cosas.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>Una carpeta por app</h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>mkdir mi-app
+cd mi-app
+claude</pre>
+      </div>
+      <p>Carpeta vacía, sesión nueva. Todo lo que Claude construya vive aquí dentro.</p>
+    </div>
+  </div>
+</section>
+
+<section id="metodo">
+  <p class="phase">Construcción</p>
+  <h2>El método: describir, probar, pedir</h2>
+  <hr class="rule">
+
+  <p>De ejemplo, una app real y útil para cualquier jugador: un gestor de backlog, la lista de juegos pendientes. Cambia el ejemplo por tu idea; el método no cambia.</p>
+
+  <div class="step">
+    <span class="step-num">03</span>
+    <h3>Describe la app como si fuera para un amigo</h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>Quiero una app web para gestionar mi backlog de juegos. Debe permitir:
+añadir un juego con nombre, plataforma y horas estimadas; marcarlo como
+jugando, terminado o abandonado; y ver el total de horas pendientes.
+Todo se guarda en el navegador: sin cuentas, sin servidor.
+Estética oscura, tipo Steam.
+Antes de escribir código, hazme las preguntas que necesites y
+proponme el plan.</pre>
+      </div>
+      <p>La última frase es la importante. Con «pregunta y propón el plan», las decisiones de diseño se toman antes de construir, no después de haber construido lo que no era.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">04</span>
+    <h3>Pide poco para empezar</h3>
+    <div class="step-body">
+      <p>Si tu idea tiene diez funciones, empieza con tres. Una app pequeña que funciona hoy y crece mañana gana siempre a una app enorme que nunca llega a funcionar. Las otras siete funciones no se pierden: se piden después, una a una, sobre algo que ya ves moverse.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">05</span>
+    <h3>Ábrela y prueba sin piedad</h3>
+    <div class="step-body">
+      <p>Claude te dirá cómo verla (normalmente un comando y una dirección local en el navegador). Prueba como un usuario cabreado: añade un juego sin nombre, mete quinientas horas, recarga la página a ver si se borra todo. Cada cosa rara que encuentres, se la cuentas:</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>Al añadir un juego sin nombre se crea una tarjeta vacía. No debería
+dejarme. Y al recargar la página se pierde el filtro que tenía puesto.
+Arregla las dos cosas y compruébalas antes de decirme que están.</pre>
+      </div>
+      <p>Fíjate en el remate: <strong>«compruébalas antes de decirme que están»</strong>. Pedir la verificación es el truco número uno para que lo entregado funcione a la primera.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">06</span>
+    <h3>Guarda cada versión buena</h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>Esto funciona. Haz commit de esta versión con git.</pre>
+      </div>
+      <p>Cuando un cambio rompa la app (pasará), se vuelve a la última versión buena en segundos. Claude maneja git por ti; tú solo marca los momentos de «esto funciona».</p>
+    </div>
+  </div>
+</section>
+
+<section id="publicar">
+  <p class="phase">Publicación</p>
+  <h2>Publicarla gratis con enlace propio</h2>
+  <hr class="rule">
+
+  <p>Una app en tu ordenador está bien. Una app con enlace que puedes mandar por WhatsApp es otra cosa. Para una app como la del ejemplo (todo en el navegador, sin servidor), publicar es gratis y son dos pasos.</p>
+
+  <div class="step">
+    <span class="step-num">07</span>
+    <h3>Súbela a GitHub</h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>Quiero publicar esta app. Crea el repositorio en GitHub y súbela.
+Si me falta algo por instalar o configurar, guíame paso a paso.</pre>
+      </div>
+      <p>Necesitas una cuenta gratuita de GitHub. Del resto (instalar la herramienta <code>gh</code>, autenticarte, crear el repo) te va guiando Claude.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">08</span>
+    <h3>Activa GitHub Pages</h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>Activa GitHub Pages en este repositorio y dame la URL pública.
+Comprueba que la app carga bien en esa URL.</pre>
+      </div>
+      <p>Resultado: <code>tuusuario.github.io/mi-app</code>, gratis y para siempre. Para apps con servidor o base de datos, el equivalente es Vercel: también tiene plan gratuito y a Claude le pides el despliegue igual, con las mismas palabras.</p>
+    </div>
+  </div>
+</section>
+
+<section id="movil">
+  <p class="phase">Móvil</p>
+  <h2>¿Y en el móvil?</h2>
+  <hr class="rule">
+
+  <div class="fork pick">
+    <h3>Vía corta · app web instalable <span class="tag">empieza aquí</span></h3>
+    <p>Pídele a Claude que convierta tu app web en PWA: «hazla instalable como PWA, con su icono». Desde el navegador del móvil, «añadir a pantalla de inicio», y ya tienes tu app con icono, a pantalla completa, sin pasar por ninguna tienda. Para el noventa por ciento de ideas, esto es todo lo que hace falta.</p>
+  </div>
+
+  <div class="fork">
+    <h3>Vía larga · app nativa de iPhone</h3>
+    <p>Existir, existe: Claude Code escribe apps nativas de iOS, y con Mac y Xcode las pruebas en tu iPhone. Sin Mac, herramientas como <a href="https://github.com/MobAI-App/ios-builder">ios-builder</a> compilan en un Mac en la nube desde Windows o Linux con un comando. Es la vía para cuando la idea necesite de verdad cosas del sistema (notificaciones serias, widgets, sensores); si no las necesita, la PWA te ahorra semanas.</p>
+  </div>
+</section>
+
+<section id="juegos">
+  <p class="phase">Juegos</p>
+  <h2>¿Y un juego?</h2>
+  <hr class="rule">
+
+  <p>El mismo método hace juegos de navegador. Cambia el prompt inicial y poco más:</p>
+
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+    <pre>Quiero un juego de navegador en un solo archivo HTML: una nave que
+esquiva asteroides, controlada con las flechas. Puntuación por tiempo,
+récord guardado en el navegador, y que se juegue igual de bien en el
+móvil con el dedo. Empieza por la versión mínima jugable.</pre>
+  </div>
+
+  <p>«La versión mínima jugable» es la clave: primero que la nave se mueva y algo te mate. Los power-ups, los niveles y la música se piden después, uno a uno, probando entre medias. Un juego se itera aún más que una app: aquí «probar sin piedad» significa jugar, que es la mejor parte del trabajo.</p>
+
+  <p>Y la misma ola llega a los motores grandes: ya hay plugins de IA dentro de Unreal Engine que montan niveles enteros desde una descripción. El patrón es idéntico al de esta guía: describes, el agente construye, tú juzgas el resultado.</p>
+</section>
+
+<section id="errores">
+  <p class="phase">Diagnóstico</p>
+  <h2>Los cinco errores del principiante</h2>
+  <hr class="rule">
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Error</th><th>Qué hacer en su lugar</th></tr></thead>
+      <tbody>
+        <tr><td>Pedir la app entera en un prompt</td><td>Versión mínima primero; el resto, una función por petición, probando entre medias.</td></tr>
+        <tr><td>Aceptar «ya está» sin abrir la app</td><td>Probar siempre. Y pedir que Claude verifique antes de entregar: «compruébalo antes de decirme que está».</td></tr>
+        <tr><td>Describir el fallo a medias</td><td>Qué hiciste, qué esperabas, qué pasó. Si hay mensaje de error, se pega entero, sin resumir.</td></tr>
+        <tr><td>No guardar versiones</td><td>«Haz commit» en cada versión que funcione. Volver atrás cuesta segundos; reconstruir, tardes.</td></tr>
+        <tr><td>Empezar de cero cada sesión</td><td>Pide un CLAUDE.md con las reglas del proyecto. Cada sesión nueva arranca sabiendo cómo va tu app.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="warn">
+    <span class="warn-title">Claves y pagos, con cabeza</span>
+    <p>Si tu app usa servicios de pago o claves de API, esas claves no se escriben dentro del código que subes a GitHub. Pídeselo así a Claude: «gestiona las claves fuera del código y comprueba que no hay ninguna en el repositorio».</p>
+  </div>
+</section>
+
+<footer>
+  Verificado con Claude Code sobre macOS · agosto de 2026 · GitHub Pages y Vercel cambian sus paneles a menudo: los pasos se piden a Claude y él comprueba la URL final.<br>
+  ¿Hacerle mods a tus juegos? Escribe MOD en cualquier reel. ¿Claude Code a fondo? Escribe SKILLS.
+</footer>
+
+</div>
+</main>
+</body>
+</html>
