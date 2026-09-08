@@ -193,7 +193,7 @@ img,svg,video{max-width:100%;height:auto}
   color:var(--foreground);font-weight:600;font-size:.9rem;
   letter-spacing:-.01em;text-decoration:none;white-space:nowrap;flex:0 0 auto;
 }
-.topbar-name:hover{color:var(--academy-orange)}
+a.topbar-name:hover{color:var(--academy-orange)}
 
 .topbar-sep{color:var(--border);flex:0 0 auto}
 .topbar-here{font-size:.85rem;color:var(--mid-gray);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
