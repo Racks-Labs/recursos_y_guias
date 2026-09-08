@@ -21,13 +21,18 @@
      fecha      AAAA-MM
 
    portada · lo que pinta assets/portadas.js
-     coleccion  sello de arriba a la derecha
+     coleccion  sello de arriba a la derecha; es la colección, no el formato
+                (el formato ya lo dice prefijo, y repetirlo queda pobre)
      prefijo    primera línea del título, pequeña
      destacado  la línea grande, en naranja
      resto      tercera línea, mediana
-     desde      rótulo del punto de salida del gráfico
-     hasta      rótulo del punto de llegada
+     grafico    'skills' | 'mods' | 'apps' | 'validacion' | 'gpu'; la ilustración,
+                que dibuja lo que se lleva el lector, no un adorno
+     color      acento de la portada, elegido por el tema del recurso
      promesa    banda inferior; una línea por salto, *entre asteriscos* va en negrita
+
+   destacado + resto son el título de arriba partido en dos alturas: la
+   portada dice exactamente lo mismo que la ficha, no un titular aparte.
    ========================================================================== */
 
 window.RACKS_RESOURCES = [
@@ -40,12 +45,12 @@ window.RACKS_RESOURCES = [
     estado: 'live',
     fecha: '2026-08',
     portada: {
-      coleccion: 'Guía',
+      coleccion: 'Colección Racks',
       prefijo: 'Guía:',
-      destacado: 'De 0 a tu skill',
-      resto: 'en Claude Code',
-      desde: '0',
-      hasta: 'Skill propia',
+      destacado: 'Configura Claude Code',
+      resto: 'y crea tus propias skills',
+      grafico: 'skills',
+      color: '#468af6',
       promesa: 'LOS SEIS TRUCOS DE *CONFIGURACIÓN* DEL CREADOR\nY CÓMO ESCRIBIR *TU PROPIA SKILL*'
     }
   },
@@ -58,12 +63,12 @@ window.RACKS_RESOURCES = [
     estado: 'live',
     fecha: '2026-08',
     portada: {
-      coleccion: 'Guía',
+      coleccion: 'Colección Racks',
       prefijo: 'Guía:',
-      destacado: 'De 0 a tu mod',
+      destacado: 'Crea mods para tus juegos',
       resto: 'sin saber programar',
-      desde: '0',
-      hasta: 'Mod instalado',
+      grafico: 'mods',
+      color: '#9a72f8',
       promesa: 'DE *«QUIERO QUE EL JUEGO HAGA X»*\nA UN *MOD FUNCIONANDO*'
     }
   },
@@ -76,12 +81,12 @@ window.RACKS_RESOURCES = [
     estado: 'live',
     fecha: '2026-08',
     portada: {
-      coleccion: 'Guía',
+      coleccion: 'Colección Racks',
       prefijo: 'Guía:',
-      destacado: 'De idea a app',
-      resto: 'publicada y gratis',
-      desde: 'Idea',
-      hasta: 'App online',
+      destacado: 'De una idea a tu app publicada',
+      resto: 'sin programar',
+      grafico: 'apps',
+      color: '#10b77f',
       promesa: 'DESCRIBIR, PROBAR Y PEDIR CAMBIOS HASTA TENER\n*TU APP CON ENLACE PROPIO*'
     }
   },
@@ -94,12 +99,12 @@ window.RACKS_RESOURCES = [
     estado: 'live',
     fecha: '2026-08',
     portada: {
-      coleccion: 'Skill',
+      coleccion: 'Colección Racks',
       prefijo: 'Skill:',
-      destacado: 'De idea a decisión',
-      resto: 'antes de gastar',
-      desde: 'Idea',
-      hasta: 'Decisión',
+      destacado: 'Skill de validación',
+      resto: 'de producto',
+      grafico: 'validacion',
+      color: '#fbba23',
       promesa: 'CÓMO SABER SI UN *PRODUCTO* TIENE BASE\nANTES DE *MOVER RECURSOS*'
     }
   },
@@ -112,12 +117,12 @@ window.RACKS_RESOURCES = [
     estado: 'live',
     fecha: '2026-08',
     portada: {
-      coleccion: 'Runbook',
+      coleccion: 'Colección Racks',
       prefijo: 'Runbook:',
-      destacado: 'De 0 a tu agente',
-      resto: 'en una GPU alquilada',
-      desde: '0',
-      hasta: 'Agente 24/7',
+      destacado: 'Tu agente de IA por horas',
+      resto: 'sin suscripción',
+      grafico: 'gpu',
+      color: '#f5911a',
       promesa: 'CÓMO ALQUILAR UNA *GPU* Y MONTAR TU AGENTE\nSIN *DEJARTE EL CONTADOR VIVO*'
     }
   }

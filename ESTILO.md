@@ -170,14 +170,35 @@ La composición, de arriba abajo:
 
 | Zona | De dónde sale |
 |---|---|
-| Sello arriba a la derecha | `portada.coleccion` |
-| Título en tres alturas | `portada.prefijo` · `portada.destacado` (naranja) · `portada.resto` |
-| Gráfico de progresión | `portada.desde` y `portada.hasta` rotulan los extremos |
+| Sello arriba a la derecha | `portada.coleccion` — la colección, no el formato |
+| Título en tres alturas | `portada.prefijo` · `portada.destacado` (en color) · `portada.resto` |
+| Ilustración | `portada.grafico` |
 | Firma entre filetes | el autor elegido |
-| Banda naranja inferior | `portada.promesa`; una línea por salto, `*entre asteriscos*` va en negrita |
+| Banda inferior | `portada.promesa`; una línea por salto, `*entre asteriscos*` va en negrita |
 
-Para añadir un autor: una entrada más en `AUTORES`, dentro de
-`assets/portadas.js`. El índice se rehace solo.
+**El título de la portada es el de la ficha.** `destacado` + `resto` son el
+`titulo` del recurso partido en dos alturas, no un titular aparte: si cambia
+el nombre del recurso, cambia la portada.
+
+**Cada recurso tiene su color y su ilustración**, elegidos por lo que enseña.
+No son adorno: dicen lo que se lleva el lector.
+
+| Recurso | Color | Ilustración |
+|---|---|---|
+| Claude Code y skills | `#468af6` azul | terminal con skills acoplándose |
+| Mods | `#9a72f8` morado | bloques de juego, y uno que añades tú |
+| Apps | `#10b77f` verde | móvil publicado, con su enlace |
+| Validación | `#fbba23` ámbar | veredicto: avanzar, esperar, parar |
+| GPU por horas | `#f5911a` naranja | tarjeta gráfica y contador |
+
+Los colores salen todos de los semánticos del sistema (sección 1): el acento
+de la portada cambia, el resto del lenguaje no.
+
+Para una ilustración nueva: una función más en `GRAFICOS`, dentro de
+`assets/portadas.js`, y su nombre en `portada.grafico`. Recibe un cuadrado y
+la unidad tipográfica, y pinta con el acento del recurso.
+
+Para añadir un autor: una entrada más en `AUTORES`. El índice se rehace solo.
 
 ---
 

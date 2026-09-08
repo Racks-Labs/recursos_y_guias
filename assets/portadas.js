@@ -34,6 +34,15 @@
     borde:   '#333'
   };
 
+  /* El acento cambia por recurso: lo fija dibuja() antes de pintar nada.
+     Es el único color que varía; el resto del sistema se queda igual. */
+  var ACENTO = T.naranja;
+
+  function conAlfa(hex, a) {
+    var n = parseInt(hex.slice(1), 16);
+    return 'rgba(' + (n >> 16 & 255) + ',' + (n >> 8 & 255) + ',' + (n & 255) + ',' + a + ')';
+  }
+
   var SANS = 'Inter, "Helvetica Neue", Arial, sans-serif';
   var MONO = '"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace';
 
@@ -63,6 +72,27 @@
 
   function centraTracked(c, texto, cx, y, tr) {
     dibujaTracked(c, texto, cx - anchoTracked(c, texto, tr) / 2, y, tr);
+  }
+
+  /* Encaja un texto en varias líneas, con el cuerpo más grande que quepa. */
+  function encajaMulti(c, texto, peso, ideal, anchoMax, min, maxLineas, altoMax) {
+    var palabras = texto.split(/\s+/);
+    for (var size = ideal; size >= min; size -= 1) {
+      c.font = peso + ' ' + size + 'px ' + SANS;
+      var lineas = [], actual = '';
+      for (var i = 0; i < palabras.length; i++) {
+        var prueba = actual ? actual + ' ' + palabras[i] : palabras[i];
+        if (c.measureText(prueba).width > anchoMax && actual) { lineas.push(actual); actual = palabras[i]; }
+        else actual = prueba;
+      }
+      if (actual) lineas.push(actual);
+      var cabe = lineas.every(function (l) { return c.measureText(l).width <= anchoMax; });
+      if (cabe && lineas.length <= maxLineas && (!altoMax || lineas.length * size * 1.06 <= altoMax)) {
+        return { size: size, lineas: lineas };
+      }
+    }
+    c.font = peso + ' ' + min + 'px ' + SANS;
+    return { size: min, lineas: [texto] };
   }
 
   /* Encaja una línea en el ancho dado, empezando por el cuerpo ideal. */
@@ -99,65 +129,226 @@
   }
 
   /* ------------------------------------------------------------------ */
-  /* El gráfico de progresión                                            */
+  /* Ilustraciones · una por recurso, dibujando lo que se lleva el lector */
   /* ------------------------------------------------------------------ */
 
-  function grafico(c, r, x, y, w, h, U) {
-    /* sube con mesetas: sale de abajo a la izquierda y remata arriba a la derecha */
-    var p = [[0,.90],[.13,.90],[.28,.62],[.44,.62],[.60,.38],[.72,.38],[1,.04]]
-              .map(function (q) { return [x + q[0] * w, y + q[1] * h]; });
+  /* Todas reciben un cuadrado (X, Y, S) y la unidad tipográfica U, y pintan
+     línea naranja sobre el fondo. Para añadir una: una función más aquí y su
+     nombre en portada.grafico dentro de assets/recursos.js. */
 
-    c.save();
-    c.strokeStyle = T.naranja;
-    c.lineWidth = Math.max(2, U * 0.16);
+  function trazo(c, U, factor) {
+    c.strokeStyle = ACENTO;
+    c.lineWidth = Math.max(2, U * (factor || 0.15));
     c.lineJoin = 'round';
     c.lineCap = 'round';
+    c.setLineDash([]);
+  }
+
+  function caja(c, x, y, w, h, relleno) {
+    c.beginPath(); c.rect(x, y, w, h);
+    if (relleno) { c.fillStyle = relleno; c.fill(); } else { c.stroke(); }
+  }
+
+  function poli(c, pts, cerrar) {
     c.beginPath();
-    c.moveTo(p[0][0], p[0][1]);
-    for (var i = 1; i < p.length; i++) c.lineTo(p[i][0], p[i][1]);
+    c.moveTo(pts[0][0], pts[0][1]);
+    for (var i = 1; i < pts.length; i++) c.lineTo(pts[i][0], pts[i][1]);
+    if (cerrar) c.closePath();
+  }
+
+  var GRAFICOS = {};
+
+  /* --- Claude Code: una terminal con skills enchufándose --------------- */
+  GRAFICOS.skills = function (c, X, Y, S, U) {
+    var tx = X + S * 0.03, ty = Y + S * 0.10, tw = S * 0.60, th = S * 0.76;
+    trazo(c, U);
+
+    caja(c, tx, ty, tw, th);                       /* marco de la terminal */
+    var barra = ty + S * 0.11;
+    c.beginPath(); c.moveTo(tx, barra); c.lineTo(tx + tw, barra); c.stroke();
+
+    c.fillStyle = ACENTO;                       /* semáforo de la barra */
+    for (var i = 0; i < 3; i++) {
+      c.beginPath();
+      c.arc(tx + S * 0.055 + i * S * 0.065, ty + S * 0.055, S * 0.019, 0, Math.PI * 2);
+      c.fill();
+    }
+
+    /* prompt: el chevron y el cursor */
+    poli(c, [[tx + S * 0.07, ty + S * 0.22], [tx + S * 0.13, ty + S * 0.29],
+             [tx + S * 0.07, ty + S * 0.36]]);
     c.stroke();
-    c.restore();
+    c.fillStyle = ACENTO;
+    c.fillRect(tx + S * 0.17, ty + S * 0.21, S * 0.24, S * 0.055);
+    c.fillRect(tx + S * 0.07, ty + S * 0.44, S * 0.30, S * 0.035);
+    c.fillRect(tx + S * 0.07, ty + S * 0.52, S * 0.18, S * 0.035);
 
-    /* nodos con silueta de persona, como en el modelo */
-    nodo(c, p[2][0], p[2][1], U * 0.95);
-    nodo(c, p[4][0], p[4][1], U * 0.95);
+    /* tres skills acoplándose por la derecha; la última, la que escribes tú */
+    var mx = X + S * 0.74, mw = S * 0.24, mh = S * 0.18;
+    [0, 1, 2].forEach(function (k) {
+      var my = Y + S * 0.14 + k * S * 0.28;
+      c.beginPath();
+      c.moveTo(tx + tw, my + mh / 2); c.lineTo(mx, my + mh / 2);
+      c.stroke();
+      if (k < 2) { caja(c, mx, my, mw, mh, ACENTO); }
+      else { c.setLineDash([U * 0.34, U * 0.28]); caja(c, mx, my, mw, mh); c.setLineDash([]); }
+    });
+  };
 
-    /* rótulo de salida, sobre el primer nodo */
-    pastilla(c, r.portada.desde, p[2][0], p[2][1] - U * 2.3, U * 0.66, U);
-    /* rótulo de llegada, en el remate */
-    pastilla(c, r.portada.hasta, p[6][0] - U * 1.6, p[6][1] - U * 1.9, U * 0.78, U);
-  }
+  /* --- Mods: bloques de videojuego, y uno que añades tú --------------- */
+  GRAFICOS.mods = function (c, X, Y, S, U) {
+    var cx = X + S * 0.50, base = Y + S * 0.78;
+    var a = S * 0.185, alto = S * 0.205;   /* semiancho y altura del cubo */
 
-  function nodo(c, x, y, rad) {
-    c.save();
-    c.fillStyle = T.naranja;
-    c.beginPath(); c.arc(x, y, rad, 0, Math.PI * 2); c.fill();
+    function cubo(px, py, discontinuo) {
+      trazo(c, U, 0.13);
+      if (discontinuo) c.setLineDash([U * 0.34, U * 0.28]);
 
+      poli(c, [[px, py - alto], [px + a, py - alto / 2],
+               [px, py], [px - a, py - alto / 2]], true);
+      if (!discontinuo) { c.fillStyle = conAlfa(ACENTO, 0.16); c.fill(); }
+      c.stroke();
+
+      poli(c, [[px - a, py - alto / 2], [px, py],
+               [px, py + alto], [px - a, py + alto / 2]], true);
+      c.stroke();
+      poli(c, [[px + a, py - alto / 2], [px, py],
+               [px, py + alto], [px + a, py + alto / 2]], true);
+      c.stroke();
+      c.setLineDash([]);
+    }
+
+    cubo(cx - a, base);                    /* la pila que ya existe */
+    cubo(cx + a, base);
+    cubo(cx, base - alto * 1.5);
+    cubo(cx, base - alto * 3.2, true);     /* el mod que colocas */
+
+    /* la flecha que baja: lo que tú añades */
+    trazo(c, U, 0.13);
+    var fy = base - alto * 4.3;
+    c.beginPath(); c.moveTo(cx, Y + S * 0.02); c.lineTo(cx, fy); c.stroke();
+    poli(c, [[cx - S * 0.045, fy - S * 0.05], [cx, fy], [cx + S * 0.045, fy - S * 0.05]]);
+    c.stroke();
+  };
+
+  /* --- Apps: un móvil con la app publicada y su enlace ---------------- */
+  GRAFICOS.apps = function (c, X, Y, S, U) {
+    var pw = S * 0.46, ph = S * 0.86;
+    var px = X + S * 0.17, py = Y + S * 0.06;
+    trazo(c, U);
+
+    caja(c, px, py, pw, ph);
+    c.fillStyle = ACENTO;
+    c.fillRect(px + S * 0.145, py + S * 0.035, S * 0.13, S * 0.016);   /* auricular */
+
+    c.fillRect(px + S * 0.05, py + S * 0.10, pw - S * 0.10, S * 0.10); /* cabecera */
+    [0, 1, 2].forEach(function (k) {                                    /* contenido */
+      c.fillStyle = conAlfa(ACENTO, 0.35);
+      c.fillRect(px + S * 0.05, py + S * 0.25 + k * S * 0.09, pw - S * 0.10 - k * S * 0.06, S * 0.045);
+    });
+    c.fillStyle = ACENTO;
+    c.fillRect(px + S * 0.05, py + ph - S * 0.17, pw - S * 0.10, S * 0.075); /* botón */
+
+    /* el globo: publicada y con enlace propio */
+    var gx = X + S * 0.80, gy = Y + S * 0.30, gr = S * 0.15;
+    trazo(c, U, 0.13);
+    c.beginPath(); c.arc(gx, gy, gr, 0, Math.PI * 2); c.stroke();
+    c.beginPath(); c.moveTo(gx - gr, gy); c.lineTo(gx + gr, gy); c.stroke();
+    c.beginPath(); c.ellipse(gx, gy, gr * 0.45, gr, 0, 0, Math.PI * 2); c.stroke();
+
+    c.beginPath();                                   /* del móvil al globo */
+    c.moveTo(px + pw, py + ph * 0.42); c.lineTo(gx - gr - S * 0.03, gy + gr * 0.5);
+    c.stroke();
+  };
+
+  /* --- Validación: el veredicto, avanzar / esperar / parar ------------ */
+  GRAFICOS.validacion = function (c, X, Y, S, U) {
+    var bw = S * 0.92, bh = S * 0.22, bx = X + S * 0.04;
+    var icono = bh * 0.62;
+
+    [0, 1, 2].forEach(function (k) {
+      var by = Y + S * 0.08 + k * (bh + S * 0.11);
+      var activo = k === 0;
+      trazo(c, U, 0.12);
+
+      if (activo) { caja(c, bx, by, bw, bh, ACENTO); }
+      else { c.globalAlpha = 0.55; caja(c, bx, by, bw, bh); c.globalAlpha = 1; }
+
+      var ix = bx + bh * 0.5, iy = by + bh * 0.5;
+      c.strokeStyle = activo ? T.fondo : ACENTO;
+      c.lineWidth = Math.max(2, U * 0.16);
+      c.globalAlpha = activo ? 1 : 0.55;
+
+      if (k === 0) {                                   /* avanzar */
+        poli(c, [[ix - icono * 0.34, iy], [ix - icono * 0.06, iy + icono * 0.28],
+                 [ix + icono * 0.36, iy - icono * 0.30]]);
+        c.stroke();
+      } else if (k === 1) {                            /* esperar */
+        c.beginPath();
+        c.moveTo(ix - icono * 0.16, iy - icono * 0.30); c.lineTo(ix - icono * 0.16, iy + icono * 0.30);
+        c.moveTo(ix + icono * 0.16, iy - icono * 0.30); c.lineTo(ix + icono * 0.16, iy + icono * 0.30);
+        c.stroke();
+      } else {                                          /* parar */
+        c.beginPath();
+        c.moveTo(ix - icono * 0.28, iy - icono * 0.28); c.lineTo(ix + icono * 0.28, iy + icono * 0.28);
+        c.moveTo(ix + icono * 0.28, iy - icono * 0.28); c.lineTo(ix - icono * 0.28, iy + icono * 0.28);
+        c.stroke();
+      }
+
+      /* la línea que representa el argumento de cada veredicto */
+      c.strokeStyle = activo ? T.fondo : ACENTO;
+      c.lineWidth = Math.max(2, U * 0.11);
+      c.beginPath();
+      c.moveTo(bx + bh, by + bh * 0.5);
+      c.lineTo(bx + bw - bh * (0.5 + k * 0.9), by + bh * 0.5);
+      c.stroke();
+      c.globalAlpha = 1;
+    });
+  };
+
+  /* --- GPU por horas: la tarjeta y el contador ------------------------ */
+  GRAFICOS.gpu = function (c, X, Y, S, U) {
+    var tx = X + S * 0.02, ty = Y + S * 0.24, tw = S * 0.70, th = S * 0.50;
+    trazo(c, U);
+
+    caja(c, tx, ty, tw, th);                       /* la tarjeta */
+
+    [0.26, 0.62].forEach(function (p) {            /* los dos ventiladores */
+      var fx = tx + tw * p, fy = ty + th * 0.5, fr = th * 0.28;
+      c.beginPath(); c.arc(fx, fy, fr, 0, Math.PI * 2); c.stroke();
+      c.beginPath(); c.arc(fx, fy, fr * 0.3, 0, Math.PI * 2); c.stroke();
+      for (var k = 0; k < 3; k++) {
+        var ang = k * Math.PI * 2 / 3;
+        c.beginPath();
+        c.moveTo(fx + Math.cos(ang) * fr * 0.32, fy + Math.sin(ang) * fr * 0.32);
+        c.lineTo(fx + Math.cos(ang) * fr * 0.92, fy + Math.sin(ang) * fr * 0.92);
+        c.stroke();
+      }
+    });
+
+    c.fillStyle = ACENTO;                       /* conector PCIe */
+    for (var j = 0; j < 7; j++) {
+      c.fillRect(tx + S * 0.06 + j * S * 0.058, ty + th, S * 0.034, S * 0.065);
+    }
+
+    /* el contador: se paga por horas */
+    var rx = X + S * 0.80, ry = Y + S * 0.17, rr = S * 0.19;
+    trazo(c, U, 0.13);
     c.fillStyle = T.fondo;
-    c.beginPath(); c.arc(x, y - rad * 0.22, rad * 0.30, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.arc(rx, ry, rr, 0, Math.PI * 2); c.fill(); c.stroke();
     c.beginPath();
-    c.arc(x, y + rad * 0.52, rad * 0.50, Math.PI * 1.15, Math.PI * 1.85, false);
-    c.lineTo(x + rad * 0.42, y + rad * 0.62);
-    c.lineTo(x - rad * 0.42, y + rad * 0.62);
-    c.closePath(); c.fill();
-    c.restore();
-  }
+    c.moveTo(rx, ry - rr * 0.55); c.lineTo(rx, ry);
+    c.lineTo(rx + rr * 0.45, ry + rr * 0.28);
+    c.stroke();
+  };
 
-  function pastilla(c, texto, cx, cy, cuerpo, U) {
-    if (!texto) return;
-    var tr = U * 0.06;
-    c.save();
-    c.font = '700 ' + cuerpo + 'px ' + SANS;
-    var t = String(texto).toUpperCase();
-    /* ancho mínimo: un rótulo de un carácter no debe quedar en cuadradito */
-    var w = Math.max(anchoTracked(c, t, tr) + U * 1.1, U * 2.6);
-    var h = cuerpo * 1.9;
-
-    c.fillStyle = T.naranja;
-    c.fillRect(cx - w / 2, cy - h / 2, w, h);
-    c.fillStyle = T.fondo;
-    centraTracked(c, t, cx, cy + cuerpo * 0.36, tr);
-    c.restore();
+  function grafico(c, r, x, y, w, h, U) {
+    var dibujo = GRAFICOS[(r.portada || {}).grafico];
+    if (!dibujo) return;
+    var S = Math.min(w * 0.98, h * 1.04);
+    dibujo(c, x + (w - S) / 2, y + (h - S) / 2, S, U);
+    c.setLineDash([]);
+    c.globalAlpha = 1;
   }
 
   /* ------------------------------------------------------------------ */
@@ -169,6 +360,8 @@
     var W = Math.round(LIENZO.w * s), H = Math.round(LIENZO.h * s);
     var P = r.portada || {};
     var autor = AUTORES.filter(function (a) { return a.id === autorId; })[0] || AUTORES[0];
+
+    ACENTO = P.color || T.naranja;
 
     canvas.width = W; canvas.height = H;
     var c = canvas.getContext('2d');
@@ -203,7 +396,7 @@
     dibujaTracked(c, col, W - M - cw + U * 0.5, M * 0.72 + ch * 0.68, cTr);
 
     /* --- título en tres alturas --- */
-    var y = H * 0.155;
+    var y = H * 0.115;
 
     if (P.prefijo) {
       var sPre = encaja(c, P.prefijo.toUpperCase(), '800', U * 1.62, CW, U * 0.9);
@@ -214,21 +407,25 @@
     }
 
     if (P.destacado) {
-      var sDes = encaja(c, P.destacado.toUpperCase(), '800', U * 3.15, CW, U * 1.3);
-      c.fillStyle = T.naranja;
+      var des = encajaMulti(c, P.destacado.toUpperCase(), '800', U * 3.15, CW, U * 1.25, 2);
+      c.fillStyle = ACENTO;
       c.textAlign = 'center';
       if ('letterSpacing' in c) c.letterSpacing = '-0.03em';
-      c.fillText(P.destacado.toUpperCase(), cx, y + sDes);
+      des.lineas.forEach(function (l, i) {
+        c.fillText(l, cx, y + des.size * (1 + i * 1.06));
+      });
       if ('letterSpacing' in c) c.letterSpacing = '0px';
-      y += sDes * 1.16;
+      y += des.size * (1 + (des.lineas.length - 1) * 1.06) + des.size * 0.20;
     }
 
     if (P.resto) {
-      var sRes = encaja(c, P.resto.toUpperCase(), '800', U * 1.95, CW, U * 1.0);
+      var res = encajaMulti(c, P.resto.toUpperCase(), '800', U * 1.95, CW, U * 0.95, 2);
       c.fillStyle = T.titulo;
       c.textAlign = 'center';
-      c.fillText(P.resto.toUpperCase(), cx, y + sRes);
-      y += sRes * 1.2;
+      res.lineas.forEach(function (l, i) {
+        c.fillText(l, cx, y + res.size * (1 + i * 1.12));
+      });
+      y += res.size * (1 + (res.lineas.length - 1) * 1.12) + res.size * 0.24;
     }
     c.textAlign = 'left';
 
@@ -239,7 +436,7 @@
     var bandaY = H - bandaAlto - H * 0.022;
 
     if (lineas.length) {
-      c.fillStyle = T.naranja;
+      c.fillStyle = ACENTO;
       c.fillRect(0, bandaY, W, bandaAlto);
       c.fillStyle = T.fondo;
       lineas.forEach(function (linea, i) {
@@ -270,8 +467,8 @@
     }
 
     /* --- gráfico, en el hueco entre el título y la firma --- */
-    var gY = y + U * 3.0;
-    var gAlto = (aY - U * 3.0) - gY;
+    var gY = y + U * 1.25;
+    var gAlto = (aY - U * 1.3) - gY;
     if (gAlto > U * 3) grafico(c, r, M + U * 0.8, gY, CW - U * 1.6, gAlto, U);
 
     return canvas;
