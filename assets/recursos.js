@@ -26,7 +26,8 @@
      prefijo    primera línea del título, pequeña
      destacado  la línea grande, en naranja
      resto      tercera línea, mediana
-     grafico    'skills' | 'mods' | 'apps' | 'validacion' | 'gpu'; la ilustración,
+     grafico    'skills' | 'mods' | 'apps' | 'validacion' | 'gpu' | 'webs' |
+                'agentes' | 'hermes'; la ilustración,
                 que dibuja lo que se lleva el lector, no un adorno
      color      acento de la portada, elegido por el tema del recurso
      promesa    banda inferior; una línea por salto, *entre asteriscos* va en negrita
@@ -36,6 +37,60 @@
    ========================================================================== */
 
 window.RACKS_RESOURCES = [
+  {
+    slug: 'webs-ia',
+    titulo: 'De 0 a 2.000 $ modernizando webs con agentes de IA',
+    kicker: 'Guía · Negocio con IA',
+    resumen: 'El modelo de negocio entero: sacar negocios locales de Google Maps, detectar webs desactualizadas, reconstruirlas con Claude Code y ofrecerlas ya hechas a puerta fría por email. Con la calculadora de objetivo, los precios reales y los prompts.',
+    etiquetas: ['Claude Code', 'Negocio', 'Cold email'],
+    estado: 'live',
+    fecha: '2026-09',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Guía:',
+      destacado: 'De 0 a 2.000 $',
+      resto: 'modernizando webs con agentes de IA',
+      grafico: 'webs',
+      color: '#fbba23',
+      promesa: 'ENCONTRAR, *RECONSTRUIR* Y VENDER\nA PUERTA FRÍA *DESDE EL EMAIL*'
+    }
+  },
+  {
+    slug: 'agentes-ia',
+    titulo: 'Aprende a usar agentes de IA desde cero',
+    kicker: 'Guía · Agentes de IA',
+    resumen: 'Qué es un agente, cómo trabaja, cómo se le pide bien, cómo se le dan herramientas y permisos y cuánto cuesta. Con Claude Code, OpenClaw y Hermes instalables en diez minutos, y el glosario para no perderse.',
+    etiquetas: ['Agentes', 'Claude Code', 'OpenClaw', 'Hermes'],
+    estado: 'live',
+    fecha: '2026-09',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Guía:',
+      destacado: 'Aprende a usar agentes de IA',
+      resto: 'desde cero',
+      grafico: 'agentes',
+      color: '#468af6',
+      promesa: 'QUÉ SON, CÓMO SE LES PIDE Y CÓMO *NO LIARLA*\nCON *CLAUDE CODE*, OPENCLAW Y HERMES'
+    }
+  },
+  {
+    slug: 'hermes',
+    titulo: 'Instala y domina Hermes, el agente que aprende contigo',
+    kicker: 'Guía · Hermes Agent',
+    resumen: 'Instalación y uso completo de Hermes Agent, el agente open source de Nous Research: de la terminal a tu Telegram, con skills que crea él solo, memoria entre sesiones, tareas programadas y la seguridad bien puesta.',
+    etiquetas: ['Hermes', 'Agentes', 'Telegram', 'Open source'],
+    estado: 'live',
+    fecha: '2026-09',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Guía:',
+      destacado: 'Instala y domina Hermes',
+      resto: 'el agente que aprende contigo',
+      grafico: 'hermes',
+      color: '#9a72f8',
+      promesa: 'DE LA TERMINAL A *TU TELEGRAM*\nCON SKILLS, MEMORIA Y *TAREAS PROGRAMADAS*'
+    }
+  },
   {
     slug: 'skills-claude',
     titulo: 'Configura Claude Code y crea tus propias skills',

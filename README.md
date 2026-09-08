@@ -6,8 +6,10 @@ GitHub Pages y listos para incrustar como iframe en cualquier página.
 
 - **Índice:** `index.html` — catálogo, generador de código de incrustación y
   resumen del sistema de estilo.
-- **Recursos:** `recursos/` — un archivo por recurso. Hoy: la guía de Vast.ai
-  y la Skill de pre-test de producto.
+- **Recursos:** `recursos/` — un archivo por recurso. Hoy: las guías de
+  modernizar webs con agentes de IA (`webs-ia`), de agentes de IA desde cero
+  (`agentes-ia`) y de Hermes (`hermes`); las de skills, mods y apps con
+  Claude; la Skill de pre-test de producto y el runbook de Vast.ai.
 - **Sistema:** `assets/racks.css` (tokens y bloques) y `assets/racks.js`
   (copiar código, índice activo, altura automática dentro de un iframe).
 - **Punto de partida:** `recursos/plantilla.html`.

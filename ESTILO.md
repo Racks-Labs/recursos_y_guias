@@ -190,6 +190,9 @@ No son adorno: dicen lo que se lleva el lector.
 | Apps | `#10b77f` verde | móvil publicado, con su enlace |
 | Validación | `#fbba23` ámbar | veredicto: avanzar, esperar, parar |
 | GPU por horas | `#f5911a` naranja | tarjeta gráfica y contador |
+| Modernizar webs | `#fbba23` ámbar | el móvil de antes y el de después |
+| Agentes de IA | `#468af6` azul | el bucle del agente y sus herramientas |
+| Hermes | `#9a72f8` morado | el chat en el móvil y las skills que apila |
 
 Los colores salen todos de los semánticos del sistema (sección 1): el acento
 de la portada cambia, el resto del lenguaje no.

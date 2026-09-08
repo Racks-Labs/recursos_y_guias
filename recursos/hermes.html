@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Instala y domina Hermes, el agente que aprende contigo · Recursos Racks Academy</title>
+<meta name="description" content="Guía completa de instalación y uso de Hermes Agent, el agente open source de Nous Research: instalación, configuración, primer uso, skills, memoria, Telegram, Discord y WhatsApp, tareas programadas, seguridad y mantenimiento.">
+<meta property="og:title" content="Instala y domina Hermes, el agente que aprende contigo">
+<meta property="og:description" content="De la terminal a tu Telegram: instalación, skills, memoria, tareas programadas y seguridad de Hermes Agent, paso a paso.">
+<meta property="og:type" content="article">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/racks.css">
+<script>/* fija el modo antes del primer pintado */(function(){var h=document.documentElement,s=location.search;if(s.indexOf('embed=1')>-1)h.classList.add('is-embed');if(window.self!==window.top)h.classList.add('is-framed');if(s.indexOf('bg=transparent')>-1)h.classList.add('is-transparent');})();</script>
+<script defer src="../assets/racks.js"></script>
+</head>
+
+<body data-resource-id="hermes">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="watermark-r" aria-hidden="true">R</div>
+
+<header class="topbar" data-embed-hide>
+  <span class="topbar-mark" aria-hidden="true">R</span>
+  <span class="topbar-name">Racks Academy</span>
+  <span class="topbar-sep" aria-hidden="true">/</span>
+  <span class="topbar-here">Hermes, instalación y uso</span>
+</header>
+
+<main class="shell" id="contenido">
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Guía · Hermes Agent, de Nous Research</p>
+  <h1>Instala <em>Hermes</em>.<br>Y deja que aprenda contigo.</h1>
+  <p class="standfirst">Instalación y uso completo de Hermes Agent, el agente de código abierto que crea sus propias skills y recuerda entre sesiones: de la terminal a tu Telegram, con tareas programadas y sin dejarte una puerta abierta. Verificado contra la documentación oficial en septiembre de 2026.</p>
+
+  <nav class="toc">
+    <p>Recorrido</p>
+    <ol>
+      <li><a href="#que-es">Qué es Hermes y por qué importa</a></li>
+      <li><a href="#antes">Antes de instalar: requisitos y proveedor</a></li>
+      <li><a href="#instalar">Instalar</a> · pasos 1–4</li>
+      <li><a href="#configurar">Configurar</a> · pasos 5–8</li>
+      <li><a href="#usar">Primer uso: chat, comandos y sesiones</a> · pasos 9–12</li>
+      <li><a href="#skills">Skills: usar, instalar y dejar que las cree</a></li>
+      <li><a href="#memoria">Memoria: lo que recuerda de ti</a></li>
+      <li><a href="#movil">Al móvil: Telegram, Discord y WhatsApp</a> · pasos 13–18</li>
+      <li><a href="#cron">Tareas programadas</a></li>
+      <li><a href="#seguridad">Seguridad: aprobaciones, contenedores y VPS</a></li>
+      <li><a href="#mantener">Mantener: actualizar, copias, perfiles</a></li>
+      <li><a href="#diagnostico">Diagnóstico</a></li>
+    </ol>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     1 · QUÉ ES
+     ══════════════════════════════════════════════════════════════════ -->
+
+<section id="que-es">
+  <p class="phase">Punto de partida</p>
+  <h2>Qué es Hermes y por qué importa</h2>
+  <hr class="rule">
+
+  <p>Hermes Agent es un agente de IA de código abierto (licencia MIT) publicado por Nous Research en febrero de 2026. Se instala en tu ordenador, en un servidor de 5 $ al mes o en un móvil Android, y trabaja con el modelo que tú elijas: Claude, GPT, Gemini, los modelos de Nous o uno local. Su frase de presentación lo resume: <em>«el agente que crece contigo»</em>.</p>
+
+  <p>Lo que lo distingue de los demás no son las herramientas (tiene más de cuarenta: terminal, archivos, búsqueda web, navegador, imágenes, voz, mensajería) sino <strong>el bucle de aprendizaje</strong>:</p>
+
+  <ul class="lead-list">
+    <li><strong>Crea skills a partir de lo que hace.</strong> Cuando resuelve una tarea que se repite, la convierte en una skill (un procedimiento guardado) y la mejora las siguientes veces que la usa.</li>
+    <li><strong>Recuerda entre sesiones.</strong> Mantiene notas sobre tu entorno y un perfil sobre ti, y puede buscar en todas las conversaciones pasadas.</li>
+    <li><strong>Vive donde estás tú.</strong> Un solo proceso, el <em>gateway</em>, lo conecta a Telegram, Discord, Slack, WhatsApp, Signal, email y Home Assistant, y ejecuta tareas programadas que te llegan a cualquiera de ellos.</li>
+  </ul>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th></th><th>Hermes</th><th>OpenClaw</th><th>Claude Code</th></tr></thead>
+      <tbody>
+        <tr><td>Qué es</td><td>Agente personal que aprende: skills propias, memoria, mensajería</td><td>Asistente personal de mensajería, el más maduro en canales</td><td>Agente de terminal para construir cosas</td></tr>
+        <tr><td>Skills</td><td>Las instala del hub y <strong>las crea él</strong> con la experiencia</td><td>Archivos que escribes y mantienes tú (ClawHub)</td><td>Carpetas que escribes tú o instalas</td></tr>
+        <tr><td>Memoria</td><td>Archivos de texto más una base de datos con búsqueda en sesiones</td><td>Archivos Markdown</td><td>CLAUDE.md por proyecto</td></tr>
+        <tr><td>Modelo</td><td>Cualquiera: Nous Portal, OpenRouter, Anthropic, OpenAI, Google, local</td><td>Cualquiera, con tu clave o suscripción</td><td>Claude, con tu suscripción</td></tr>
+        <tr><td>Precio</td><td>Gratis; pagas el modelo</td><td>Gratis; pagas el modelo</td><td>Con Claude Pro o Max</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="caution">
+    <span class="caution-title">Dos cosas que hay que saber antes</span>
+    <p>Primera: Hermes mejora con el uso, así que <strong>la primera semana es peor que la décima</strong>; no lo juzgues el primer día. Segunda: es un proyecto joven que publica versiones cada pocas semanas. Si un comando de esta guía no aparece en tu instalación, primero <code>hermes update</code> y luego la documentación oficial en <a href="https://hermes-agent.nousresearch.com/docs">hermes-agent.nousresearch.com/docs</a>.</p>
+  </div>
+
+  <div class="note">
+    <span class="note-title">Si vienes de OpenClaw o de Claude Code</span>
+    <p>Hermes importa tu configuración: <code>hermes claw migrate</code> trae la de OpenClaw (con <code>--dry-run</code> para ver qué haría antes de tocar nada) y <code>hermes import-agent</code> lee la de Claude Code o Codex.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     2 · ANTES
+     ══════════════════════════════════════════════════════════════════ -->
+
+<section id="antes">
+  <p class="phase">Decisiones previas</p>
+  <h2>Antes de instalar: requisitos y proveedor</h2>
+  <hr class="rule">
+
+  <h3>Requisitos</h3>
+  <dl>
+    <div class="field"><dt>Sistema</dt><dd>Linux, macOS, Windows (nativo por PowerShell, o WSL2, que es la vía más rodada) y Android con Termux. Un VPS Linux barato vale para tenerlo encendido siempre.</dd></div>
+    <div class="field"><dt>Que tengas instalado</dt><dd><strong>Git</strong> y <strong>curl</strong>. En Linux, también <code>xz-utils</code>. Nada más: el instalador trae su propio Python (3.11), Node.js, <code>uv</code>, <code>ripgrep</code> y <code>ffmpeg</code>.</dd></div>
+    <div class="field"><dt>Permisos</dt><dd>Sin <code>sudo</code>. Se instala en tu carpeta de usuario: el código en <code>~/.hermes/hermes-agent/</code>, el comando en <code>~/.local/bin/hermes</code> y tus datos en <code>~/.hermes/</code>.</dd></div>
+    <div class="field"><dt>Modelo</dt><dd>Cualquiera con al menos <strong>64.000 tokens de contexto</strong>. Con menos, la compresión de contexto no da abasto y el agente se pierde.</dd></div>
+  </dl>
+
+  <h3>La decisión: quién pone el modelo</h3>
+
+  <p>Hermes no cobra nada; el modelo sí. Tres caminos, y se pueden cambiar después con un comando.</p>
+
+  <div class="fork pick">
+    <h3>Nous Portal <span class="tag">para empezar</span></h3>
+    <p>La suscripción de Nous Research: un solo inicio de sesión da acceso a más de 200 modelos (Claude, GPT, Gemini, DeepSeek, los Hermes de Nous) y al <em>Tool Gateway</em>, que pone búsqueda web, generación de imágenes, voz y navegador sin más claves. Hay un nivel gratuito con modelos gratuitos; el plan Plus son 20 $/mes con 22 $ de crédito, y hay Super (100 $) y Ultra (200 $). Se configura con un comando y no hay que gestionar claves.</p>
+    <p class="flow">hermes setup --portal → navegador → elegir modelo → listo</p>
+  </div>
+
+  <div class="fork">
+    <h3>Tus propias claves</h3>
+    <p>Una clave de API de Anthropic, OpenAI, Google u OpenRouter (que reúne cientos de modelos bajo una sola clave). Pagas por uso, por token, y la clave se guarda en <code>~/.hermes/.env</code>. Es la vía para quien ya tiene claves o quiere control fino del gasto. Las herramientas que necesitan servicios externos (búsqueda web, imágenes) pedirán sus propias claves.</p>
+  </div>
+
+  <div class="fork">
+    <h3>Un modelo local</h3>
+    <p>Ollama, vLLM o llama.cpp en tu máquina o en una GPU alquilada. Gratis por token, privado, y exigente: necesitas un modelo con 64k de contexto que corra decentemente. En <code>hermes model</code> eliges «Custom endpoint» y pones la dirección (con Ollama, <code>http://localhost:11434/v1</code>). Para montar la GPU por horas, la <a href="vast-ollama.html">guía de Vast.ai</a>.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     3 · INSTALAR
+     ══════════════════════════════════════════════════════════════════ -->
+
+<section id="instalar">
+  <p class="phase">Fase 1</p>
+  <h2>Instalar</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Linux, macOS, WSL2 y Android (Termux)</h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</pre>
+      </div>
+      <p>El instalador descarga el código, crea un entorno de Python aislado con <code>uv</code>, instala Node.js si no tienes una versión reciente, y deja el comando <code>hermes</code> en <code>~/.local/bin</code>. Tarda unos minutos. <strong>No lo ejecutes con <code>sudo</code></strong>: no lo necesita y te dejaría los archivos con el dueño equivocado.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>Windows</h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre><span class="c"># PowerShell, instalación nativa</span>
+iex (irm https://hermes-agent.nousresearch.com/install.ps1)</pre>
+      </div>
+      <p>La instalación nativa en Windows es reciente. Si algo se resiste, la vía rodada es <strong>WSL2</strong> (Ubuntu dentro de Windows) con el comando del paso 1. Para Mac y Windows existe además un instalador de escritorio con interfaz gráfica en la web oficial; instala lo mismo, con ventana.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">03</span>
+    <h3>Recarga la terminal y comprueba</h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>source ~/.bashrc      <span class="c"># en Mac con zsh: source ~/.zshrc</span>
+hermes --version
+hermes doctor</pre>
+      </div>
+      <p><code>hermes doctor</code> revisa el entorno, detecta lo que falta y te dice cómo arreglarlo. Es el primer comando que hay que lanzar cada vez que algo raro pase.</p>
+      <div class="ok">
+        <span class="ok-title">Bien</span>
+        <p><code>hermes --version</code> imprime un número de versión y <code>hermes doctor</code> no muestra errores en rojo. Si dice que falta un proveedor de modelo, es normal: eso es el siguiente paso.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">04</span>
+    <h3>Si algo falla en la instalación</h3>
+    <div class="step-body">
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Mensaje</th><th>Arreglo</th></tr></thead>
+          <tbody>
+            <tr><td><code>hermes: command not found</code></td><td>La terminal no ha recargado el PATH. <code>source ~/.bashrc</code> (o <code>~/.zshrc</code>), o cierra y abre la terminal.</td></tr>
+            <tr><td>Python demasiado antiguo</td><td>Hermes necesita 3.11 o superior. En Ubuntu, <code>sudo apt install python3.12</code>; en Mac, <code>brew install python@3.12</code>. Luego repite el instalador.</td></tr>
+            <tr><td><code>uv: command not found</code></td><td>Instálalo: <code>curl -LsSf https://astral.sh/uv/install.sh | sh</code> y repite.</td></tr>
+            <tr><td>Permission denied</td><td>Has usado <code>sudo</code> o la carpeta de usuario no es tuya. Sin <code>sudo</code>, y comprueba que puedes escribir en <code>~/.local/bin</code>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     4 · CONFIGURAR
+     ══════════════════════════════════════════════════════════════════ -->
+
+<section id="configurar">
+  <p class="phase">Fase 2</p>
+  <h2>Configurar</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">05</span>
+    <h3>El asistente: <code>hermes setup</code></h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>hermes setup            <span class="c"># asistente completo</span>
+hermes setup --portal   <span class="c"># directo a Nous Portal, en un solo paso</span></pre>
+      </div>
+      <p>El asistente ofrece tres modos: <strong>Quick Setup</strong> (Nous Portal, el recomendado si empiezas), <strong>Full Setup</strong> (eliges proveedor y claves a mano) y <strong>Blank Slate</strong> (lo mínimo, activando cada cosa tú). Con <code>--portal</code> se abre el navegador, inicias sesión, eliges modelo del catálogo y el Tool Gateway queda activado; las credenciales se guardan en <code>~/.hermes/auth.json</code>.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">06</span>
+    <h3>Elegir o cambiar de modelo: <code>hermes model</code></h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>hermes model                              <span class="c"># menú interactivo de proveedor y modelo</span>
+hermes config set model <span class="k">proveedor/modelo</span>   <span class="c"># o directamente, sabiendo el nombre</span></pre>
+      </div>
+      <p>Si eliges un proveedor con clave (Anthropic, OpenAI, OpenRouter), te la pide y la guarda en <code>~/.hermes/.env</code>. Para un modelo local, «Custom endpoint» y la dirección de tu servidor. Los proveedores que configures se quedan disponibles: cambiar de uno a otro después es volver a <code>hermes model</code>, o <code>/model</code> en mitad de una conversación.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">07</span>
+    <h3>Activar herramientas: <code>hermes tools</code></h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>hermes tools</pre>
+      </div>
+      <p>Un menú para encender y apagar conjuntos de herramientas: <code>terminal</code>, <code>file</code>, <code>web</code> (búsqueda y extracción), <code>browser</code>, <code>vision</code>, <code>image_gen</code>, voz, memoria, tareas programadas y más. Con Nous Portal, la búsqueda web, las imágenes, la voz y el navegador funcionan sin claves adicionales; con tus propias claves, cada una te pedirá la suya. La búsqueda en X (Twitter) viene apagada y requiere credenciales de xAI.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">08</span>
+    <h3>Dónde vive todo: la carpeta <code>~/.hermes</code></h3>
+    <div class="step-body">
+      <dl>
+        <div class="field"><dt>config.yaml</dt><dd>Toda la configuración que no es secreta: modelo, terminal, compresión, herramientas, aprobaciones.</dd></div>
+        <div class="field"><dt>.env</dt><dd>Claves de API y tokens de bots. <strong>Sólo secretos, y con permisos 600.</strong></dd></div>
+        <div class="field"><dt>auth.json</dt><dd>Credenciales de inicio de sesión (Nous Portal).</dd></div>
+        <div class="field"><dt>SOUL.md</dt><dd>La identidad del agente: quién es, cómo habla, qué prioriza. Lo editas tú.</dd></div>
+        <div class="field"><dt>memories/</dt><dd><code>MEMORY.md</code> y <code>USER.md</code>, la memoria persistente (sección 7).</dd></div>
+        <div class="field"><dt>skills/</dt><dd>Las skills instaladas y las que crea el agente (sección 6).</dd></div>
+        <div class="field"><dt>sessions/, state.db, logs/</dt><dd>Conversaciones, la base de datos con búsqueda de sesiones y los registros.</dd></div>
+      </dl>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>hermes config            <span class="c"># ver la configuración</span>
+hermes config edit       <span class="c"># abrirla en el editor</span>
+hermes config get <span class="k">clave</span>   <span class="c"># leer un valor</span>
+hermes config set <span class="k">clave</span> <span class="k">valor</span>
+hermes config check      <span class="c"># comprobar que no falta nada</span></pre>
+      </div>
+      <p>Un <code>config.yaml</code> mínimo y sensato para empezar en tu ordenador:</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre><span class="c"># ~/.hermes/config.yaml</span>
+model: <span class="k">proveedor/modelo</span>
+provider: <span class="k">nous</span>            <span class="c"># o anthropic, openrouter, openai…</span>
+
+terminal:
+  backend: local          <span class="c"># en un servidor, docker (sección 10)</span>
+  timeout: 180
+
+approvals:
+  mode: smart             <span class="c"># smart | manual | off</span>
+
+compression:
+  enabled: true
+
+memory:
+  memory_enabled: true
+  user_profile_enabled: true</pre>
+      </div>
+      <p>Orden de prioridad si algo se define en dos sitios: lo que pasas en la línea de comandos manda sobre <code>config.yaml</code>, que manda sobre <code>.env</code>, que manda sobre los valores por defecto.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     5 · PRIMER USO
+     ══════════════════════════════════════════════════════════════════ -->
+
+<section id="usar">
+  <p class="phase">Fase 3</p>
+  <h2>Primer uso: chat, comandos y sesiones</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">09</span>
+    <h3>Arranca y pide algo pequeño</h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>cd <span class="k">carpeta-de-un-proyecto</span>
+hermes            <span class="c"># interfaz clásica</span>
+hermes --tui      <span class="c"># interfaz moderna, con paneles</span></pre>
+      </div>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>Mira la carpeta en la que estamos y dime, en cinco líneas, qué es este
+proyecto y cuál parece el archivo principal. No modifiques nada.</pre>
+      </div>
+      <p>Verás el bucle: lista archivos, lee alguno, resume. Para escribir varias líneas, Alt+Intro (también Ctrl+J o Mayús+Intro). Para interrumpirlo, escribe el mensaje nuevo y pulsa Intro; también vale Ctrl+C.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">10</span>
+    <h3>Los comandos de barra que vas a usar</h3>
+    <div class="step-body">
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Comando</th><th>Qué hace</th></tr></thead>
+          <tbody>
+            <tr><td><code>/help</code></td><td>Lista todos los comandos disponibles en tu versión.</td></tr>
+            <tr><td><code>/new</code> · <code>/reset</code></td><td>Conversación nueva · borrar el historial de la actual.</td></tr>
+            <tr><td><code>/model</code></td><td>Cambiar de proveedor o modelo sin salir.</td></tr>
+            <tr><td><code>/tools</code> · <code>/skills</code></td><td>Encender o apagar herramientas · cargar o descargar skills.</td></tr>
+            <tr><td><code>/personality</code></td><td>Aplicar un preajuste de personalidad al agente.</td></tr>
+            <tr><td><code>/memory</code></td><td>Consultar o actualizar la memoria persistente.</td></tr>
+            <tr><td><code>/reasoning-effort</code></td><td>Cuánto piensa el modelo antes de actuar: sube para lo difícil, baja para lo rutinario.</td></tr>
+            <tr><td><code>/compression</code></td><td>Gestionar la compresión de contexto cuando la sesión se alarga.</td></tr>
+            <tr><td><code>/rollback</code></td><td>Deshacer cambios en archivos desde un punto de control (arranca con <code>--checkpoints</code>).</td></tr>
+            <tr><td><code>/approve</code></td><td>Aprobar una operación pendiente.</td></tr>
+            <tr><td><code>/image</code> · <code>/browser</code> · <code>/voice</code></td><td>Adjuntar una imagen · buscar o navegar · configurar la voz.</td></tr>
+            <tr><td><code>/status</code> · <code>/save</code> · <code>/stop</code></td><td>Estado del agente · exportar la sesión · parar el bucle.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">11</span>
+    <h3>Sesiones: retomar, buscar, lanzar en una línea</h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>hermes -c                          <span class="c"># retomar la última sesión</span>
+hermes --resume <span class="k">id-o-título</span>        <span class="c"># retomar una concreta</span>
+hermes sessions list               <span class="c"># ver las anteriores</span>
+hermes journey                     <span class="c"># línea de tiempo de skills y memorias aprendidas</span>
+
+hermes chat -q "Resume este repositorio en 5 puntos"   <span class="c"># sesión con pregunta inicial</span>
+hermes -z "¿Qué hora es en Tokio?"                     <span class="c"># una respuesta y fuera; para scripts</span>
+hermes chat --image foto.png -q "¿Qué pone aquí?"      <span class="c"># con una imagen</span></pre>
+      </div>
+      <p>Cada sesión es una conversación con su contexto. La regla de siempre: <strong>una sesión por tarea</strong>. Lo importante que quieras que sobreviva va a la memoria, no al chat.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">12</span>
+    <h3>Cuando pide permiso</h3>
+    <div class="step-body">
+      <p>Antes de ejecutar un comando que pueda hacer daño (borrar, sobrescribir, descargar y ejecutar), Hermes se para y pregunta. En el modo <code>smart</code>, un modelo auxiliar decide qué es inocuo (se ejecuta), qué es claramente peligroso (se niega) y qué es dudoso (te pregunta). Respondes con una de cuatro opciones:</p>
+      <ul>
+        <li><strong>once</strong> · sólo esta vez.</li>
+        <li><strong>session</strong> · durante esta sesión.</li>
+        <li><strong>always</strong> · siempre: añade el patrón a <code>command_allowlist</code> en la configuración.</li>
+        <li><strong>deny</strong> · no (es la opción por defecto si no contestas).</li>
+      </ul>
+      <p>Empieza respondiendo <em>once</em> y pasa a <em>always</em> sólo con comandos que veas repetirse y entiendas. Hay comandos que Hermes no ejecuta nunca, ni aunque se lo pidas (sección 10).</p>
+      <div class="note">
+        <span class="note-title">Personalidad y perfiles</span>
+        <p><code>SOUL.md</code> define quién es tu agente; <code>/personality</code> cambia el tono al vuelo. Y si quieres un Hermes para el trabajo y otro para lo personal, con memorias y skills separadas: <code>hermes profile create trabajo</code> y luego <code>hermes -p trabajo</code>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     6 · SKILLS
+     ══════════════════════════════════════════════════════════════════ -->
+
+<section id="skills">
+  <p class="phase">Lo que lo hace distinto</p>
+  <h2>Skills: usar, instalar y dejar que las cree</h2>
+  <hr class="rule">
+
+  <p>Una skill es una carpeta en <code>~/.hermes/skills/</code> con un archivo <code>SKILL.md</code> que describe un procedimiento: cuándo usarlo, los pasos, las trampas y cómo comprobar el resultado. Puede llevar al lado plantillas, scripts y referencias. El formato sigue el estándar abierto de agentskills.io, así que las skills de Claude Code, OpenAI o la comunidad funcionan aquí.</p>
+
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+    <pre><span class="c"># ~/.hermes/skills/contenido/informe-semanal/SKILL.md</span>
+---
+name: informe-semanal
+description: Informe semanal de métricas de contenido en Notion
+version: 1.0.0
+metadata:
+  hermes:
+    tags: [contenido, notion]
+    requires_toolsets: [terminal, web]
+---
+
+## When to Use
+Cuando pidan el informe semanal, el resumen de la semana o las métricas.
+
+## Procedure
+1. Leer las publicaciones de los últimos 7 días de la base de Notion.
+2. Calcular alcance, retención media y guardados por pieza.
+3. Escribir el informe con la plantilla de templates/informe.md.
+
+## Verification
+Las cifras del informe coinciden con las de Notion. Si una falta, se
+marca como [SIN DATO], no se estima.</pre>
+  </div>
+
+  <h3>Usar una skill</h3>
+  <p>Se cargan solas cuando tu petición encaja con su descripción, o a mano: <code>/informe-semanal hazme el de esta semana</code>. Puedes encadenar hasta cinco en un mensaje (<code>/skill-uno /skill-dos arregla esto</code>). Y con <code>/skills</code> ves las que hay cargadas.</p>
+
+  <h3>Instalar del hub</h3>
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+    <pre>hermes skills browse                          <span class="c"># ver el catálogo</span>
+hermes skills search notion                   <span class="c"># buscar en todas las fuentes</span>
+hermes skills inspect <span class="k">fuente/ruta/skill</span>       <span class="c"># leerla antes de instalar</span>
+hermes skills install <span class="k">fuente/ruta/skill</span>
+hermes skills install https://<span class="k">ejemplo.com</span>/SKILL.md --name <span class="k">mi-skill</span>
+hermes skills list                            <span class="c"># instaladas</span>
+hermes skills check                           <span class="c"># ¿hay cambios arriba?</span>
+hermes skills update
+hermes skills uninstall <span class="k">nombre</span></pre>
+  </div>
+  <p>Las fuentes tienen niveles de confianza: <code>official/</code> (las que empaqueta el propio Hermes) y los repositorios de <code>openai/</code>, <code>anthropics/</code>, <code>huggingface/</code> y <code>NVIDIA/</code> son de confianza; <code>skills-sh/</code> (el directorio público de Vercel) y las URLs sueltas son «comunidad». Todas pasan por un escáner que busca exfiltración de datos, inyección de prompt y comandos destructivos: lo dudoso se puede forzar con <code>--force</code> después de leerlo; <strong>lo peligroso se bloquea siempre</strong>.</p>
+
+  <h3>Dejar que las cree él</h3>
+  <p>Es la parte que no tiene nadie más. Cuando Hermes resuelve algo que huele a repetible, guarda el procedimiento como skill con su herramienta interna <code>skill_manage</code>, y la va afinando cada vez que la usa. Puedes provocarlo:</p>
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+    <pre>Lo que acabamos de hacer lo voy a necesitar cada semana. Conviértelo
+en una skill llamada informe-semanal, con los pasos exactos que has
+seguido y la comprobación final de que las cifras coinciden.</pre>
+  </div>
+  <p>Si prefieres revisar antes de que escriba nada en disco, activa la aprobación de escritura y revisa lo que propone:</p>
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+    <pre><span class="c"># en config.yaml</span>
+skills:
+  write_approval: true
+
+<span class="c"># en el chat</span>
+/skills pending          <span class="c"># qué quiere escribir</span>
+/skills diff <span class="k">id</span>          <span class="c"># ver el cambio</span>
+/skills approve <span class="k">id</span>       <span class="c"># o /skills reject id</span></pre>
+  </div>
+
+  <div class="note">
+    <span class="note-title">Skills de otros proyectos</span>
+    <p>Si tienes skills en otras carpetas (las de Claude Code, las de tu equipo), no hace falta copiarlas: en <code>config.yaml</code>, <code>skills.external_dirs</code> con la lista de rutas. Las skills que vienen dentro de un repositorio clonado exigen confianza explícita con <code>hermes skills trust</code> antes de cargarse.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     7 · MEMORIA
+     ══════════════════════════════════════════════════════════════════ -->
+
+<section id="memoria">
+  <p class="phase">Lo que recuerda</p>
+  <h2>Memoria: lo que recuerda de ti</h2>
+  <hr class="rule">
+
+  <p>Dos archivos de texto en <code>~/.hermes/memories/</code>, que el agente mantiene y tú puedes editar:</p>
+
+  <dl>
+    <div class="field"><dt>MEMORY.md</dt><dd>Sus notas: cómo es tu entorno, convenciones, cosas que ha aprendido. Límite de <strong>2.200 caracteres</strong> (unos 800 tokens).</dd></div>
+    <div class="field"><dt>USER.md</dt><dd>Tu perfil: preferencias, forma de comunicarte, qué esperas de él. Límite de <strong>1.375 caracteres</strong> (unos 500 tokens).</dd></div>
+  </dl>
+
+  <p>Los límites son a propósito: la memoria se carga entera en el arranque de cada sesión, y una memoria corta que se cumple vale más que una larga que diluye. Cuando se llena, la herramienta devuelve un error y el agente tiene que consolidar antes de añadir; no se trunca nada en silencio. Lo que se guarda durante una sesión queda en disco al momento pero <strong>se ve en la siguiente</strong>: el arranque es una foto fija.</p>
+
+  <p>Además de esos dos archivos, Hermes puede <strong>buscar en todas las conversaciones anteriores</strong> (búsqueda de texto completo sobre <code>~/.hermes/state.db</code>), así que encuentra cosas que no están en la memoria activa sin gastar contexto en cargarlas.</p>
+
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+    <pre>Recuerda que mis vídeos van siempre en español de España, que mi
+audiencia no es técnica y que odio las frases de relleno.
+
+¿Qué sabes de mí? Enséñame tu USER.md.
+
+Busca en nuestras conversaciones anteriores cuándo hablamos del
+formato de los guiones y resume lo que decidimos.</pre>
+  </div>
+
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+    <pre><span class="c"># config.yaml · interruptores de la memoria</span>
+memory:
+  memory_enabled: true
+  user_profile_enabled: true
+  write_approval: false     <span class="c"># true: revisar con /memory pending y /memory approve</span></pre>
+  </div>
+
+  <p>Para ver cómo ha ido creciendo (qué skills y qué memorias ha ido aprendiendo y cuándo): <code>hermes journey</code>. Y si quieres memoria semántica o grafos de conocimiento, <code>hermes memory</code> conecta proveedores externos como Honcho, Mem0 o Supermemory. Para empezar, los dos archivos sobran.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     8 · MÓVIL
+     ══════════════════════════════════════════════════════════════════ -->
+
+<section id="movil">
+  <p class="phase">Fase 4</p>
+  <h2>Al móvil: Telegram, Discord y WhatsApp</h2>
+  <hr class="rule">
+
+  <p>El <em>gateway</em> es un único proceso que conecta Hermes a todas las plataformas a la vez y ejecuta las tareas programadas. Lo configuras una vez por plataforma y lo dejas encendido. Telegram es el más sencillo y el más estable: empieza por ahí.</p>
+
+  <div class="step">
+    <span class="step-num">13</span>
+    <h3>Cómo se arranca y se mantiene encendido</h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>hermes gateway setup          <span class="c"># asistente: elegir plataforma, pegar tokens</span>
+hermes gateway                <span class="c"># arrancar en primer plano (para probar)</span>
+hermes gateway install        <span class="c"># instalarlo como servicio de usuario</span>
+sudo hermes gateway install --system   <span class="c"># Linux: que arranque con la máquina</span>
+hermes gateway status
+hermes gateway stop</pre>
+      </div>
+      <p>En WSL2 los servicios del sistema no siempre funcionan: usa <code>tmux</code> o <code>nohup hermes gateway run</code> para dejarlo en segundo plano.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">14</span>
+    <h3>Telegram</h3>
+    <div class="step-body">
+      <ol>
+        <li>En Telegram, abre <strong>@BotFather</strong>, escribe <code>/newbot</code>, dale un nombre y un usuario que termine en <code>bot</code>. Te devuelve el <strong>token</strong> (algo como <code>123456789:ABCdef…</code>). Es una contraseña: no lo pegues en ningún chat.</li>
+        <li>Averigua tu <strong>ID numérico</strong> de usuario escribiendo a <strong>@userinfobot</strong>. No es tu nombre de usuario: es un número.</li>
+        <li>Configura: <code>hermes gateway setup</code>, elige Telegram, pega el token y tu ID. O a mano, en <code>~/.hermes/.env</code>:</li>
+      </ol>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>TELEGRAM_BOT_TOKEN=<span class="k">123456789:ABCdefGHIjklMNOpqrSTUvwxYZ</span>
+TELEGRAM_ALLOWED_USERS=<span class="k">123456789</span>      <span class="c"># varios: separados por comas</span></pre>
+      </div>
+      <p>Arranca con <code>hermes gateway</code> y escríbele al bot. Debería contestar en segundos. Dentro del chat tienes <code>/new</code>, <code>/model</code>, <code>/status</code>, <code>/skill</code>, <code>/help</code> y <code>/stop</code> para parar una tarea.</p>
+      <div class="note">
+        <span class="note-title">En grupos</span>
+        <p>Por defecto los bots de Telegram sólo ven los comandos en los grupos. Para que lea todos los mensajes: en @BotFather, <code>/mybots</code> → tu bot → <em>Bot Settings → Group Privacy → Turn off</em>, y saca y vuelve a meter al bot en el grupo. Autoriza el grupo con <code>TELEGRAM_GROUP_ALLOWED_CHATS</code> (los IDs de grupo son negativos) y, si quieres que sólo responda cuando le mencionan, <code>telegram: { require_mention: true }</code> en <code>config.yaml</code>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">15</span>
+    <h3>El canal «casa»: dónde llegan las tareas programadas</h3>
+    <div class="step-body">
+      <p>Las tareas programadas necesitan saber a qué chat mandar el resultado. Desde el propio chat, <code>/sethome</code> lo fija; o en <code>.env</code>:</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>TELEGRAM_HOME_CHANNEL=<span class="k">123456789</span>            <span class="c"># tu ID si es un chat privado; negativo si es un grupo</span>
+TELEGRAM_HOME_CHANNEL_NAME="<span class="k">Mis avisos</span>"</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">16</span>
+    <h3>Discord</h3>
+    <div class="step-body">
+      <ol>
+        <li>En <a href="https://discord.com/developers/applications">discord.com/developers/applications</a>, <em>New Application</em>. En la pestaña <strong>Bot</strong>, activa los <em>Privileged Gateway Intents</em> <strong>Server Members</strong> y <strong>Message Content</strong> (sin el segundo, el bot no lee los mensajes). <em>Reset Token</em> y copia el token: sólo se muestra una vez.</li>
+        <li>En <strong>Installation</strong>, enlace de invitación con los ámbitos <code>bot</code> y <code>applications.commands</code> y los permisos de ver canales, enviar mensajes, insertar enlaces, adjuntar archivos y leer el historial. Abre el enlace e invita al bot a tu servidor.</li>
+        <li>Tu ID de usuario: en Discord, <em>Ajustes → Avanzado → Modo desarrollador</em>, y luego clic derecho sobre tu nombre → <em>Copiar ID</em>.</li>
+      </ol>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>DISCORD_BOT_TOKEN=<span class="k">tu-token</span>
+DISCORD_ALLOWED_USERS=<span class="k">tu-id-numerico</span>
+DISCORD_REQUIRE_MENTION=true          <span class="c"># en canales, sólo responde si le mencionas</span></pre>
+      </div>
+      <p><code>hermes gateway</code> y el bot aparece en línea. Para canales donde quieras que responda sin mención, <code>DISCORD_FREE_RESPONSE_CHANNELS</code> con sus IDs.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">17</span>
+    <h3>WhatsApp</h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>hermes whatsapp</pre>
+      </div>
+      <p>El asistente te pregunta el modo (<em>bot</em>, con un número dedicado; o <em>self-chat</em>, hablando contigo mismo en tu propio número) y muestra un código QR. En el móvil: <em>WhatsApp → Ajustes → Dispositivos vinculados → Vincular un dispositivo</em>, y escanea. Necesita Node.js (18 o superior), que el instalador ya dejó puesto.</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>WHATSAPP_ENABLED=true
+WHATSAPP_MODE=<span class="k">bot</span>                     <span class="c"># bot | self-chat</span>
+WHATSAPP_ALLOWED_USERS=<span class="k">34600000000</span>     <span class="c"># con prefijo de país, sin el +</span></pre>
+      </div>
+      <div class="warn">
+        <span class="warn-title">Riesgo de bloqueo</span>
+        <p>WhatsApp no admite oficialmente bots fuera de su API de empresa; un número vinculado así puede acabar bloqueado. Si el número te importa, usa uno secundario, o la vía oficial con la API de WhatsApp Business (<code>hermes whatsapp-cloud</code>). Cada perfil de Hermes admite un solo número, y la carpeta <code>~/.hermes/platforms/whatsapp/session</code> es tu sesión de WhatsApp: protégela como una contraseña.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">18</span>
+    <h3>Quién puede hablar con tu agente</h3>
+    <div class="step-body">
+      <p>Por defecto, <strong>nadie</strong>: si no hay listas de permitidos, el gateway rechaza a todo el mundo y te avisa al arrancar. Dos formas de abrir la puerta:</p>
+      <ul>
+        <li><strong>Listas por plataforma</strong>, como las de arriba (<code>TELEGRAM_ALLOWED_USERS</code>, <code>DISCORD_ALLOWED_USERS</code>…) o una global, <code>GATEWAY_ALLOWED_USERS</code>.</li>
+        <li><strong>Emparejamiento:</strong> un desconocido que escribe recibe un código de ocho caracteres (caduca en una hora) y tú lo apruebas desde la terminal.</li>
+      </ul>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>hermes pairing approve <span class="k">telegram</span> <span class="k">CÓDIGO</span>
+hermes pairing list
+hermes pairing revoke <span class="k">telegram</span> <span class="k">id-de-usuario</span></pre>
+      </div>
+      <div class="warn">
+        <span class="warn-title">Nunca</span>
+        <p><code>GATEWAY_ALLOW_ALL_USERS=true</code> en un agente con terminal es dar tu ordenador a cualquiera que encuentre el bot. No existe un caso en que compense.</p>
+      </div>
+      <p>Slack, Signal, email y Home Assistant se configuran con el mismo <code>hermes gateway setup</code>; para Slack, <code>hermes slack</code> genera el manifiesto de la app con sus comandos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     9 · CRON
+     ══════════════════════════════════════════════════════════════════ -->
+
+<section id="cron">
+  <p class="phase">Que trabaje solo</p>
+  <h2>Tareas programadas</h2>
+  <hr class="rule">
+
+  <p>Con el gateway encendido, Hermes ejecuta tareas a la hora que le digas, en una sesión nueva cada vez, y te manda el resultado a donde quieras. Se pide en lenguaje normal:</p>
+
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+    <pre>Cada día laborable a las 8:00, revisa las novedades de los tres canales
+de YouTube de mi lista canales.txt, resume en cinco líneas lo que han
+publicado y mándamelo por Telegram. Si no hay nada nuevo, no me escribas.</pre>
+  </div>
+
+  <p>O desde la terminal y el chat, con control fino:</p>
+
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+    <pre>hermes cron create "every 2h" "Comprueba que la web de la academia responde"
+hermes cron list
+hermes cron run <span class="k">id</span>            <span class="c"># ejecutarla ahora</span>
+hermes cron pause <span class="k">id</span>          <span class="c"># y resume</span>
+hermes cron edit <span class="k">id</span> --schedule "weekdays at 9am"
+hermes cron remove <span class="k">id</span>
+
+<span class="c"># en el chat: /cron add "every 1h" "Resume las novedades" --skill vigilar-blog</span></pre>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Formato</th><th>Ejemplos</th></tr></thead>
+      <tbody>
+        <tr><td>Una vez, dentro de</td><td><code>"in 30m"</code>, <code>"in 2h"</code>, <code>"in 1d"</code></td></tr>
+        <tr><td>Cada</td><td><code>"every 30m"</code>, <code>"every 2h"</code>, <code>"every hour"</code></td></tr>
+        <tr><td>Lenguaje natural</td><td><code>"every monday 9am"</code>, <code>"daily at 7am"</code>, <code>"weekdays at 9am"</code></td></tr>
+        <tr><td>Expresión cron</td><td><code>"0 9 * * *"</code> (a diario a las 9), <code>"0 9 * * 1-5"</code> (laborables)</td></tr>
+        <tr><td>Fecha exacta</td><td><code>"2026-10-01T09:00:00"</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>El resultado va a <code>origin</code> (donde se creó la tarea), a <code>local</code> (se guarda en <code>~/.hermes/cron/output/</code>), a una plataforma concreta (<code>telegram</code>, <code>discord</code>, <code>slack</code>, <code>email</code>…) o a <code>all</code>. El gateway comprueba el reloj cada minuto.</p>
+
+  <div class="caution">
+    <span class="caution-title">Nadie aprueba de madrugada</span>
+    <p>Una tarea programada que tropiece con un comando que requiere aprobación se queda sin respuesta. Por defecto, en ese caso Hermes deniega (<code>approvals.cron_mode: deny</code>). Diseña las tareas nocturnas para que no necesiten comandos delicados, o añade a la lista de permitidos exactamente los que necesiten. Un ejemplo completo de pipeline nocturno, con aprobación desde el móvil de lo irreversible, está en la <a href="webs-ia.html#automatizar">guía de modernizar webs</a>.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     10 · SEGURIDAD
+     ══════════════════════════════════════════════════════════════════ -->
+
+<section id="seguridad">
+  <p class="phase">Sin puertas abiertas</p>
+  <h2>Seguridad: aprobaciones, contenedores y VPS</h2>
+  <hr class="rule">
+
+  <h3>Aprobaciones</h3>
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+    <pre><span class="c"># config.yaml</span>
+approvals:
+  mode: smart              <span class="c"># smart (recomendado) | manual (pregunta siempre) | off</span>
+  timeout: 300             <span class="c"># segundos esperando tu respuesta</span>
+  cron_mode: deny          <span class="c"># qué hacer sin nadie delante</span>
+  deny:                    <span class="c"># tus propias prohibiciones, siempre</span>
+    - "git push --force*"
+    - "*curl*|*sh*"</pre>
+  </div>
+  <p>Hay una lista negra que <strong>no se puede saltar</strong>, ni con <code>--yolo</code> ni con <code>mode: off</code>: borrar la raíz del disco, bombas de procesos, formatear discos montados, descargar-y-ejecutar de una tubería. Y hay archivos que el agente no puede escribir aunque quiera: <code>~/.ssh</code>, <code>~/.aws</code>, sus propios <code>auth.json</code> y <code>.env</code>, y los <code>.env</code> de tus proyectos. La variable <code>HERMES_WRITE_SAFE_ROOT</code> restringe además todas las escrituras a las carpetas que digas.</p>
+
+  <h3>Dónde ejecuta los comandos</h3>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Backend</th><th>Aislamiento</th><th>Para qué</th></tr></thead>
+      <tbody>
+        <tr><td><code>local</code></td><td>Ninguno; se apoya en las aprobaciones</td><td>Tu ordenador, tú delante</td></tr>
+        <tr><td><code>docker</code></td><td>Contenedor con recursos limitados</td><td>Un gateway que trabaja solo. El contenedor es la frontera, y por eso ahí no pide aprobaciones.</td></tr>
+        <tr><td><code>ssh</code></td><td>Otra máquina</td><td>Separar la mensajería de la ejecución</td></tr>
+        <tr><td><code>modal</code>, <code>daytona</code>, <code>vercel_sandbox</code>, <code>singularity</code></td><td>Sandbox en la nube o en HPC</td><td>Escalar o aislar del todo</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+    <pre><span class="c"># config.yaml · gateway en un servidor, dentro de Docker</span>
+terminal:
+  backend: docker
+  docker_image: "nikolaik/python-nodejs:python3.11-nodejs20"
+  container_persistent: true
+  container_memory: 4096      <span class="c"># MB</span>
+  container_cpu: 2
+  cwd: "/opt/data"</pre>
+  </div>
+
+  <h3>Si lo montas en un VPS</h3>
+  <ul class="lead-list">
+    <li><strong>Listas de permitidos explícitas</strong> o emparejamiento. Jamás «permitir a todos».</li>
+    <li><strong>Backend docker</strong> con límites de CPU, memoria y disco, y usuario sin privilegios.</li>
+    <li><strong>Secretos en <code>~/.hermes/.env</code></strong> con permisos 600, y nada más ahí.</li>
+    <li><strong>Revisar de vez en cuando</strong> <code>command_allowlist</code> en la configuración y los registros en <code>~/.hermes/logs/</code>.</li>
+    <li><strong>Actualizar</strong> con <code>hermes update</code>; <code>hermes doctor</code> avisa además de paquetes de Python comprometidos.</li>
+    <li>Si quieres cinturón y tirantes: gateway en una máquina y ejecución en otra por <code>ssh</code>, y <code>security.allow_lazy_installs: false</code> para que ninguna configuración pueda instalar dependencias por su cuenta.</li>
+  </ul>
+
+  <div class="note">
+    <span class="note-title">Lo que ya viene puesto</span>
+    <p>Hermes escanea los archivos de contexto (<code>AGENTS.md</code>, <code>SOUL.md</code>, <code>.cursorrules</code>) en busca de instrucciones inyectadas, bloquea peticiones a direcciones internas y de metadatos de la nube, y filtra las variables de entorno que llegan a los servidores MCP. No sustituye a las reglas de arriba, pero es más de lo que trae la mayoría.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     11 · MANTENER
+     ══════════════════════════════════════════════════════════════════ -->
+
+<section id="mantener">
+  <p class="phase">Cuidados</p>
+  <h2>Mantener: actualizar, copias, perfiles</h2>
+  <hr class="rule">
+
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+    <pre>hermes update                  <span class="c"># última versión; sincroniza las skills de todos los perfiles</span>
+hermes backup                  <span class="c"># zip con configuración, memoria, skills y sesiones</span>
+hermes import <span class="k">archivo.zip</span>       <span class="c"># restaurar en otra máquina</span>
+
+hermes profile create <span class="k">trabajo</span>  <span class="c"># un Hermes aparte, con su memoria y sus skills</span>
+hermes profile list
+hermes -p <span class="k">trabajo</span>              <span class="c"># usarlo</span>
+hermes -p <span class="k">trabajo</span> gateway start
+
+hermes status                  <span class="c"># agente, autenticación y plataformas</span>
+hermes logs                    <span class="c"># registros del agente y del gateway</span>
+hermes insights                <span class="c"># tokens, coste y actividad</span>
+hermes dashboard               <span class="c"># panel web de configuración y sesiones</span>
+hermes mcp                     <span class="c"># conectar servidores MCP</span>
+hermes uninstall               <span class="c"># quitarlo del sistema</span></pre>
+  </div>
+
+  <p>Los perfiles exportados no llevan credenciales; para una copia completa, <code>hermes backup</code>. Y si algún día te pasas al ordenador nuevo: <code>backup</code> en el viejo, instalador en el nuevo, <code>import</code>. Diez minutos.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     12 · DIAGNÓSTICO
+     ══════════════════════════════════════════════════════════════════ -->
+
+<section id="diagnostico">
+  <p class="phase">Diagnóstico</p>
+  <h2>Cuando algo no va</h2>
+  <hr class="rule">
+
+  <p>Antes de nada, la secuencia oficial de recuperación: <code>hermes doctor</code> → <code>hermes model</code> → <code>hermes setup</code> → <code>hermes sessions list</code> → <code>hermes -c</code> → <code>hermes gateway status</code>. Casi todo se arregla en los dos primeros.</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Síntoma</th><th>Causa y arreglo</th></tr></thead>
+      <tbody>
+        <tr><td>Respuestas vacías o cortadas</td><td>Proveedor mal configurado o clave caducada. <code>hermes model</code>, comprueba la autenticación y vuelve a elegir el modelo.</td></tr>
+        <tr><td>Un modelo local da timeout con contextos grandes</td><td>En <code>.env</code>: <code>HERMES_STREAM_READ_TIMEOUT=1800</code>. Y prueba el endpoint por separado antes de culpar a Hermes.</td></tr>
+        <tr><td>«Session not found»</td><td><code>hermes sessions list</code> y confirma que estás en el perfil correcto (<code>-p</code>).</td></tr>
+        <tr><td>El bot no contesta a nadie</td><td>No hay lista de permitidos: el gateway deniega por defecto y lo avisa al arrancar. Añade tu ID o usa el emparejamiento.</td></tr>
+        <tr><td>El bot responde en privado pero no en el grupo</td><td>Privacidad de grupo activada en BotFather. Desactívala, saca al bot del grupo y vuelve a meterlo.</td></tr>
+        <tr><td>Las tareas programadas no se ejecutan</td><td>El gateway no está encendido. <code>hermes gateway status</code>; instálalo como servicio.</td></tr>
+        <tr><td>Una tarea nocturna «no hizo nada»</td><td>Tropezó con una aprobación y, sin nadie delante, denegó. Mira <code>hermes logs</code> y rediseña la tarea o añade el comando a la lista de permitidos.</td></tr>
+        <tr><td>WhatsApp se desconecta</td><td>Vuelve a escanear el QR con <code>hermes whatsapp</code>. Si se repite, es el riesgo de la vía no oficial: valora <code>hermes whatsapp-cloud</code>.</td></tr>
+        <tr><td>Un comando de esta guía no existe</td><td><code>hermes update</code>. El proyecto cambia deprisa; <code>hermes --help</code> y <code>/help</code> dicen lo que hay en tu versión.</td></tr>
+        <tr><td>Necesitas ayuda de la comunidad</td><td><code>hermes dump</code> genera un resumen de tu instalación sin secretos, listo para pegar; <code>hermes debug share</code> sube un informe con los registros.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  Verificado contra la documentación oficial de Hermes Agent (hermes-agent.nousresearch.com/docs) y la página de precios de Nous Portal · septiembre de 2026 · Hermes publica versiones cada pocas semanas: si un comando no coincide, <code>hermes update</code> primero y la documentación después.<br>
+  ¿Qué es un agente y cómo se le pide bien? Escribe AGENTES en cualquier reel. ¿Un negocio con esto? Escribe WEBS.
+</footer>
+
+</div>
+</main>
+</body>
+</html>

@@ -342,6 +342,135 @@
     c.stroke();
   };
 
+  /* --- Modernizar webs: el móvil de antes y el de después -------------- */
+  GRAFICOS.webs = function (c, X, Y, S, U) {
+    var pw = S * 0.34, ph = S * 0.80, py = Y + S * 0.08;
+    var ax = X + S * 0.04, bx = X + S * 0.62;
+
+    /* la web vieja: marco discontinuo, maquetación de tabla, todo apagado */
+    trazo(c, U, 0.12);
+    c.globalAlpha = 0.55;
+    c.setLineDash([U * 0.34, U * 0.28]);
+    caja(c, ax, py, pw, ph);
+    c.setLineDash([]);
+    var gx = ax + S * 0.045, gy = py + S * 0.10, gw = pw - S * 0.09, gh = ph * 0.60;
+    caja(c, gx, gy, gw, gh);                                   /* la tabla */
+    c.beginPath();
+    c.moveTo(gx, gy + gh / 3); c.lineTo(gx + gw, gy + gh / 3);
+    c.moveTo(gx, gy + gh * 2 / 3); c.lineTo(gx + gw, gy + gh * 2 / 3);
+    c.moveTo(gx + gw * 0.45, gy); c.lineTo(gx + gw * 0.45, gy + gh);
+    c.stroke();
+    c.fillStyle = ACENTO;                                       /* texto diminuto */
+    [0, 1, 2].forEach(function (k) {
+      c.fillRect(gx, gy + gh + S * 0.05 + k * S * 0.035, gw * (0.9 - k * 0.2), S * 0.014);
+    });
+    c.globalAlpha = 1;
+
+    /* la flecha: lo que haces tú */
+    trazo(c, U, 0.14);
+    var fy = py + ph * 0.5, f0 = ax + pw + S * 0.05, f1 = bx - S * 0.05;
+    c.beginPath(); c.moveTo(f0, fy); c.lineTo(f1, fy); c.stroke();
+    poli(c, [[f1 - S * 0.05, fy - S * 0.045], [f1, fy], [f1 - S * 0.05, fy + S * 0.045]]);
+    c.stroke();
+
+    /* la web nueva: marco firme, cabecera, foto, texto y botón de llamar */
+    trazo(c, U, 0.14);
+    caja(c, bx, py, pw, ph);
+    c.fillStyle = ACENTO;
+    c.fillRect(bx + S * 0.11, py + S * 0.03, S * 0.12, S * 0.014);       /* auricular */
+    c.fillRect(bx + S * 0.045, py + S * 0.09, pw - S * 0.09, S * 0.075);  /* cabecera */
+    c.fillStyle = conAlfa(ACENTO, 0.30);
+    c.fillRect(bx + S * 0.045, py + S * 0.20, pw - S * 0.09, S * 0.20);   /* la foto */
+    c.fillStyle = conAlfa(ACENTO, 0.45);
+    [0, 1, 2].forEach(function (k) {
+      c.fillRect(bx + S * 0.045, py + S * 0.44 + k * S * 0.06, (pw - S * 0.09) * (1 - k * 0.22), S * 0.028);
+    });
+    c.fillStyle = ACENTO;
+    c.fillRect(bx + S * 0.045, py + ph - S * 0.13, pw - S * 0.09, S * 0.07);  /* llamar */
+  };
+
+  /* --- Agentes: el bucle, con el agente en medio y sus herramientas ---- */
+  GRAFICOS.agentes = function (c, X, Y, S, U) {
+    var cx = X + S * 0.40, cy = Y + S * 0.50, R = S * 0.36;
+    var box = S * 0.24;
+
+    /* el bucle: un arco casi completo, con punta de flecha */
+    trazo(c, U, 0.13);
+    var a0 = -Math.PI * 0.35, a1 = Math.PI * 1.45;
+    c.beginPath(); c.arc(cx, cy, R, a0, a1); c.stroke();
+    var ex = cx + Math.cos(a1) * R, ey = cy + Math.sin(a1) * R;
+    var t = a1 + Math.PI / 2;                                   /* tangente */
+    poli(c, [[ex - Math.cos(t) * S * 0.07 + Math.cos(a1) * S * 0.045, ey - Math.sin(t) * S * 0.07 + Math.sin(a1) * S * 0.045],
+             [ex, ey],
+             [ex - Math.cos(t) * S * 0.07 - Math.cos(a1) * S * 0.045, ey - Math.sin(t) * S * 0.07 - Math.sin(a1) * S * 0.045]]);
+    c.stroke();
+
+    /* cuatro paradas del bucle: plan, acción, resultado, comprobación */
+    c.fillStyle = ACENTO;
+    [0.05, 0.45, 0.85, 1.25].forEach(function (k) {
+      var a = Math.PI * k;
+      c.fillRect(cx + Math.cos(a) * R - S * 0.03, cy + Math.sin(a) * R - S * 0.03, S * 0.06, S * 0.06);
+    });
+
+    /* el agente, en el centro, con su prompt */
+    c.fillStyle = T.fondo;
+    c.fillRect(cx - box / 2, cy - box / 2, box, box);
+    caja(c, cx - box / 2, cy - box / 2, box, box);
+    poli(c, [[cx - box * 0.28, cy - box * 0.18], [cx - box * 0.08, cy], [cx - box * 0.28, cy + box * 0.18]]);
+    c.stroke();
+    c.fillStyle = ACENTO;
+    c.fillRect(cx + box * 0.02, cy + box * 0.08, box * 0.26, box * 0.10);
+
+    /* las herramientas, enchufadas a la derecha */
+    var tx = X + S * 0.82, tw = S * 0.16, th = S * 0.13;
+    [0, 1, 2].forEach(function (k) {
+      var ty = Y + S * 0.22 + k * S * 0.22;
+      c.beginPath(); c.moveTo(cx + R, ty + th / 2); c.lineTo(tx, ty + th / 2); c.stroke();
+      if (k < 2) caja(c, tx, ty, tw, th, ACENTO);
+      else { c.setLineDash([U * 0.34, U * 0.28]); caja(c, tx, ty, tw, th); c.setLineDash([]); }
+    });
+  };
+
+  /* --- Hermes: el chat en el móvil y las skills que va apilando -------- */
+  GRAFICOS.hermes = function (c, X, Y, S, U) {
+    /* la burbuja del chat, arriba a la izquierda, con el prompt dentro */
+    var bx = X + S * 0.02, by = Y + S * 0.04, bw = S * 0.54, bh = S * 0.32;
+    trazo(c, U, 0.14);
+    caja(c, bx, by, bw, bh);
+    poli(c, [[bx + S * 0.08, by + bh], [bx + S * 0.08, by + bh + S * 0.09], [bx + S * 0.18, by + bh]]);
+    c.stroke();
+    c.fillStyle = T.fondo;                                      /* abre la burbuja hacia el rabo */
+    c.fillRect(bx + S * 0.082, by + bh - S * 0.012, S * 0.096, S * 0.024);
+    poli(c, [[bx + S * 0.07, by + S * 0.09], [bx + S * 0.13, by + S * 0.16], [bx + S * 0.07, by + S * 0.23]]);
+    c.stroke();
+    c.fillStyle = ACENTO;
+    c.fillRect(bx + S * 0.17, by + S * 0.125, S * 0.22, S * 0.06);
+    c.fillStyle = conAlfa(ACENTO, 0.45);
+    c.fillRect(bx + S * 0.07, by + S * 0.255, S * 0.34, S * 0.035);
+
+    /* las skills: una pila abajo a la derecha que crece; la de arriba, aún por aprender */
+    var sx = X + S * 0.60, sw = S * 0.36, sh = S * 0.14, hueco = S * 0.04;
+    var base = Y + S * 0.96;
+    [0, 1, 2].forEach(function (k) {
+      var sy = base - (k + 1) * (sh + hueco);
+      if (k < 2) caja(c, sx, sy, sw, sh, ACENTO);
+      else { c.setLineDash([U * 0.34, U * 0.28]); caja(c, sx, sy, sw, sh); c.setLineDash([]); }
+    });
+
+    /* de la conversación a la pila: sale por debajo del rabo, dobla y baja hasta la skill nueva */
+    var topePila = base - 3 * (sh + hueco);
+    var ly = by + bh + S * 0.20;                                /* por debajo del rabo de la burbuja */
+    var mx = sx + sw / 2;
+    c.beginPath();
+    c.moveTo(bx + S * 0.13, by + bh + S * 0.09);
+    c.lineTo(bx + S * 0.13, ly);
+    c.lineTo(mx, ly);
+    c.lineTo(mx, topePila - S * 0.03);
+    c.stroke();
+    poli(c, [[mx - S * 0.045, topePila - S * 0.085], [mx, topePila - S * 0.03], [mx + S * 0.045, topePila - S * 0.085]]);
+    c.stroke();
+  };
+
   function grafico(c, r, x, y, w, h, U) {
     var dibujo = GRAFICOS[(r.portada || {}).grafico];
     if (!dibujo) return;
