@@ -42,6 +42,11 @@
   <h2>Todo lo publicado</h2>
   <hr class="rule">
 
+  <p>Cada recurso trae su portada, en dos versiones que sólo se diferencian en
+  la firma. Se generan en el navegador con las fuentes y los colores del
+  sistema, así que salen siempre al día con el recurso; los botones de cada
+  ficha las descargan en PNG a doble resolución.</p>
+
   <div class="res-grid" id="grid"></div>
 
   <noscript>
@@ -143,6 +148,7 @@
 </dialog>
 
 <script src="assets/recursos.js"></script>
+<script src="assets/portadas.js"></script>
 <script>
 (function(){
   var grid = document.getElementById('grid');
@@ -163,19 +169,58 @@
       ? '<span class="pill pill--draft">Borrador</span>'
       : '<span class="pill pill--live">Publicado</span>';
 
+    var formatos = RacksPortadas.AUTORES.map(function(a){
+      return '<button class="btn" type="button" data-png="' + a.id + '">' +
+             a.nombre + '</button>';
+    }).join('');
+
     el.innerHTML =
-      '<p class="res-kicker">' + r.kicker + '</p>' +
-      '<h3><a href="' + href + '">' + r.titulo + '</a></h3>' +
-      '<p>' + r.resumen + '</p>' +
+      '<div class="res-head">' +
+        '<a class="res-thumb" href="' + href + '" aria-hidden="true" tabindex="-1"></a>' +
+        '<div class="res-text">' +
+          '<p class="res-kicker">' + r.kicker + '</p>' +
+          '<h3><a href="' + href + '">' + r.titulo + '</a></h3>' +
+        '</div>' +
+      '</div>' +
+      '<p class="res-resumen">' + r.resumen + '</p>' +
       '<div class="res-foot">' +
         estado +
         '<span>' + (r.etiquetas || []).join(' · ') + '</span>' +
         '<button class="btn" type="button" data-embed="' + r.slug + '">Incrustar</button>' +
+      '</div>' +
+      '<div class="res-portadas">' +
+        '<span class="label-inline">Portada PNG a nombre de</span>' + formatos +
       '</div>';
 
     el.querySelector('[data-embed]').addEventListener('click', function(){
       openEmbed(r, href);
     });
+
+    // miniatura: la misma rutina que el PNG, dibujada en pequeño
+    var thumb = el.querySelector('.res-thumb');
+    var lienzo = document.createElement('canvas');
+    thumb.appendChild(lienzo);
+    RacksPortadas.listo().then(function(){
+      RacksPortadas.dibuja(lienzo, r, RacksPortadas.AUTORES[0].id, 0.34);
+    });
+
+    el.querySelectorAll('[data-png]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var previo = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Generando';
+        RacksPortadas.descarga(r, btn.dataset.png).then(function(){
+          btn.textContent = 'Descargada';
+          btn.classList.add('is-done');
+          setTimeout(function(){
+            btn.textContent = previo;
+            btn.classList.remove('is-done');
+            btn.disabled = false;
+          }, 1800);
+        });
+      });
+    });
+
     return el;
   }
 

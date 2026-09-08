@@ -99,6 +99,7 @@ recursos/<slug>.html      el recurso
 assets/racks.css          el sistema
 assets/racks.js           copiar código, índice activo, altura del iframe
 assets/recursos.js        el catálogo que pinta index.html
+assets/portadas.js        las portadas, dibujadas en canvas
 recursos/plantilla.html   punto de partida con todos los bloques
 ```
 
@@ -152,6 +153,31 @@ eso en cada recurso.
 Hay hoja de impresión: al imprimir o exportar a PDF, el recurso sale en tinta
 negra sobre blanco, sin barra ni marca de agua, y con la URL detrás de cada
 enlace externo — el mismo criterio que learn.racks.university con sus guías.
+
+---
+
+## 3 bis. Portadas
+
+Cada recurso tiene portada, y la dibuja `assets/portadas.js` en un `<canvas>`
+con las fuentes del sistema — no hay imágenes que mantener: la portada sale
+siempre al día con lo que diga el catálogo.
+
+Salen **dos versiones por recurso**, idénticas salvo la firma: **Carlos Adams**
+y **Jaime Racks**. Se descargan desde los botones de cada ficha del índice, en
+PNG de 2400×3000 (el doble del lienzo de 1200×1500, proporción 4:5).
+
+La composición, de arriba abajo:
+
+| Zona | De dónde sale |
+|---|---|
+| Sello arriba a la derecha | `portada.coleccion` |
+| Título en tres alturas | `portada.prefijo` · `portada.destacado` (naranja) · `portada.resto` |
+| Gráfico de progresión | `portada.desde` y `portada.hasta` rotulan los extremos |
+| Firma entre filetes | el autor elegido |
+| Banda naranja inferior | `portada.promesa`; una línea por salto, `*entre asteriscos*` va en negrita |
+
+Para añadir un autor: una entrada más en `AUTORES`, dentro de
+`assets/portadas.js`. El índice se rehace solo.
 
 ---
 

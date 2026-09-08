@@ -1,68 +1,124 @@
 /* ==========================================================================
    Racks Academy · Catálogo de recursos
    --------------------------------------------------------------------------
-   Fuente única de verdad del índice. Para publicar un recurso nuevo:
+   Fuente única de verdad del índice y de las portadas. Para publicar un
+   recurso nuevo:
 
-     1. Copia plantilla.html en recursos/<slug>.html y escribe el contenido.
+     1. Copia recursos/plantilla.html en recursos/<slug>.html y escríbelo.
      2. Añade una entrada aquí arriba del todo.
 
    Es un .js y no un .json a propósito: así el índice también funciona
    abriendo el archivo en local, sin servidor.
 
    Campos:
-     slug     identificador estable; también es el nombre del archivo
-     titulo   cómo aparece en la tarjeta
-     kicker   antetítulo corto en mayúsculas
-     resumen  una o dos frases
-     etiquetas  lista corta para el pie de la tarjeta
-     estado   'live' | 'draft'
-     fecha    AAAA-MM
+     slug       identificador estable; también es el nombre del archivo y la
+                URL pública, así que no se cambia una vez publicado
+     titulo     el gancho: qué se lleva quien lo lea, no de qué trata
+     kicker     antetítulo corto para la ficha
+     resumen    una o dos frases
+     etiquetas  lista corta para el pie de la ficha
+     estado     'live' | 'draft'
+     fecha      AAAA-MM
+
+   portada · lo que pinta assets/portadas.js
+     coleccion  sello de arriba a la derecha
+     prefijo    primera línea del título, pequeña
+     destacado  la línea grande, en naranja
+     resto      tercera línea, mediana
+     desde      rótulo del punto de salida del gráfico
+     hasta      rótulo del punto de llegada
+     promesa    banda inferior; una línea por salto, *entre asteriscos* va en negrita
    ========================================================================== */
 
 window.RACKS_RESOURCES = [
   {
     slug: 'skills-claude',
-    titulo: 'Skills y configuración de Claude Code',
+    titulo: 'Configura Claude Code y crea tus propias skills',
     kicker: 'Guía · Claude Code',
     resumen: 'Los seis trucos de configuración del creador de Claude Code, cómo instalar skills hechas por la comunidad y cómo escribir la tuya. Con los comandos y los prompts listos para copiar.',
     etiquetas: ['Claude Code', 'Skills', 'Configuración'],
     estado: 'live',
-    fecha: '2026-08'
+    fecha: '2026-08',
+    portada: {
+      coleccion: 'Guía',
+      prefijo: 'Guía:',
+      destacado: 'De 0 a tu skill',
+      resto: 'en Claude Code',
+      desde: '0',
+      hasta: 'Skill propia',
+      promesa: 'LOS SEIS TRUCOS DE *CONFIGURACIÓN* DEL CREADOR\nY CÓMO ESCRIBIR *TU PROPIA SKILL*'
+    }
   },
   {
     slug: 'mods-claude',
-    titulo: 'Tu primer mod con Claude',
+    titulo: 'Crea mods para tus juegos sin saber programar',
     kicker: 'Guía · Modding con IA',
     resumen: 'De «quiero que el juego haga X» a un mod instalado, sin saber programar: Minecraft por datapacks, Stardew Valley con SMAPI y cómo ajustar a tu gusto mods que ya existen. Con los prompts exactos.',
     etiquetas: ['Claude Code', 'Mods', 'Videojuegos'],
     estado: 'live',
-    fecha: '2026-08'
+    fecha: '2026-08',
+    portada: {
+      coleccion: 'Guía',
+      prefijo: 'Guía:',
+      destacado: 'De 0 a tu mod',
+      resto: 'sin saber programar',
+      desde: '0',
+      hasta: 'Mod instalado',
+      promesa: 'DE *«QUIERO QUE EL JUEGO HAGA X»*\nA UN *MOD FUNCIONANDO*'
+    }
   },
   {
     slug: 'apps-claude',
-    titulo: 'De idea a app con Claude',
+    titulo: 'De una idea a tu app publicada, sin programar',
     kicker: 'Guía · Construir con IA',
     resumen: 'Describir, probar y pedir cambios hasta tener la app publicada gratis con enlace propio. Con la vía PWA para el móvil, la nativa de iPhone y los juegos de navegador.',
     etiquetas: ['Claude Code', 'Apps', 'Sin código'],
     estado: 'live',
-    fecha: '2026-08'
+    fecha: '2026-08',
+    portada: {
+      coleccion: 'Guía',
+      prefijo: 'Guía:',
+      destacado: 'De idea a app',
+      resto: 'publicada y gratis',
+      desde: 'Idea',
+      hasta: 'App online',
+      promesa: 'DESCRIBIR, PROBAR Y PEDIR CAMBIOS HASTA TENER\n*TU APP CON ENLACE PROPIO*'
+    }
   },
   {
     slug: 'skill-pretest-producto',
-    titulo: 'Pre-test de producto',
+    titulo: 'Skill de validación de producto',
     kicker: 'Skill · Producto',
     resumen: 'Skill para Claude que ordena lo que sabes de un producto, detecta qué puede frenar la compra y dice si hay base para avanzar, qué cambiar o qué dato falta. Con el bloque de instrucciones listo para pegar en el chat.',
     etiquetas: ['Claude', 'Producto', 'Validación'],
     estado: 'live',
-    fecha: '2026-08'
+    fecha: '2026-08',
+    portada: {
+      coleccion: 'Skill',
+      prefijo: 'Skill:',
+      destacado: 'De idea a decisión',
+      resto: 'antes de gastar',
+      desde: 'Idea',
+      hasta: 'Decisión',
+      promesa: 'CÓMO SABER SI UN *PRODUCTO* TIENE BASE\nANTES DE *MOVER RECURSOS*'
+    }
   },
   {
     slug: 'vast-ollama',
-    titulo: 'Vast.ai paso a paso',
+    titulo: 'Tu agente de IA por horas, sin suscripción',
     kicker: 'Runbook · Infraestructura',
     resumen: 'Alquilar una GPU en Vast.ai y montar encima un agente de codificación con Ollama y Claude Code. Los 32 pasos, desde crear la cuenta hasta apagar la instancia sin dejarte el contador vivo.',
     etiquetas: ['Vast.ai', 'Ollama', 'Claude Code', 'GPU'],
     estado: 'live',
-    fecha: '2026-08'
+    fecha: '2026-08',
+    portada: {
+      coleccion: 'Runbook',
+      prefijo: 'Runbook:',
+      destacado: 'De 0 a tu agente',
+      resto: 'en una GPU alquilada',
+      desde: '0',
+      hasta: 'Agente 24/7',
+      promesa: 'CÓMO ALQUILAR UNA *GPU* Y MONTAR TU AGENTE\nSIN *DEJARTE EL CONTADOR VIVO*'
+    }
   }
 ];

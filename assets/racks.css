@@ -530,6 +530,35 @@ input[type=range]{width:100%;accent-color:var(--academy-orange);margin:0}
   text-transform:uppercase;color:var(--academy-orange);margin:0 0 .6rem;
 }
 
+/* --- ficha con portada ---------------------------------------------------- */
+
+.res-head{display:flex;gap:1rem;align-items:flex-start;margin:0 0 .9rem}
+.res-text{min-width:0;flex:1}
+.res-text > *:last-child{margin-bottom:0}
+.res-resumen{font-size:.92rem;margin:0 0 1rem}
+
+.res-thumb{
+  flex:0 0 auto;display:block;width:6.25rem;line-height:0;
+  border:1px solid var(--border);background:var(--background);
+  transition:border-color .15s;
+}
+@media (max-width:30rem){.res-thumb{width:5rem}}
+.res-card:hover .res-thumb{border-color:var(--academy-orange)}
+.res-thumb canvas{width:100%;height:auto;display:block}
+
+/* --- descarga de portadas ------------------------------------------------- */
+
+.res-portadas{
+  display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;
+  margin-top:.7rem;padding-top:.7rem;border-top:1px solid var(--line);
+}
+.res-portadas .label-inline{
+  font-family:var(--font-mono);font-size:.6rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--mid-gray);margin-right:.15rem;
+}
+.res-portadas .btn{font-size:.64rem;padding:.3rem .5rem;letter-spacing:.06em;text-transform:uppercase}
+.res-portadas .btn.is-done{border-color:var(--accent-green);color:var(--accent-green)}
+
 .res-foot{
   margin-top:auto;padding-top:.9rem;border-top:1px solid var(--line);
   display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
