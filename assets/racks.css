@@ -423,11 +423,14 @@ td{padding:.65rem 1rem .65rem 0;border-bottom:1px solid var(--line);vertical-ali
 td:first-child{color:var(--foreground)}
 
 /* ==========================================================================
-   11 bis. Vídeo · carátula propia, reproductor sólo a petición
+   11 bis. Vídeo · el reproductor de YouTube, con su miniatura
    --------------------------------------------------------------------------
-   Mismo criterio que las fuentes: la página no pide nada a un tercero para
-   pintarse. La carátula se dibuja con los tokens de la casa y racks.js
-   cambia el botón por el <iframe> cuando alguien pulsa, no antes.
+   El hueco fija la proporción 16:9 antes de que cargue nada, así que la
+   altura que publica el puente de incrustación no da saltos.
+
+   Al incrustar un recurso con vídeo dentro de otra página, el <iframe> del
+   contenedor necesita delegar permisos o el reproductor no arranca:
+     allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
    ========================================================================== */
 
 .video-block{padding:3.25rem 0 0}
@@ -435,52 +438,13 @@ td:first-child{color:var(--foreground)}
 .video-block + .masthead{padding-top:2.25rem}
 
 .video{
-  position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;
+  position:relative;width:100%;aspect-ratio:16/9;
   background:var(--surface-deep);
   border:1px solid var(--border);border-radius:var(--radius);
 }
 .video iframe{position:absolute;inset:0;display:block;width:100%;height:100%;border:0}
 
-.video-play{
-  position:absolute;inset:0;width:100%;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.9rem;
-  padding:1.5rem;cursor:pointer;
-  background:transparent;border:0;border-radius:var(--radius);
-  background-image:radial-gradient(var(--border) 1px,transparent 1px);
-  background-size:24px 24px;
-}
-
-.video-icon{
-  flex:0 0 auto;display:grid;place-items:center;
-  width:3.4rem;height:3.4rem;
-  border:1px solid var(--academy-orange);background:var(--orange-soft);
-  transition:background .15s;
-}
-.video-icon::after{
-  content:"";margin-left:.2rem;
-  border-style:solid;border-width:.55rem 0 .55rem .95rem;
-  border-color:transparent transparent transparent var(--academy-orange);
-}
-
-.video-name{
-  max-width:26rem;font-size:.95rem;line-height:1.5;text-align:center;
-  color:var(--text-secondary);transition:color .15s;
-}
-.video-hint{
-  font-family:var(--font-mono);font-size:.64rem;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--mid-gray);
-}
-
-.video-play:hover .video-icon{background:var(--academy-orange)}
-.video-play:hover .video-icon::after{border-left-color:var(--background)}
-.video-play:hover .video-name{color:var(--foreground)}
-
 .video-foot{font-size:.85rem;color:var(--mid-gray);margin:.7rem 0 0}
-
-@media (max-width:30rem){
-  .video-icon{width:2.8rem;height:2.8rem}
-  .video-name{display:none}
-}
 
 /* ==========================================================================
    12. Controles · chips, botones, rangos, medidor

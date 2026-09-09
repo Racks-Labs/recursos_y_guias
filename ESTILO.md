@@ -140,7 +140,7 @@ Esqueleto mínimo:
 | `.mode`, `.fork` (+ `.pick`) | Opciones; `.pick` marca la recomendada |
 | `.tag` | Etiqueta corta junto a un `<h3>` |
 | `.tablewrap` + `<table>` | Tabla; el envoltorio la hace scrolleable en móvil |
-| `.video-block` + `.video` + `.video-play` | Vídeo con carátula propia; `racks.js` carga el reproductor al pulsar |
+| `.video-block` + `.video` | Vídeo de YouTube incrustado, en hueco 16:9 |
 | `.chip`, `.btn`, `.btn--primary` | Controles; un `.chip` en `<span>` es etiqueta estática, en `<button>` es interactivo |
 | `.launch` + `.launch-label` | Panel de arranque: para qué sirve y frase con la que empezar |
 | `.verdict-card` + `.go` / `.hold` / `.stop` | Veredictos en semáforo: avanzar, esperar, parar |
@@ -149,37 +149,37 @@ Esqueleto mínimo:
 | `.res-grid`, `.res-card`, `.pill` | Tarjetas del catálogo |
 | `.swatches`, `.swatch` | Muestrario de color |
 
-`racks.js` cablea solo los `.copy`, el índice y el vídeo: no hace falta
-escribir JS para eso en cada recurso.
+`racks.js` cablea solo los `.copy` y el índice: no hace falta escribir JS
+para eso en cada recurso.
 
 ### Vídeo
 
-Un recurso puede abrir con un vídeo. La carátula se dibuja con los tokens de
-la casa, así que **la página no pide nada a YouTube hasta que alguien pulsa**
-— el mismo criterio que con las fuentes. Al pulsar, `racks.js` cambia el botón
-por un `<iframe>` de `youtube-nocookie.com` que entra ya reproduciendo.
+Un recurso puede abrir con un vídeo. Se incrusta el reproductor de YouTube
+tal cual, para que se vea la miniatura y el usuario reproduzca desde ahí.
 
 ```html
 <div class="video-block">
   <p class="label">Vídeo · 34 minutos</p>
-  <div class="video" data-video="ID_DE_YOUTUBE" data-video-title="Título">
-    <button class="video-play" type="button" aria-label="Reproducir el vídeo: …">
-      <span class="video-icon" aria-hidden="true"></span>
-      <span class="video-name">Título del vídeo</span>
-      <span class="video-hint">Al pulsar se carga YouTube</span>
-    </button>
+  <div class="video">
+    <iframe src="https://www.youtube.com/embed/ID_DE_YOUTUBE?rel=0"
+            title="Título del vídeo"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
   </div>
   <p class="video-foot">… <a href="https://www.youtube.com/watch?v=ID">Ver en YouTube</a>.</p>
 </div>
 ```
 
-El hueco mantiene la proporción 16:9 antes y después de cargar, así que la
-altura que publica el puente de incrustación no da saltos. Al imprimir, el
-reproductor desaparece y queda el enlace con su URL detrás.
+`.video` fija la proporción 16:9 antes de que cargue nada, así que la altura
+que publica el puente de incrustación no da saltos. `loading="lazy"` evita
+que pese en la primera pintada. Al imprimir, el reproductor desaparece y
+queda el enlace con su URL detrás.
 
-Hay hoja de impresión: al imprimir o exportar a PDF, el recurso sale en tinta
-negra sobre blanco, sin barra ni marca de agua, y con la URL detrás de cada
-enlace externo — el mismo criterio que learn.racks.university con sus guías.
+**Si el recurso se va a incrustar, el `<iframe>` del contenedor tiene que
+delegar permisos** o el reproductor de dentro no arranca. Está en la sección
+4.
 
 ---
 
@@ -259,7 +259,9 @@ En el contenedor:
 ```html
 <iframe id="racks" src="…/recursos/vast-ollama.html?embed=1"
         style="width:100%;height:600px;border:0;display:block"
-        loading="lazy" title="Vast.ai paso a paso"></iframe>
+        loading="lazy"
+        allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+        title="Vast.ai paso a paso"></iframe>
 <script>
   addEventListener('message', function (e) {
     var d = e.data;
@@ -277,6 +279,14 @@ abrir un acordeón o cambiar de pestaña.
 
 Dentro de un iframe, los enlaces externos se abren en pestaña nueva y los
 internos navegan en `_top`, para no encerrar al lector dentro del marco.
+
+### Recursos con vídeo
+
+El `allow` del iframe **no es opcional** si el recurso lleva vídeo: un
+`<iframe>` de YouTube anidado hereda los permisos del marco que lo contiene,
+y sin `encrypted-media` el reproductor no llega a arrancar. `fullscreen` es
+lo que hace que el botón de pantalla completa funcione desde dentro del
+marco.
 
 ---
 

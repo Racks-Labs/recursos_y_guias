@@ -74,6 +74,7 @@
 &lt;iframe src=<span class="k">"…/recursos/vast-ollama.html?embed=1"</span>
         style=<span class="k">"width:100%;height:900px;border:0"</span>
         loading=<span class="k">"lazy"</span>
+        allow=<span class="k">"autoplay; encrypted-media; fullscreen; picture-in-picture"</span>
         title=<span class="k">"Vast.ai paso a paso"</span>&gt;&lt;/iframe&gt;</pre>
   </div>
 
@@ -86,6 +87,7 @@
         src=<span class="k">"…/recursos/vast-ollama.html?embed=1"</span>
         style=<span class="k">"width:100%;height:600px;border:0;display:block"</span>
         loading=<span class="k">"lazy"</span>
+        allow=<span class="k">"autoplay; encrypted-media; fullscreen; picture-in-picture"</span>
         title=<span class="k">"Vast.ai paso a paso"</span>&gt;&lt;/iframe&gt;
 
 &lt;script&gt;
@@ -102,6 +104,11 @@
   <div class="note">
     <span class="note-title">Parámetros</span>
     <p><code>?embed=1</code> activa el modo incrustado. Añade <code>&amp;bg=transparent</code> para que el fondo lo ponga el contenedor, y <code>&amp;id=loquesea</code> si incrustas varios recursos en la misma página y necesitas distinguir de cuál viene cada mensaje de altura.</p>
+  </div>
+
+  <div class="note">
+    <span class="note-title">Recursos con vídeo</span>
+    <p>El <code>allow</code> del iframe no es opcional cuando el recurso lleva vídeo: sin él, el reproductor de YouTube que va dentro se queda sin permisos y no arranca. Con <code>fullscreen</code> ahí, el botón de pantalla completa también funciona desde el marco.</p>
   </div>
 
   <div class="note">
@@ -248,6 +255,7 @@
       '        src="' + url + '"\n' +
       '        style="width:100%;height:600px;border:0;display:block"\n' +
       '        loading="lazy"\n' +
+      '        allow="autoplay; encrypted-media; fullscreen; picture-in-picture"\n' +
       '        title="' + r.titulo + '"></iframe>\n\n' +
       '<script>\n' +
       '  addEventListener("message", function (e) {\n' +

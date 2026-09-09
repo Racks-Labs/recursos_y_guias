@@ -3,10 +3,9 @@
    --------------------------------------------------------------------------
    1. Botones de copiar en bloques de código
    2. Índice con sección activa
-   3. Vídeo bajo demanda: la carátula es nuestra, el reproductor sólo al pulsar
-   4. Puente de incrustación: publica su altura al contenedor padre
+   3. Puente de incrustación: publica su altura al contenedor padre
 
-   Todo es opcional y tolerante: si un recurso no tiene índice, ni vídeo, ni
+   Todo es opcional y tolerante: si un recurso no tiene índice o no tiene
    código, no pasa nada.
    ========================================================================== */
 
@@ -94,39 +93,7 @@
   }
 
   /* ------------------------------------------------------------------ */
-  /* 3. Vídeo bajo demanda                                               */
-  /* ------------------------------------------------------------------ */
-  /* La carátula la pintamos nosotros con los tokens de la casa, así que la
-     página no pide nada a YouTube mientras nadie le dé al play. Al pulsar,
-     el botón se cambia por el reproductor y éste entra ya reproduciendo.
-     El marco conserva la proporción del hueco, así que la altura que publica
-     el puente no se mueve. */
-
-  document.querySelectorAll('.video[data-video]').forEach(function (box) {
-    var play = box.querySelector('.video-play');
-    if (!play) return;
-
-    play.addEventListener('click', function () {
-      var id = box.getAttribute('data-video');
-      if (!id) return;
-
-      var frame = document.createElement('iframe');
-      frame.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) +
-                  '?autoplay=1&rel=0&modestbranding=1&hl=es';
-      frame.title = box.getAttribute('data-video-title') || 'Vídeo';
-      frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; ' +
-                    'gyroscope; picture-in-picture; web-share';
-      frame.referrerPolicy = 'strict-origin-when-cross-origin';
-      frame.setAttribute('allowfullscreen', '');
-
-      play.remove();
-      box.appendChild(frame);
-      frame.focus();
-    });
-  });
-
-  /* ------------------------------------------------------------------ */
-  /* 4. Puente de incrustación                                           */
+  /* 3. Puente de incrustación                                           */
   /* ------------------------------------------------------------------ */
 
   if (!FRAMED) return;
