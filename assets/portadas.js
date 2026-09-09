@@ -524,6 +524,56 @@
     });
   };
 
+  /* --- Encargo: la web publicada y el correo que la lleva ------------- */
+  GRAFICOS.encargo = function (c, X, Y, S, U) {
+    /* el navegador con la web nueva, arriba a la izquierda */
+    var nx = X + S * 0.02, ny = Y + S * 0.06, nw = S * 0.68, nh = S * 0.52;
+    trazo(c, U, 0.13);
+    caja(c, nx, ny, nw, nh);
+
+    var barra = ny + S * 0.09;                       /* la barra del navegador */
+    c.beginPath(); c.moveTo(nx, barra); c.lineTo(nx + nw, barra); c.stroke();
+    c.fillStyle = ACENTO;
+    for (var i = 0; i < 3; i++) {
+      c.fillRect(nx + S * 0.035 + i * S * 0.045, ny + S * 0.037, S * 0.022, S * 0.022);
+    }
+    c.fillStyle = conAlfa(ACENTO, 0.45);             /* la dirección, ya con su enlace */
+    c.fillRect(nx + S * 0.19, ny + S * 0.040, nw - S * 0.23, S * 0.016);
+
+    c.fillStyle = ACENTO;                            /* cabecera de la web */
+    c.fillRect(nx + S * 0.045, barra + S * 0.045, nw - S * 0.09, S * 0.075);
+    c.fillStyle = conAlfa(ACENTO, 0.30);             /* la foto */
+    c.fillRect(nx + S * 0.045, barra + S * 0.145, nw * 0.46, S * 0.17);
+    c.fillStyle = conAlfa(ACENTO, 0.45);             /* el texto */
+    [0, 1, 2].forEach(function (k) {
+      c.fillRect(nx + nw * 0.53, barra + S * 0.150 + k * S * 0.048,
+                 (nw * 0.40) * (1 - k * 0.18), S * 0.024);
+    });
+    c.fillStyle = ACENTO;                            /* el botón que ahora sí funciona */
+    c.fillRect(nx + nw * 0.53, barra + S * 0.305, nw * 0.24, S * 0.045);
+
+    /* el sobre, abajo a la derecha: la demo sale por correo */
+    var sw = S * 0.40, sh = S * 0.27;
+    var sx = X + S * 0.56, sy = Y + S * 0.68;
+    trazo(c, U, 0.13);
+    c.fillStyle = T.fondo;
+    c.fillRect(sx, sy, sw, sh);
+    caja(c, sx, sy, sw, sh);
+    poli(c, [[sx, sy], [sx + sw / 2, sy + sh * 0.58], [sx + sw, sy]]);
+    c.stroke();
+
+    /* del navegador al sobre: el enlace que se manda */
+    c.beginPath();
+    c.moveTo(nx + nw * 0.30, ny + nh);
+    c.lineTo(nx + nw * 0.30, sy + sh * 0.45);
+    c.lineTo(sx - S * 0.04, sy + sh * 0.45);
+    c.stroke();
+    poli(c, [[sx - S * 0.095, sy + sh * 0.45 - S * 0.045],
+             [sx - S * 0.04, sy + sh * 0.45],
+             [sx - S * 0.095, sy + sh * 0.45 + S * 0.045]]);
+    c.stroke();
+  };
+
   function grafico(c, r, x, y, w, h, U) {
     var dibujo = GRAFICOS[(r.portada || {}).grafico];
     if (!dibujo) return;

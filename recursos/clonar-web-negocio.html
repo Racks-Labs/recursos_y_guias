@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Clona la web de un negocio, mejórala y véndesela · Recursos Racks Academy</title>
+<meta name="description" content="El proceso entero en una tarde: sacar negocios locales de un enlace de Google Maps, reconstruir la web de uno con Claude Code, publicarla en Vercel con su enlace propio y salir con el correo de contacto ya escrito.">
+<meta property="og:title" content="Clona la web de un negocio, mejórala y véndesela">
+<meta property="og:description" content="Del enlace de Google Maps a una web publicada y el correo de contacto escrito. En una tarde y sin saber programar.">
+<meta property="og:type" content="article">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/racks.css">
+<script>/* fija el modo antes del primer pintado */(function(){var h=document.documentElement,s=location.search;if(s.indexOf('embed=1')>-1)h.classList.add('is-embed');if(window.self!==window.top)h.classList.add('is-framed');if(s.indexOf('bg=transparent')>-1)h.classList.add('is-transparent');})();</script>
+<script defer src="../assets/racks.js"></script>
+</head>
+
+<body data-resource-id="clonar-web-negocio">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="watermark-r" aria-hidden="true">R</div>
+
+<header class="topbar" data-embed-hide>
+  <span class="topbar-mark" aria-hidden="true">R</span>
+  <span class="topbar-name">Racks Academy</span>
+  <span class="topbar-sep" aria-hidden="true">/</span>
+  <span class="topbar-here">Clonar y vender una web</span>
+</header>
+
+<main class="shell" id="contenido">
+<div class="wrap">
+
+<!-- ══════════════════════════════════════════════════════════════════
+     VÍDEO · arriba del todo; el runbook escrito va debajo
+     ══════════════════════════════════════════════════════════════════ -->
+
+<div class="video-block">
+  <p class="label">Vídeo · el proceso completo</p>
+
+  <div class="video" data-video="tXm8czRAPx8"
+       data-video-title="Claude Fable 5 + Google Maps = 10.000 $/mes">
+    <button class="video-play" type="button" aria-label="Reproducir el vídeo: Claude Fable 5 más Google Maps, el modelo de negocio entero">
+      <span class="video-icon" aria-hidden="true"></span>
+      <span class="video-name">Claude Fable 5 + Google Maps = 10.000 $/mes</span>
+      <span class="video-hint">Al pulsar se carga YouTube</span>
+    </button>
+  </div>
+
+  <p class="video-foot">Debajo tienes el proceso por escrito, paso a paso y con los prompts. También puedes <a href="https://www.youtube.com/watch?v=tXm8czRAPx8">verlo en YouTube</a>.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     RUNBOOK
+     ══════════════════════════════════════════════════════════════════ -->
+
+<header class="masthead">
+  <p class="eyebrow">Runbook · Negocio con IA</p>
+  <h1>Clona la web de un negocio.<br>Mejórala y <em>véndesela</em>.</h1>
+  <p class="standfirst">De un enlace de Google Maps a una web publicada, con su enlace propio, y el correo de contacto ya escrito. Los quince pasos de una sesión real, con los prompts exactos y los tres errores que te vas a encontrar.</p>
+
+  <nav class="toc">
+    <p>Recorrido</p>
+    <ol>
+      <li><a href="#antes">Lo que necesitas antes de empezar</a></li>
+      <li><a href="#encontrar">Encontrar el negocio</a> · pasos 1–3</li>
+      <li><a href="#reconstruir">Reconstruir la web</a> · 4–8</li>
+      <li><a href="#publicar">Publicarla en internet</a> · 9–12</li>
+      <li><a href="#vender">El correo que la vende</a> · 13–15</li>
+      <li><a href="#volumen">Los números: esto va de volumen</a></li>
+      <li><a href="#jerga">La jerga que vas a oír</a></li>
+      <li><a href="#diagnostico">Cuando algo falla</a></li>
+    </ol>
+  </nav>
+</header>
+
+<section id="antes">
+  <p class="phase">Punto de partida</p>
+  <h2>Lo que necesitas antes de empezar</h2>
+  <hr class="rule">
+
+  <p>El modelo cabe en una frase: <strong>hay negocios locales con webs de hace quince años, y ahora reconstruir una cuesta una tarde.</strong> No les vendes una promesa, les mandas la web ya hecha y que juzguen el trabajo.</p>
+
+  <p>No hace falta saber programar ni haber desplegado nada en tu vida. Los conceptos los vas a ir cogiendo por el camino, que es como se aprenden en el mundo real y no antes de empezar.</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Pieza</th><th>Para qué</th><th>Coste</th></tr></thead>
+      <tbody>
+        <tr><td>Claude Code</td><td>Hace el trabajo entero: buscar, reconstruir, publicar y escribir el correo.</td><td>Suscripción. Con la de 100 $ vas bien; con la de 200 $ no piensas en los tokens.</td></tr>
+        <tr><td>Cuenta de GitHub</td><td>Guarda el código. Es de donde lo lee la plataforma que lo publica.</td><td>Gratis</td></tr>
+        <tr><td>Cuenta de Vercel</td><td>Publica la web y le da su enlace, con el candado ya puesto.</td><td>Gratis para la demo · ver el aviso</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="caution">
+    <span class="caution-title">La capa gratuita tiene letra pequeña</span>
+    <p>El plan gratuito de Vercel es para proyectos personales, no comerciales. Para enseñar la demo va sobrado. En cuanto el cliente te pague, o pasas a plan de pago o le transfieres el proyecto a su cuenta. Míralo en sus términos antes de facturar, que estas condiciones cambian.</p>
+  </div>
+</section>
+
+<section id="encontrar">
+  <p class="phase">Fase 1</p>
+  <h2>Encontrar el negocio</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Elige una zona y copia el enlace de Google Maps</h3>
+    <div class="step-body">
+      <p>Busca una ciudad pequeña, céntrala en el mapa y usa <strong>Compartir → Copiar enlace</strong>. Ese enlace lleva dentro las coordenadas, así que Claude sabe exactamente de qué zona le hablas.</p>
+      <p>Cuanto más lejos de una capital, mejor. Los negocios locales de ciudades medianas tienen webs viejas, un único dueño que decide y ninguna agencia de por medio.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>Pídele la lista</h3>
+    <div class="step-body">
+      <p>Abre Claude Code en una carpeta nueva y pega esto, con tu enlace:</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>De esta zona que te comparto de Google Maps <span class="k">[PEGA AQUÍ EL ENLACE]</span>
+sácame los negocios en 20 km a la redonda que tengan web y sean
+negocios locales independientes. Nada de cadenas ni franquicias.
+
+Mi objetivo es encontrar uno con una web que se le haya quedado
+vieja para reconstruírsela. Así que audítame técnicamente cada web
+y ordénalas de peor a mejor, diciendo qué le pasa a cada una.</pre>
+      </div>
+      <p>Tarda un buen rato: está entrando en cada web una por una. Déjalo trabajando y abre otra conversación en paralelo para ir avanzando con la siguiente fase.</p>
+      <div class="caution">
+        <span class="caution-title">Cada servicio tiene sus términos</span>
+        <p>Extraer listados de Maps de forma masiva choca con las condiciones de Google. Para una tanda a mano no pasa nada, pero si vas a hacer volumen, la vía limpia es la API oficial de Places o un proveedor de datos que asuma él el cumplimiento.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">03</span>
+    <h3>Lee la lista con ojos de vendedor</h3>
+    <div class="step-body">
+      <p>Te va a devolver algo así: veterinario, aseguradora, cristalería, tienda de neumáticos, con la plataforma de cada uno y una puntuación de lo mal que está. Lo que buscas no es la web más fea: es la que le está <strong>costando clientes al dueño</strong>.</p>
+      <ul class="lead-list">
+        <li><strong>Sirve por HTTP, sin candado.</strong> El navegador avisa de que el sitio no es seguro. Ahí se va medio tráfico.</li>
+        <li><strong>No se ve en el móvil.</strong> Sin viewport, sale la versión de escritorio encogida y hay que hacer zoom.</li>
+        <li><strong>El teléfono no se puede pulsar.</strong> El cliente tiene que memorizarlo y marcarlo a mano.</li>
+        <li><strong>Algo devuelve error.</strong> El botón de pedir cita que da 403 es dinero perdiéndose todos los días.</li>
+        <li><strong>El pie dice 2015.</strong> Maquetada con tablas, jQuery antiguo, tipografías del sistema.</li>
+      </ul>
+      <p>Ábrela en el móvil antes de decidir. Los dos primeros segundos ahí te dicen más que cualquier auditoría.</p>
+    </div>
+  </div>
+</section>
+
+<section id="reconstruir">
+  <p class="phase">Fase 2</p>
+  <h2>Reconstruir la web</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">04</span>
+    <h3>Abre una sesión aparte, con el enlace de la web</h3>
+    <div class="step-body">
+      <p>Misma carpeta, conversación nueva. La búsqueda de negocios y la reconstrucción son dos temas distintos y no tienen por qué compartir contexto.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">05</span>
+    <h3>El prompt de reconstrucción</h3>
+    <div class="step-body">
+      <p>Este es el que hace el trabajo. Lo importante es la línea de «no inventes nada»: si se inventa un teléfono o un horario, la demo deja de servir.</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>Tengo esta web que quiero reconstruir: <span class="k">[ENLACE DE LA WEB ORIGINAL]</span>
+
+Quiero un clon con TODOS los datos originales: fotos, textos,
+direcciones, enlaces, correos, teléfonos, horarios, formularios.
+No inventes ni un dato. Si algo no lo puedes sacar, dímelo.
+
+Mi objetivo es presentarle al dueño su misma web pero modernizada:
+que cargue rápido, que esté bien de SEO, que sea responsiva, con
+animaciones, y sin los fallos que tiene ahora la original.
+
+Stack: Next.js con TypeScript, Tailwind y Framer Motion para las
+animaciones. Serverless, para desplegarla en Vercel.
+
+Ponte en modo plan y pregúntame lo que necesites antes de empezar.</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">06</span>
+    <h3>Contesta a sus preguntas</h3>
+    <div class="step-body">
+      <p>Va a preguntar. Las tres que salen casi siempre y qué contestar:</p>
+      <dl>
+        <div class="field"><dt>¿Qué alcance?</dt><dd>Si es la tienda de una cadena, <strong>solo la de esa localidad</strong>. Es la que le duele al dueño que tienes delante.</dd></div>
+        <div class="field"><dt>¿Formulario propio o el original?</dt><dd>Para la primera, <strong>los originales</strong>. Un formulario propio implica base de datos y se te va la tarde.</dd></div>
+        <div class="field"><dt>¿Dónde clono el repositorio?</dt><dd>En la carpeta actual, la raíz. Es la que va a subir a Vercel.</dd></div>
+      </dl>
+      <div class="note">
+        <span class="note-title">Ahí está el upsell</span>
+        <p>El formulario propio con base de datos es, en la práctica, un pequeño gestor de citas y clientes. No lo metas en la demo, pero guárdalo: es lo que le ofreces después, y es donde está el dinero de verdad.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">07</span>
+    <h3>Lee el plan antes de aceptar</h3>
+    <div class="step-body">
+      <p>Planifica con el modelo más capaz que tengas y el esfuerzo alto: es la parte que pide cabeza. Puede tardar veinte minutos en pensar. Cuando salga el documento, busca cuatro cosas:</p>
+      <ul class="lead-list">
+        <li><strong>Contenido: nunca inventar.</strong> Que lo diga explícitamente.</li>
+        <li><strong>Los fallos de la original, listados para no repetirlos.</strong> El desplazamiento lateral, el botón roto, las imágenes duplicadas.</li>
+        <li><strong>El plan de SEO.</strong> Etiquetas por página, datos estructurados con la dirección y el horario, y la vista previa al compartir el enlace.</li>
+        <li><strong>Cómo se baja las imágenes.</strong> Muchas webs firman las URL de sus fotos: hay que cogerlas tal cual vienen o devuelven error.</li>
+      </ul>
+      <p>Si algo no te cuadra, se lo dices y rehace el plan. Es el momento barato de corregir.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">08</span>
+    <h3>Cambia a Opus 5 y déjalo en automático</h3>
+    <div class="step-body">
+      <p>Planificar y ejecutar piden cosas distintas. Una vez el plan está bien, <strong>baja a Opus 5 y ponlo en modo automático</strong>: va a hacer cientos de ediciones seguidas y no quieres ni pagarlas al precio del modelo de razonar ni ir dándole al intro.</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>/model</pre>
+      </div>
+      <p>En la sesión del vídeo, la web entera salió en <strong>una hora y cuarenta</strong> sin tocar nada. Arráncala en local, míratela como si fueras el dueño y corrige lo que chirríe pidiéndoselo tal cual.</p>
+      <div class="ok">
+        <span class="ok-title">Aquí es donde ganas el cliente</span>
+        <p>El clon exacto pero sin fallos ya es mejor que lo que tiene. Pero no le vendes lo mismo que ya tiene: cambia la tipografía, mete una animación al desplazarse, una banda de marcas, un contador. Media hora más y la demo pasa de «igual pero arreglada» a «esto es otra cosa».</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="publicar">
+  <p class="phase">Fase 3</p>
+  <h2>Publicarla en internet</h2>
+  <hr class="rule">
+
+  <p>Aquí es donde la gente se atasca, y es lo más tonto del proceso: son cuatro pasos y tres de ellos los hace Claude.</p>
+
+  <div class="step">
+    <span class="step-num">09</span>
+    <h3>Crea el repositorio en GitHub</h3>
+    <div class="step-body">
+      <p>En tu perfil, <strong>New</strong>. Le pones el nombre del negocio, lo marcas <strong>privado</strong> y lo creas <strong>vacío</strong>: sin README, sin licencia, sin nada. Copia la dirección que te da.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">10</span>
+    <h3>Sincroniza tu carpeta con él</h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>Clona este repositorio vacío en la carpeta en la que estamos
+trabajando y sincronízala con él: <span class="k">[DIRECCIÓN DEL REPOSITORIO]</span>
+
+Cuando yo te lo diga, subes lo que haya hecho.</pre>
+      </div>
+      <p>Un repositorio es una carpeta en la nube con historial. Lo usamos porque es de donde Vercel va a leer la web cada vez que la cambies.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">11</span>
+    <h3>Sube a la rama principal</h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>Sube todo a main.</pre>
+      </div>
+      <p><code>main</code> es la rama por defecto, la versión buena. En proyectos grandes se trabaja en varias ramas a la vez; aquí, con una sobra.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">12</span>
+    <h3>Importa el repositorio en Vercel</h3>
+    <div class="step-body">
+      <p>Entra en Vercel, vincula tu cuenta de GitHub y dale a <strong>Add New Project</strong>. Te salen tus repositorios: importas el que acabas de subir y le das a <strong>Deploy</strong>. No hay que configurar nada más.</p>
+      <p>En un par de minutos tienes la web en línea, con su enlace y el candado ya puesto. Ese enlace es lo que va dentro del correo.</p>
+      <div class="warn">
+        <span class="warn-title">Si el despliegue falla</span>
+        <p>Es normal y no es tu culpa: lo que funciona en tu ordenador no siempre compila en el servidor. Copia el error entero de Vercel, pégaselo a Claude y dile «Vercel me da esto». Lo arregla y vuelve a subir. En el vídeo pasó exactamente eso, con una variable de entorno vacía.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vender">
+  <p class="phase">Fase 4</p>
+  <h2>El correo que la vende</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">13</span>
+    <h3>Pídeselo a partir de lo que ha arreglado</h3>
+    <div class="step-body">
+      <p>No le pidas «un correo de ventas». Pídeselo a partir del trabajo, que es lo único que tienes de concreto:</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>A partir de los fallos que has arreglado y las mejoras medibles
+que has hecho, escríbeme un correo de contacto en frío al dueño
+de esta web.
+
+Nada de pitch. Que el correo diga que ya se la he reconstruido,
+que le pase el enlace y que enumere en concreto qué estaba roto
+y qué he arreglado, con datos.
+
+Y escríbeme también el de seguimiento para cuatro días después,
+por si no contesta.</pre>
+      </div>
+      <p>Sale en el idioma del negocio y con varios asuntos a elegir. Quédate con el sereno. Los del tipo «tu web devuelve un error 403» suenan a estafa de las de siempre y van directos a spam.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">14</span>
+    <h3>Qué tiene que decir</h3>
+    <div class="step-body">
+      <p>El correo que funciona hace cuatro cosas y ninguna más:</p>
+      <ul class="lead-list">
+        <li><strong>Va al grano.</strong> «En lugar de contarte lo que haría, te la he reconstruido. Júzgala tú.»</li>
+        <li><strong>Le deja claro que es suya.</strong> Sus fotos, sus textos, sus ofertas, sus horarios, sus teléfonos.</li>
+        <li><strong>Da datos, no adjetivos.</strong> «Carga tres veces más rápido», «el botón de pedir cita devolvía un error y ya no», «no se podía hacer zoom en el móvil».</li>
+        <li><strong>Pide una sola cosa.</strong> Una llamada de quince minutos. Nada de precios todavía.</li>
+      </ul>
+      <p>Y busca el nombre del dueño antes de enviarlo. Está en la propia web o en LinkedIn en dos minutos. Un «hola» seco pierde la mitad de las respuestas.</p>
+      <div class="warn">
+        <span class="warn-title">El correo en frío tiene reglas</span>
+        <p>En Estados Unidos manda la CAN-SPAM: identifícate de verdad, pon una dirección postal real y una forma de darse de baja que funcione. En la Unión Europea es más estricto todavía. Escribe desde un dominio propio para enviar, no desde tu cuenta de siempre.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">15</span>
+    <h3>El seguimiento, y a la siguiente</h3>
+    <div class="step-body">
+      <p>A los cuatro o cinco días, el segundo correo: tres líneas, sin reproche, recordando el enlace. Y ya está. Dos toques y a otra cosa.</p>
+      <p>Apunta en Notion o donde lleves las cosas el negocio, la fecha de envío, la del seguimiento y la respuesta. Sin ese registro, a la web número veinte ya no sabes a quién escribiste.</p>
+    </div>
+  </div>
+</section>
+
+<section id="volumen">
+  <p class="phase">Realidad</p>
+  <h2>Los números: esto va de volumen</h2>
+  <hr class="rule">
+
+  <p>Esto no funciona haciendo una web y esperando. Funciona haciendo muchas.</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Ritmo</th><th>Lo que sale</th></tr></thead>
+      <tbody>
+        <tr><td>Una web al día</td><td>Un contacto encontrado y un correo enviado, con la web ya hecha delante.</td></tr>
+        <tr><td>En un año</td><td>365 demos reales, no 365 correos genéricos.</td></tr>
+        <tr><td>Antes de la número 100</td><td>Ahí es donde suele caer el primer cliente.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Y hay un efecto que no se ve en la tabla: en un pueblo mediano los dueños de negocio se conocen. El primero que te contrate te trae al segundo y al tercero sin que tú hagas nada. Por eso conviene concentrarse en una zona en vez de dispersarse por medio país.</p>
+
+  <div class="note">
+    <span class="note-title">Lo que frena a la mayoría</span>
+    <p>No es la parte técnica: es el «no sé si puedo aportar valor». Si la web que tienen delante no se ve en el móvil y el teléfono no se puede pulsar, sí que puedes.</p>
+  </div>
+</section>
+
+<section id="jerga">
+  <p class="phase">Glosario</p>
+  <h2>La jerga que vas a oír</h2>
+  <hr class="rule">
+
+  <p>Cinco palabras que van a salir en el proceso. Con esto te sobra.</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Palabra</th><th>Qué es, en cristiano</th></tr></thead>
+      <tbody>
+        <tr><td>Repositorio</td><td>Una carpeta en la nube con historial de cambios. La de GitHub.</td></tr>
+        <tr><td>Rama <code>main</code></td><td>La versión buena del proyecto, la que se publica.</td></tr>
+        <tr><td>Stack</td><td>Las piezas con las que está hecha la web. Aquí: Next.js para el armazón, Tailwind para el estilo, Framer Motion para las animaciones.</td></tr>
+        <tr><td>Serverless</td><td>El servidor solo se enciende cuando alguien entra y responde al momento. Sale baratísimo, pero no vale para tareas largas en segundo plano.</td></tr>
+        <tr><td>Variable de entorno</td><td>Un dato que el código necesita y que se configura fuera de él, en Vercel. Como la dirección pública de la web.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="diagnostico">
+  <p class="phase">Diagnóstico</p>
+  <h2>Cuando algo falla</h2>
+  <hr class="rule">
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Síntoma</th><th>Qué pasa y cómo se arregla</th></tr></thead>
+      <tbody>
+        <tr><td>Vercel da error al desplegar</td><td>Compila distinto que en tu ordenador. Copia el error entero, pégaselo a Claude y que lo arregle y vuelva a subir.</td></tr>
+        <tr><td>La web sale en blanco tras desplegar</td><td>Casi siempre una variable de entorno vacía en Vercel. Añádela en los ajustes del proyecto y dale a <strong>Redeploy</strong>.</td></tr>
+        <tr><td>Faltan imágenes en el clon</td><td>La web original firma las URL de sus fotos. Dile que las descargue con la URL exacta del HTML, sin pedir otros tamaños.</td></tr>
+        <tr><td>Se ha inventado un teléfono o un horario</td><td>Repite el prompt con «no inventes ni un dato» y pídele que verifique cada dato contra el original antes de escribirlo.</td></tr>
+        <tr><td>Tarda una eternidad planificando</td><td>Es normal con el esfuerzo alto. Pero para ejecutar, baja a Opus 5: mismo resultado, mucho más rápido y más barato.</td></tr>
+        <tr><td>No encuentras a quién escribir</td><td>Mira el pie de la web, el aviso legal y LinkedIn. Diez minutos de búsqueda valen más que diez correos a «info@».</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ok">
+    <span class="ok-title">Cuándo has terminado</span>
+    <p>La web abre en el móvil sin hacer zoom, el candado está puesto, todos los botones responden, ningún dato es inventado y tienes el enlace pegado en un correo con el nombre del dueño arriba. Eso es una entrega.</p>
+  </div>
+</section>
+
+<footer>
+  Verificado con Claude Code, GitHub y Vercel · septiembre de 2026 · Los planes y las condiciones de Vercel y de Google cambian: compruébalos antes de facturarle a nadie.<br>
+  Esto es la sesión práctica. La parte de negocio —precios, ofertas, cobro y cómo escalarlo— está en la guía «De 0 a 2.000 $ modernizando webs con agentes de IA».
+</footer>
+
+</div>
+</main>
+</body>
+</html>

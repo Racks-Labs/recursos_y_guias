@@ -221,6 +221,7 @@ No son adorno: dicen lo que se lleva el lector.
 | Agentes de IA | `#468af6` azul | el bucle del agente y sus herramientas |
 | Hermes | `#9a72f8` morado | el chat en el móvil y las skills que apila |
 | Conceptos de Claude Code | `#10b77f` verde | el mapa entero, desplegado como un índice |
+| Clonar y vender una web | `#9a72f8` morado | la web publicada y el sobre que la lleva |
 
 Los colores salen todos de los semánticos del sistema (sección 1): el acento
 de la portada cambia, el resto del lenguaje no.

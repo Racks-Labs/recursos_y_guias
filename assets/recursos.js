@@ -27,7 +27,7 @@
      destacado  la línea grande, en naranja
      resto      tercera línea, mediana
      grafico    'skills' | 'mods' | 'apps' | 'validacion' | 'gpu' | 'webs' |
-                'agentes' | 'hermes' | 'conceptos'; la ilustración,
+                'agentes' | 'hermes' | 'conceptos' | 'encargo'; la ilustración,
                 que dibuja lo que se lleva el lector, no un adorno
      color      acento de la portada, elegido por el tema del recurso
      promesa    banda inferior; una línea por salto, *entre asteriscos* va en negrita
@@ -37,6 +37,24 @@
    ========================================================================== */
 
 window.RACKS_RESOURCES = [
+  {
+    slug: 'clonar-web-negocio',
+    titulo: 'Clona la web de un negocio, mejórala y véndesela',
+    kicker: 'Runbook · Negocio con IA',
+    resumen: 'La sesión entera, paso a paso: sacar negocios locales de un enlace de Google Maps, reconstruir la web de uno con Claude Code, publicarla en Vercel con su enlace propio y salir con el correo de contacto y el de seguimiento ya escritos.',
+    etiquetas: ['Claude Code', 'Vercel', 'Next.js', 'Negocio'],
+    estado: 'live',
+    fecha: '2026-09',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Runbook:',
+      destacado: 'Clona la web de un negocio',
+      resto: 'mejórala y véndesela',
+      grafico: 'encargo',
+      color: '#9a72f8',
+      promesa: 'DEL MAPA A UNA WEB *PUBLICADA*\nY EL CORREO *YA ESCRITO*'
+    }
+  },
   {
     slug: 'conceptos-claude-code',
     titulo: 'Todos los conceptos de Claude Code, explicados en cristiano',
