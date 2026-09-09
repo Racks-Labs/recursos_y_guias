@@ -163,7 +163,6 @@ tal cual, para que se vea la miniatura y el usuario reproduzca desde ahí.
   <div class="video">
     <iframe src="https://www.youtube.com/embed/ID_DE_YOUTUBE?rel=0"
             title="Título del vídeo"
-            loading="lazy"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
             allowfullscreen></iframe>
@@ -172,10 +171,12 @@ tal cual, para que se vea la miniatura y el usuario reproduzca desde ahí.
 </div>
 ```
 
-`.video` fija la proporción 16:9 antes de que cargue nada, así que la altura
-que publica el puente de incrustación no da saltos. `loading="lazy"` evita
-que pese en la primera pintada. Al imprimir, el reproductor desaparece y
-queda el enlace con su URL detrás.
+Es el fragmento que da YouTube en Compartir → Insertar, con dos cambios: el
+`title` dice el título real del vídeo, no «YouTube video player», y el
+tamaño lo pone `.video` en vez de los atributos `width` y `height`, para que
+sea responsivo. `.video` fija la proporción 16:9 antes de que cargue nada,
+así que la altura que publica el puente de incrustación no da saltos. Al
+imprimir, el reproductor desaparece y queda el enlace con su URL detrás.
 
 **Si el recurso se va a incrustar, el `<iframe>` del contenedor tiene que
 delegar permisos** o el reproductor de dentro no arranca. Está en la sección

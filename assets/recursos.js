@@ -39,7 +39,7 @@
 window.RACKS_RESOURCES = [
   {
     slug: 'clonar-web-negocio',
-    titulo: 'Clona la web de un negocio, mejórala y véndesela',
+    titulo: 'Claude + Google Maps: webs de negocios locales que puedes vender',
     kicker: 'Runbook · Negocio con IA',
     resumen: 'La sesión entera, paso a paso: sacar negocios locales de un enlace de Google Maps, reconstruir la web de uno con Claude Code, publicarla en Vercel con su enlace propio y salir con el correo de contacto y el de seguimiento ya escritos.',
     etiquetas: ['Claude Code', 'Vercel', 'Next.js', 'Negocio'],
@@ -48,8 +48,8 @@ window.RACKS_RESOURCES = [
     portada: {
       coleccion: 'Colección Racks',
       prefijo: 'Runbook:',
-      destacado: 'Clona la web de un negocio',
-      resto: 'mejórala y véndesela',
+      destacado: 'Claude + Google Maps',
+      resto: 'webs de negocios locales que puedes vender',
       grafico: 'encargo',
       color: '#9a72f8',
       promesa: 'DEL MAPA A UNA WEB *PUBLICADA*\nY EL CORREO *YA ESCRITO*'
