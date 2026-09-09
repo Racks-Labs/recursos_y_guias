@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Todos los conceptos de Claude Code, explicados en cristiano · Recursos Racks Academy</title>
+<meta name="description" content="Contexto, tokens, skills, MCP, hooks, subagentes, checkpoints: los 30 conceptos de Claude Code que hay que entender, qué significa cada uno y cuándo se usa. Con el vídeo de 34 minutos y todo por escrito.">
+<meta property="og:title" content="Todos los conceptos de Claude Code, explicados en cristiano">
+<meta property="og:description" content="Los 30 términos que sueltan en cualquier vídeo de Claude Code, qué significa cada uno y cuándo se usa.">
+<meta property="og:type" content="article">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/racks.css">
+<script>/* fija el modo antes del primer pintado */(function(){var h=document.documentElement,s=location.search;if(s.indexOf('embed=1')>-1)h.classList.add('is-embed');if(window.self!==window.top)h.classList.add('is-framed');if(s.indexOf('bg=transparent')>-1)h.classList.add('is-transparent');})();</script>
+<script defer src="../assets/racks.js"></script>
+</head>
+
+<body data-resource-id="conceptos-claude-code">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="watermark-r" aria-hidden="true">R</div>
+
+<header class="topbar" data-embed-hide>
+  <span class="topbar-mark" aria-hidden="true">R</span>
+  <span class="topbar-name">Racks Academy</span>
+  <span class="topbar-sep" aria-hidden="true">/</span>
+  <span class="topbar-here">Conceptos de Claude Code</span>
+</header>
+
+<main class="shell" id="contenido">
+<div class="wrap">
+
+<!-- ══════════════════════════════════════════════════════════════════
+     VÍDEO · arriba del todo; la guía escrita va debajo
+     ══════════════════════════════════════════════════════════════════ -->
+
+<div class="video-block">
+  <p class="label">Vídeo · 34 minutos</p>
+
+  <div class="video" data-video="bYYNtj7ODao"
+       data-video-title="Todos los conceptos de Claude Code explicados en 34 minutos">
+    <button class="video-play" type="button" aria-label="Reproducir el vídeo: todos los conceptos de Claude Code explicados en 34 minutos">
+      <span class="video-icon" aria-hidden="true"></span>
+      <span class="video-name">Todos los conceptos de Claude Code, explicados</span>
+      <span class="video-hint">Al pulsar se carga YouTube</span>
+    </button>
+  </div>
+
+  <p class="video-foot">Debajo tienes lo mismo por escrito, ordenado y copiable. También puedes <a href="https://www.youtube.com/watch?v=bYYNtj7ODao">verlo en YouTube</a>.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     GUÍA
+     ══════════════════════════════════════════════════════════════════ -->
+
+<header class="masthead">
+  <p class="eyebrow">Guía · Claude Code de cero</p>
+  <h1>Todos los conceptos.<br>Explicados <em>en cristiano</em>.</h1>
+  <p class="standfirst">Contexto, tokens, skills, MCP, hooks, subagentes, checkpoints. Los treinta términos que sueltan en cualquier vídeo de Claude Code: qué es cada uno, para qué sirve y —lo que casi nunca cuentan— cuándo se usa.</p>
+
+  <nav class="toc">
+    <p>Recorrido</p>
+    <ol>
+      <li><a href="#arranque">Qué es y dónde se usa</a> · conceptos 1–4</li>
+      <li><a href="#permisos">Permisos: quién manda y hasta dónde</a> · 5–8</li>
+      <li><a href="#contexto">Contexto y memoria</a> · 9–13</li>
+      <li><a href="#tokens">Tokens, modelos y lo que cuesta</a> · 14–18</li>
+      <li><a href="#extender">Cómo se le añaden capacidades</a> · 19–23</li>
+      <li><a href="#paralelo">Trabajar en paralelo</a> · 24–26</li>
+      <li><a href="#dia-a-dia">El día a día</a> · 27–30</li>
+      <li><a href="#chuleta">La chuleta</a></li>
+    </ol>
+  </nav>
+</header>
+
+<section id="arranque">
+  <p class="phase">Punto de partida</p>
+  <h2>Qué es y dónde se usa</h2>
+  <hr class="rule">
+
+  <p>Si has abierto la terminal, has visto un cursor parpadeando sobre fondo negro y has pensado «esto no es para mí», el problema no era tuyo: era que nadie te había explicado las piezas. Son treinta, están todas relacionadas y se entienden en una tarde.</p>
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Agente</h3>
+    <div class="step-body">
+      <p>Un chat te <strong>dice</strong> lo que tienes que hacer. Un agente lo <strong>hace</strong>. Claude Code no es un buscador con esteroides: lee y escribe archivos de tu ordenador, ejecuta comandos y comprueba el resultado.</p>
+      <p>La analogía que mejor funciona: un chat es el consultor al teléfono; un agente es el becario al que sientas en la silla de al lado. El modelo sigue estando fuera, en los servidores, pero las acciones ocurren en tu máquina.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>Herramientas</h3>
+    <div class="step-body">
+      <p>Un modelo de lenguaje, por sí solo, hace una cosa: recibe texto y devuelve texto. Nada más. Lo que lo convierte en agente son las <strong>herramientas</strong>: leer un archivo, editarlo, ejecutar un comando, abrir el navegador, mandar un correo.</p>
+      <p>Es la palabra tal cual la tienes en la cabeza, aplicada a un programa. Sin herramientas, Claude opina. Con herramientas, Claude trabaja.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">03</span>
+    <h3>Terminal o aplicación de escritorio</h3>
+    <div class="step-body">
+      <p>Claude Code corre en tu ordenador, no en una pestaña del navegador. Y tiene dos caras: la terminal y la aplicación de escritorio, para Mac y Windows.</p>
+      <p>La terminal es potentísima <em>si</em> te sabes los mil atajos, si tienes tu configuración montada y si eso es lo tuyo. Para todos los demás, la aplicación de escritorio hace lo mismo y con menos fricción: chats separados por tema, cambio de modelo con un clic, el gasto a la vista y el resumen de contexto automático.</p>
+      <div class="note">
+        <span class="note-title">Sin postureo</span>
+        <p>Usar la terminal no te hace mejor. Si no es tu nicho, vas a ir más lento. Lo dice quien aprendió a programar en ella.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">04</span>
+    <h3>Prompt</h3>
+    <div class="step-body">
+      <p>El prompt es lo que le pides. Con un agente pesa más que en un chat normal, porque un mal prompt no te da una respuesta mediocre: te deja media carpeta tocada. La estructura que funciona son cuatro piezas.</p>
+      <dl>
+        <div class="field"><dt>Contexto</dt><dd>Quién eres y cuál es tu situación de partida.</dd></div>
+        <div class="field"><dt>Problema</dt><dd>Qué quieres resolver, concreto.</dd></div>
+        <div class="field"><dt>Comportamiento</dt><dd>Cómo quieres que actúe: «eres un programador experto en…».</dd></div>
+        <div class="field"><dt>Formato</dt><dd>Cómo quieres la salida.</dd></div>
+      </dl>
+      <p>Y el truco que cambia el resultado más que los otros cuatro juntos:</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>Antes de empezar, hazme todas las preguntas que necesites
+hasta tener claro lo que quiero. No asumas nada.</pre>
+      </div>
+      <p>Al escribir nunca le das toda la información de golpe: se te olvida la mitad. Con esa línea, es él quien te la saca.</p>
+    </div>
+  </div>
+</section>
+
+<section id="permisos">
+  <p class="phase">Control</p>
+  <h2>Permisos: quién manda y hasta dónde</h2>
+  <hr class="rule">
+
+  <p>Claude Code puede tocar todos los archivos de tu ordenador si le dejas. Es una herramienta potente, y como toda herramienta potente conviene saber por dónde se agarra. No es difícil: son cuatro conceptos.</p>
+
+  <div class="step">
+    <span class="step-num">05</span>
+    <h3>Los modos de permisos</h3>
+    <div class="step-body">
+      <p>De más restrictivo a menos. En la terminal se rotan con <strong>Mayús+Tab</strong>; en la aplicación de escritorio, con el selector de la caja de texto.</p>
+
+      <div class="mode">
+        <h3>Solicitar permisos</h3>
+        <p>Pregunta antes de cada acción. Seguro y lentísimo: te pasas la sesión dando a aceptar.</p>
+      </div>
+      <div class="mode">
+        <h3>Aceptar ediciones</h3>
+        <p>Edita archivos sin preguntar, pero sigue pidiéndote permiso para ejecutar comandos. El punto medio razonable.</p>
+      </div>
+      <div class="mode pick">
+        <h3>Plan <span class="tag">empieza aquí</span></h3>
+        <p>No toca nada: investiga y te escribe qué piensa hacer. Lo tienes desarrollado en el concepto 6.</p>
+      </div>
+      <div class="mode">
+        <h3>Automático</h3>
+        <p>Ejecuta el plan entero —ediciones y comandos— sin pararse. Un clasificador decide sobre la marcha si cada comando es seguro. Es el modo cómodo <em>después</em> de haber revisado el plan.</p>
+      </div>
+      <div class="mode">
+        <h3>Omitir permisos</h3>
+        <p>Barra libre. Claude no es malvado y va a seguir tus órdenes, pero aquí ya no hay red: cualquier instrucción que le llegue, venga de donde venga, se ejecuta. Para carpetas aisladas y poco más.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">06</span>
+    <h3>Modo plan</h3>
+    <div class="step-body">
+      <p>El arquitecto antes de levantar la casa. Le pides algo, te hace preguntas, investiga y te devuelve un documento con lo que va a hacer. Tú lo lees, corriges lo que no cuadre y solo entonces le das a ejecutar.</p>
+      <p><strong>Grábatelo:</strong> cualquier cosa que requiera algo de planificación, empieza en modo plan y con el modelo más listo que tengas. Es la parte que más cabeza pide.</p>
+      <div class="ok">
+        <span class="ok-title">Por qué importa</span>
+        <p>Casi todo el miedo a que «la IA haga cosas raras» se cura aquí: si te está diciendo antes lo que va a hacer y no te gusta, se lo dices y cambia el plan. No hay sorpresa posible.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">07</span>
+    <h3>Sandbox e inyección de prompts</h3>
+    <div class="step-body">
+      <p>Una <strong>inyección de prompt</strong> es texto que llega de fuera —una skill que te has bajado, una página web, un correo— y que trae instrucciones escondidas: «manda también estas contraseñas aquí». La probabilidad es baja, pero existe, y crece según instalas cosas de terceros.</p>
+      <p>El <strong>sandbox</strong> es la respuesta: encierra a Claude en un espacio del que no puede salir, con acceso limitado a la red y al disco. En la aplicación de escritorio viene activado por defecto; en la terminal se activa por configuración.</p>
+      <div class="warn">
+        <span class="warn-title">La regla corta</span>
+        <p>Si instalas una skill, un MCP o un plugin de alguien, ábrelo y léelo antes. Son instrucciones que se van a ejecutar en tu máquina con tus permisos.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">08</span>
+    <h3>settings.json y la lista de lo prohibido</h3>
+    <div class="step-body">
+      <p><code>settings.json</code> es el archivo que define cómo arranca Claude Code en un proyecto: modelo por defecto, modo de permisos, y sobre todo qué <strong>no</strong> puede tocar. Vive en <code>.claude/settings.json</code> dentro del proyecto, o en <code>~/.claude/settings.json</code> para todos.</p>
+      <p>No hace falta que lo escribas tú: se lo pides y te lo crea. Pero por dentro es esto, texto plano y nada más:</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>{
+  <span class="c">// .claude/settings.json</span>
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./secrets/**)",
+      "Bash(curl:*)"
+    ]
+  }
+}</pre>
+      </div>
+      <p>Lo típico que se bloquea: variables de entorno, claves de API, contraseñas, carpetas de credenciales. Y también comandos enteros, como <code>curl</code>, para que no pueda mandar nada fuera aunque se lo pidan.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contexto">
+  <p class="phase">Cabeza</p>
+  <h2>Contexto y memoria</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">09</span>
+    <h3>Ventana de contexto</h3>
+    <div class="step-body">
+      <p>Todo lo que Claude puede ver ahora mismo: tu conversación, los archivos que ha abierto, sus propias respuestas. Es su memoria a corto plazo, y tiene un límite.</p>
+      <p>A más contexto, entre comillas más listo: sabe más cosas de tu problema. Pero cuando se pasa de largo empieza a confundir qué dijiste cuándo, y ahí aparecen los errores tontos.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">10</span>
+    <h3>Compactar</h3>
+    <div class="step-body">
+      <p>Cuando la ventana se llena, el historial se comprime: se resume lo hablado conservando lo que importa y se tira el ruido. Es recoger la mesa —te quedas los papeles buenos y a la basura los bolígrafos secos.</p>
+      <p>En la aplicación de escritorio ocurre solo (verás un icono de «resumiendo»). En la terminal lo fuerzas con:</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre><span class="c"># comprime la conversación y sigue trabajando</span>
+/compact
+
+<span class="c"># borra el contexto de golpe: empezar de cero, con ojo</span>
+/clear</pre>
+      </div>
+      <div class="note">
+        <span class="note-title">No lo confundas con /resume</span>
+        <p><code>/compact</code> comprime la conversación en la que estás. <code>/resume</code> es otra cosa: retomar una sesión anterior.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">11</span>
+    <h3>Un chat por tema</h3>
+    <div class="step-body">
+      <p>El error más común: meter el proyecto entero en una sola conversación «para que no pierda el hilo». Consigues justo lo contrario, porque se pasa la vida comprimiendo en vez de trabajar.</p>
+      <p>Si estás tocando dos partes separadas, dos chats. Es responsabilidad tuya trocear los temas; el contexto del proyecto no se mantiene a base de historial, se mantiene con el archivo del concepto siguiente.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">12</span>
+    <h3>CLAUDE.md</h3>
+    <div class="step-body">
+      <p>Un archivo de texto normal y corriente en la raíz del proyecto. Nada raro: la única diferencia con un Word es la terminación. Claude lo lee al empezar cada sesión, así que ahí va lo que siempre tiene que saber.</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre><span class="c"># CLAUDE.md — corto y que se cumpla</span>
+Tienda online en Next.js. El código vive en src/ y se arranca con `npm run dev`.
+
+Reglas de la casa:
+- Los textos visibles, en español de España.
+- Nada se da por hecho sin ejecutar los tests una vez.
+- Los precios, siempre con IVA incluido.</pre>
+      </div>
+      <p>El 90 % de la gente repite el mismo contexto en cada conversación del mismo proyecto. Escríbelo una vez aquí y lo tienen todas a la vez. Se genera un primer borrador con <code>/init</code> y se poda a mano: veinte líneas que se cumplen valen más que doscientas que diluyen lo importante.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">13</span>
+    <h3>Memoria</h3>
+    <div class="step-body">
+      <p>El historial es lo que dijiste en <em>este</em> chat. La memoria son las reglas que se quedan entre proyectos y sesiones: cómo te gusta trabajar, qué convenciones sigues, qué no hay que volver a preguntarte.</p>
+      <p>Se alimenta sola según hablas, y también a mano: «esto es importante, guárdalo». Lo bueno es que aprende; lo que hay que vigilar es que no se llene de cosas que ya no son verdad.</p>
+    </div>
+  </div>
+</section>
+
+<section id="tokens">
+  <p class="phase">Dinero</p>
+  <h2>Tokens, modelos y lo que cuesta</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">14</span>
+    <h3>Tokens</h3>
+    <div class="step-body">
+      <p>Los modelos no leen palabras: parten el texto en trozos, algo así como sílabas. Cada trozo es un <strong>token</strong>. Los que entran son tokens de entrada; los que salen, de salida. Cada uno tiene su precio, y el de salida es siempre más caro.</p>
+      <p>Es un taxímetro: cuanto más texto entra y sale, más marca. Por eso los archivos enormes y las conversaciones infinitas cuestan dinero de verdad.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">15</span>
+    <h3>Límites de uso</h3>
+    <div class="step-body">
+      <p>Con una suscripción no pagas por token: pagas una cuota y tienes un cupo por ventanas de tiempo —cada pocas horas y por semana—. Teóricamente usas lo que quieras mientras no te pases de ritmo.</p>
+      <p>En el plan de 20 $ ese techo se toca. En el de 100 $ o el de 200 $ el margen es otro. Y si te quedas sin cupo es porque le estás sacando partido: ahí ya sale rentable subir.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">16</span>
+    <h3>Suscripción o API</h3>
+    <div class="step-body">
+      <p>Dos maneras de pagar lo mismo. La <strong>suscripción</strong> es la tarifa plana: cuota fija, entras con tu cuenta y te despreocupas del gasto. La <strong>API</strong> es el saldo: entras con una clave, recargas y pagas exactamente lo que consumes.</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Vía</th><th>Cómo entras</th><th>Cuándo compensa</th></tr></thead>
+          <tbody>
+            <tr><td>Suscripción</td><td>Cuenta y contraseña</td><td>Uso diario. No piensas en el gasto.</td></tr>
+            <tr><td>API</td><td>Clave y saldo</td><td>Automatizaciones y picos sueltos.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="caution">
+        <span class="caution-title">Con la API, ojo</span>
+        <p>Se gasta sin que lo notes. Recarga de cinco en cinco euros hasta que sepas tu ritmo real. Y ahí sí importa mucho elegir bien modelo y esfuerzo.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">17</span>
+    <h3>Los tres modelos</h3>
+    <div class="step-body">
+      <p>El modelo es el cerebro. Hay tres familias y se cambia a mitad de conversación con <code>/model</code> o con el selector de la aplicación. Usa siempre la versión más avanzada de cada una.</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Modelo</th><th>Para qué</th><th>Coste</th></tr></thead>
+          <tbody>
+            <tr><td>Haiku</td><td>Tareas mecánicas: titular algo, clasificar, buscar.</td><td>El más barato</td></tr>
+            <tr><td>Sonnet</td><td>Gama media: cambios acotados de código.</td><td>Intermedio</td></tr>
+            <tr><td>Opus</td><td>Planificar y todo lo que pida cabeza.</td><td>El más caro</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Con el plan de 100 $ o de 200 $, Opus todo el rato y a otra cosa: no se acaban los tokens.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">18</span>
+    <h3>Nivel de esfuerzo</h3>
+    <div class="step-body">
+      <p>Dentro de un mismo modelo eliges cuánto piensa antes de actuar. En la terminal, con <code>/effort</code>.</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>/model    <span class="c"># cambiar de modelo a mitad de sesión</span>
+/effort   <span class="c"># cuánto razona antes de moverse</span></pre>
+      </div>
+      <p>Más esfuerzo es mejor resultado, más lento y más caro. Si no tienes prisa y el problema es duro, súbelo. Si lo dejas al máximo por defecto, vas a tardar un montón y a quemar el cupo sin necesidad.</p>
+    </div>
+  </div>
+</section>
+
+<section id="extender">
+  <p class="phase">Ampliar</p>
+  <h2>Cómo se le añaden capacidades</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">19</span>
+    <h3>Comandos de barra</h3>
+    <div class="step-body">
+      <p>Escribe <code>/</code> en la caja de texto y sale el listado. Los que vas a usar de verdad:</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Comando</th><th>Qué hace</th></tr></thead>
+          <tbody>
+            <tr><td><code>/init</code></td><td>Inicializa el proyecto y escribe un primer CLAUDE.md.</td></tr>
+            <tr><td><code>/compact</code></td><td>Comprime el historial de la conversación.</td></tr>
+            <tr><td><code>/clear</code></td><td>Borra el contexto entero. Sin vuelta atrás.</td></tr>
+            <tr><td><code>/model</code></td><td>Cambia de modelo sobre la marcha.</td></tr>
+            <tr><td><code>/rewind</code></td><td>Vuelve a un punto anterior.</td></tr>
+            <tr><td><code>/help</code></td><td>Los lista todos.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Y lo bueno: puedes crearte los tuyos. No hace falta que toques archivos, se lo pides tal cual.</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>Créame un comando /correo que, cuando lo escriba, redacte un correo
+con mi tono de siempre: cercano, directo, tuteando y sin muletillas
+corporativas. Móntame tú los archivos.</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">20</span>
+    <h3>Skills</h3>
+    <div class="step-body">
+      <p>Si vienes de ChatGPT: una skill es como un GPT, pero reutilizable dentro de cualquier conversación y atado al proyecto que tú quieras. Por dentro es una carpeta con un archivo de instrucciones, <code>SKILL.md</code>.</p>
+      <p>No funciona sola: <strong>extiende</strong> lo que ya tienes. Cuando pides algo que encaja con su descripción, Claude carga esas instrucciones en la conversación y se comporta como digan. Como si pegaras el prompt tú mismo, pero sin tener que acordarte.</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre><span class="c"># dónde vive una skill</span>
+~/.claude/skills/&lt;nombre&gt;/SKILL.md   <span class="c"># tuya, en todos los proyectos</span>
+.claude/skills/&lt;nombre&gt;/SKILL.md     <span class="c"># del proyecto, viaja con el repo</span></pre>
+      </div>
+      <p>Dentro puede haber subskills —redactar un correo para un cliente y para un amigo comparten estructura pero no tono— y hasta trozos de código que la skill ejecuta. Nada de eso lo tienes que escribir tú: se lo pides a Claude y te lo monta.</p>
+      <div class="ok">
+        <span class="ok-title">Cuándo crear una</span>
+        <p>Cuando una tarea concreta se repite: redactar correos, arrancar proyectos siempre igual, dar formato a algo con tus reglas. Si lo haces una vez, es un prompt. Si lo haces cada semana, es una skill.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">21</span>
+    <h3>Hooks</h3>
+    <div class="step-body">
+      <p>Una skill se dispara si Claude decide que toca. Un <strong>hook</strong> se dispara siempre. Es un trozo de código atado a un momento concreto: al guardar un archivo, antes de ejecutar un comando, al terminar la tarea.</p>
+      <p>Son las reglas automáticas del correo llevadas a tu proyecto: cuando pase X, haz Y, sin preguntar y sin gastar un token en decidirlo. Para formatear el código, registrar lo que se ha hecho o bloquear algo, es lo que quieres.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">22</span>
+    <h3>MCP y conectores</h3>
+    <div class="step-body">
+      <p><strong>MCP</strong> son las siglas de Model Context Protocol, y es más sencillo de lo que suena: un puente entre la IA y otro programa. Si una herramienta tiene MCP, Claude puede usarla —Notion, Canva, Figma, Blender, Excel, tu CRM—.</p>
+      <p>En la aplicación se llaman <strong>conectores</strong>: Personalizar → Conectores → Añadir, pegas la dirección que te da la herramienta, inicias sesión y ya está. Y con eso, el catálogo de herramientas del concepto 2 deja de tener techo.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">23</span>
+    <h3>Flags</h3>
+    <div class="step-body">
+      <p>Esto es solo de terminal. Un flag es una opción con la que arrancas el comando: qué modelo usar, en qué modo de permisos, cómo devolver la salida.</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>claude --help              <span class="c"># el listado completo, sin memorizar nada</span>
+claude --model opus        <span class="c"># arrancar con un modelo concreto</span>
+claude -p "resume el log"  <span class="c"># una respuesta y se cierra</span></pre>
+      </div>
+      <p>No hay que sabérselos. Está <code>--help</code> para eso, y en la aplicación de escritorio esto ya son botones.</p>
+    </div>
+  </div>
+</section>
+
+<section id="paralelo">
+  <p class="phase">Escala</p>
+  <h2>Trabajar en paralelo</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">24</span>
+    <h3>Subagentes</h3>
+    <div class="step-body">
+      <p>Claude Code es un agente que puede lanzar otros agentes más pequeños, cada uno especializado en una cosa. El principal reparte el trabajo, los subagentes lo hacen y devuelven el resultado.</p>
+      <p>Lo importante: <strong>cada subagente tiene su propia ventana de contexto</strong>. Puede leerse cuarenta archivos y devolverte tres líneas, sin ensuciarte la conversación principal. Una cadena de montaje.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">25</span>
+    <h3>Equipos de agentes</h3>
+    <div class="step-body">
+      <p>El problema de muchos subagentes sueltos es el cuello de botella: si no se hablan entre ellos, repiten trabajo y se contradicen. Un equipo de agentes es eso resuelto — varios trabajando coordinados sobre la misma tarea, con un reparto claro.</p>
+      <div class="note">
+        <span class="note-title">Buena noticia</span>
+        <p>No tienes que montar nada. Claude Code ya usa subagentes por debajo: el que explora y busca información, el que planifica, el que arrastra tareas de varios pasos. Y si quieres uno tuyo, se lo pides.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">26</span>
+    <h3>Worktrees</h3>
+    <div class="step-body">
+      <p>Un worktree es el mismo proyecto abierto dos veces, en dos carpetas distintas, a la vez. Sirve para trabajar en una funcionalidad sin tocar lo que está haciendo la otra copia, y fusionarlo cuando te venga bien.</p>
+      <p>Es lo mismo que hacen las ramas de Git (concepto 29), pero con archivos de verdad en disco, así que puedes tener dos Claude trabajando en paralelo sin pisarse. La gestión del árbol, las carpetas y la fusión las lleva él.</p>
+    </div>
+  </div>
+</section>
+
+<section id="dia-a-dia">
+  <p class="phase">Práctica</p>
+  <h2>El día a día</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">27</span>
+    <h3>Multimodalidad</h3>
+    <div class="step-body">
+      <p>Mucha gente pierde el tiempo describiendo con palabras lo que podría enseñar. «El botón de arriba a la derecha, el que está al lado del…». Pega una captura y ya está.</p>
+      <p>Claude entiende imágenes: capturas con flechas pintadas encima, un boceto en un folio, una web de referencia. Una imagen te ahorra contexto de entrada y, sobre todo, tres rondas de ida y vuelta. No va a acertar a la primera —tú tampoco—, pero arranca mucho más cerca.</p>
+      <div class="caution">
+        <span class="caution-title">Las imágenes ocupan</span>
+        <p>Cada captura consume contexto, y bastante. Mete las que aporten, no el carrete entero.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">28</span>
+    <h3>Checkpoints y rewind</h3>
+    <div class="step-body">
+      <p>Puntos de guardado, como en un videojuego. Si la lías, vuelves atrás y ya está.</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>/rewind</pre>
+      </div>
+      <p>Y eliges qué recuperas: solo el código, solo la conversación, o las dos cosas. Aquí se acaba el miedo a que toque archivos de tu ordenador: no es que no se equivoque, es que se puede deshacer.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">29</span>
+    <h3>Git</h3>
+    <div class="step-body">
+      <p>Git es el control de versiones: el historial de tu proyecto, quién cambió qué y cuándo, con la posibilidad de volver a cualquier punto. El historial de versiones de Google Docs, para código.</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Rama</th><th>Qué es</th></tr></thead>
+          <tbody>
+            <tr><td><code>main</code></td><td>La versión estable. Revisada y funcionando.</td></tr>
+            <tr><td><code>develop</code></td><td>Donde se van juntando los cambios.</td></tr>
+            <tr><td>De funcionalidad</td><td>Una rama por cosa nueva. «Integrar con Instagram», por ejemplo.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>No hace falta que sepas nada de esto: se lo pides y lo lleva él, probablemente mejor que tú. Y no lo digo solo por los que no programan — un agente numera versiones y escribe mensajes de commit con más disciplina que la mayoría de equipos.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">30</span>
+    <h3>Modo automático y headless</h3>
+    <div class="step-body">
+      <p>Ya lo viste en los permisos: el modo automático ejecuta el plan entero sin que tengas que dar a intro cada diez segundos.</p>
+      <p>Su equivalente en la terminal se llama <strong>headless</strong>: nada de conversación, le pasas la orden, hace el trabajo y devuelve el resultado. Es el modo con el que se automatizan cosas de verdad — un agente que corre solo cada noche.</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>claude -p "revisa los cambios de hoy y escribe el resumen en NOTAS.md"</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="chuleta">
+  <p class="phase">Resumen</p>
+  <h2>La chuleta</h2>
+  <hr class="rule">
+
+  <p>Los treinta conceptos, con lo único que hace falta recordar de cada uno.</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Concepto</th><th>Cuándo lo necesitas</th></tr></thead>
+      <tbody>
+        <tr><td>Agente</td><td>Siempre. Es la diferencia con un chat.</td></tr>
+        <tr><td>Herramientas</td><td>Cuando quieras que actúe, no que opine.</td></tr>
+        <tr><td>App de escritorio</td><td>Por defecto, si la terminal no es tu nicho.</td></tr>
+        <tr><td>Prompt</td><td>Cada vez. Y pídele que te pregunte.</td></tr>
+        <tr><td>Modos de permisos</td><td>Al empezar cualquier sesión.</td></tr>
+        <tr><td>Modo plan</td><td>Todo lo que sea mínimamente grande.</td></tr>
+        <tr><td>Sandbox</td><td>Siempre que uses cosas de terceros.</td></tr>
+        <tr><td>settings.json</td><td>Para blindar credenciales y comandos.</td></tr>
+        <tr><td>Ventana de contexto</td><td>Cuando empiece a olvidarse de cosas.</td></tr>
+        <tr><td>Compactar</td><td>Conversación larga que aún no ha terminado.</td></tr>
+        <tr><td>Un chat por tema</td><td>Dos frentes abiertos, dos conversaciones.</td></tr>
+        <tr><td>CLAUDE.md</td><td>Lo que repites en cada conversación.</td></tr>
+        <tr><td>Memoria</td><td>Tus manías, para no repetirlas.</td></tr>
+        <tr><td>Tokens</td><td>Para entender por qué te cuesta lo que cuesta.</td></tr>
+        <tr><td>Límites de uso</td><td>Si te quedas seco antes de tiempo.</td></tr>
+        <tr><td>Suscripción o API</td><td>Al decidir cómo pagas.</td></tr>
+        <tr><td>Modelos</td><td>Opus para pensar, Sonnet para ejecutar.</td></tr>
+        <tr><td>Esfuerzo</td><td>Problema duro y sin prisa: súbelo.</td></tr>
+        <tr><td>Comandos de barra</td><td>Para no salir de la caja de texto.</td></tr>
+        <tr><td>Skills</td><td>Tarea concreta que repites cada semana.</td></tr>
+        <tr><td>Hooks</td><td>Algo que debe pasar siempre, sin decidirlo.</td></tr>
+        <tr><td>MCP</td><td>Conectarlo con otra herramienta tuya.</td></tr>
+        <tr><td>Flags</td><td>Solo en terminal. Y con <code>--help</code>.</td></tr>
+        <tr><td>Subagentes</td><td>Trabajo largo que ensucia el contexto.</td></tr>
+        <tr><td>Equipos de agentes</td><td>Varios frentes que hay que coordinar.</td></tr>
+        <tr><td>Worktrees</td><td>Dos funcionalidades a la vez, sin pisarse.</td></tr>
+        <tr><td>Multimodalidad</td><td>Cuando describirlo cuesta más que enseñarlo.</td></tr>
+        <tr><td>Checkpoints</td><td>Antes de algo que puede salir mal.</td></tr>
+        <tr><td>Git</td><td>Cualquier proyecto que vaya a durar.</td></tr>
+        <tr><td>Headless</td><td>Automatizar algo que corre solo.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Con esto ya no hay concepto de Claude Code que te pille fuera de juego. Y lo que queda es lo único que importa: es un programador dentro de tu ordenador que no se cansa, no se queja y cuesta doscientos euros al mes como mucho. Si sabes usarlo, hoy no hay nada más potente.</p>
+</section>
+
+<footer>
+  Verificado con Claude Code sobre macOS y Windows · septiembre de 2026 · Familias de modelos vigentes al escribirlo: Opus 5, Sonnet 5 y Haiku 4.5.<br>
+  Nota de vigencia: los nombres de comandos, modelos y planes cambian rápido. Si algo no te aparece, actualiza primero con <code>claude update</code> y comprueba el listado con <code>/help</code>.
+</footer>
+
+</div>
+</main>
+</body>
+</html>

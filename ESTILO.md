@@ -62,7 +62,8 @@ cambia en `assets/racks.css` y todos los recursos se mueven a la vez.
 **Inter** para el texto y **JetBrains Mono** para código, etiquetas en
 mayúsculas, numeración de pasos y cifras. Son las dos fuentes de la casa: no
 se sustituye la mono por la del sistema, porque se nota en todo el documento.
-Se cargan desde Google Fonts en el `<head>` de cada recurso.
+Van **auto-alojadas** en `assets/fonts/` y las declara `assets/racks.css`: un
+recurso incrustado en otra web no debe depender de un tercero para pintarse.
 
 ### Geometría
 
@@ -139,6 +140,7 @@ Esqueleto mínimo:
 | `.mode`, `.fork` (+ `.pick`) | Opciones; `.pick` marca la recomendada |
 | `.tag` | Etiqueta corta junto a un `<h3>` |
 | `.tablewrap` + `<table>` | Tabla; el envoltorio la hace scrolleable en móvil |
+| `.video-block` + `.video` + `.video-play` | Vídeo con carátula propia; `racks.js` carga el reproductor al pulsar |
 | `.chip`, `.btn`, `.btn--primary` | Controles; un `.chip` en `<span>` es etiqueta estática, en `<button>` es interactivo |
 | `.launch` + `.launch-label` | Panel de arranque: para qué sirve y frase con la que empezar |
 | `.verdict-card` + `.go` / `.hold` / `.stop` | Veredictos en semáforo: avanzar, esperar, parar |
@@ -147,8 +149,33 @@ Esqueleto mínimo:
 | `.res-grid`, `.res-card`, `.pill` | Tarjetas del catálogo |
 | `.swatches`, `.swatch` | Muestrario de color |
 
-`racks.js` cablea solo los `.copy` y el índice: no hace falta escribir JS para
-eso en cada recurso.
+`racks.js` cablea solo los `.copy`, el índice y el vídeo: no hace falta
+escribir JS para eso en cada recurso.
+
+### Vídeo
+
+Un recurso puede abrir con un vídeo. La carátula se dibuja con los tokens de
+la casa, así que **la página no pide nada a YouTube hasta que alguien pulsa**
+— el mismo criterio que con las fuentes. Al pulsar, `racks.js` cambia el botón
+por un `<iframe>` de `youtube-nocookie.com` que entra ya reproduciendo.
+
+```html
+<div class="video-block">
+  <p class="label">Vídeo · 34 minutos</p>
+  <div class="video" data-video="ID_DE_YOUTUBE" data-video-title="Título">
+    <button class="video-play" type="button" aria-label="Reproducir el vídeo: …">
+      <span class="video-icon" aria-hidden="true"></span>
+      <span class="video-name">Título del vídeo</span>
+      <span class="video-hint">Al pulsar se carga YouTube</span>
+    </button>
+  </div>
+  <p class="video-foot">… <a href="https://www.youtube.com/watch?v=ID">Ver en YouTube</a>.</p>
+</div>
+```
+
+El hueco mantiene la proporción 16:9 antes y después de cargar, así que la
+altura que publica el puente de incrustación no da saltos. Al imprimir, el
+reproductor desaparece y queda el enlace con su URL detrás.
 
 Hay hoja de impresión: al imprimir o exportar a PDF, el recurso sale en tinta
 negra sobre blanco, sin barra ni marca de agua, y con la URL detrás de cada
@@ -193,6 +220,7 @@ No son adorno: dicen lo que se lleva el lector.
 | Modernizar webs | `#fbba23` ámbar | el móvil de antes y el de después |
 | Agentes de IA | `#468af6` azul | el bucle del agente y sus herramientas |
 | Hermes | `#9a72f8` morado | el chat en el móvil y las skills que apila |
+| Conceptos de Claude Code | `#10b77f` verde | el mapa entero, desplegado como un índice |
 
 Los colores salen todos de los semánticos del sistema (sección 1): el acento
 de la portada cambia, el resto del lenguaje no.

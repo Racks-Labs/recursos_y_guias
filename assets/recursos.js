@@ -27,7 +27,7 @@
      destacado  la línea grande, en naranja
      resto      tercera línea, mediana
      grafico    'skills' | 'mods' | 'apps' | 'validacion' | 'gpu' | 'webs' |
-                'agentes' | 'hermes'; la ilustración,
+                'agentes' | 'hermes' | 'conceptos'; la ilustración,
                 que dibuja lo que se lleva el lector, no un adorno
      color      acento de la portada, elegido por el tema del recurso
      promesa    banda inferior; una línea por salto, *entre asteriscos* va en negrita
@@ -37,6 +37,24 @@
    ========================================================================== */
 
 window.RACKS_RESOURCES = [
+  {
+    slug: 'conceptos-claude-code',
+    titulo: 'Todos los conceptos de Claude Code, explicados en cristiano',
+    kicker: 'Guía · Claude Code de cero',
+    resumen: 'Los treinta términos que sueltan en cualquier vídeo de Claude Code —contexto, tokens, skills, MCP, hooks, subagentes, checkpoints—: qué es cada uno, para qué sirve y cuándo se usa. Con el vídeo de 34 minutos arriba y la chuleta al final.',
+    etiquetas: ['Claude Code', 'Conceptos', 'Vídeo'],
+    estado: 'live',
+    fecha: '2026-09',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Guía:',
+      destacado: 'Todos los conceptos',
+      resto: 'de Claude Code, explicados en cristiano',
+      grafico: 'conceptos',
+      color: '#10b77f',
+      promesa: 'LOS TREINTA: *QUÉ SIGNIFICA CADA UNO*\nY SOBRE TODO *CUÁNDO SE USA*'
+    }
+  },
   {
     slug: 'webs-ia',
     titulo: 'De 0 a 2.000 $ modernizando webs con agentes de IA',

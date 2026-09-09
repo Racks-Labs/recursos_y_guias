@@ -471,6 +471,59 @@
     c.stroke();
   };
 
+  /* --- Conceptos: el mapa entero, desplegado como un índice ----------- */
+  GRAFICOS.conceptos = function (c, X, Y, S, U) {
+    var mx = X + S * 0.06;                       /* tronco principal */
+    var sx = X + S * 0.28;                       /* tronco de los hijos */
+    var x1 = X + S * 0.16, x2 = X + S * 0.38;    /* sangrías de cada nivel */
+    var h  = S * 0.075;
+
+    /* cada fila: [centro en Y, nivel, ancho de la caja] */
+    var filas = [
+      [0.14, 1, 0.58],
+      [0.27, 2, 0.34],
+      [0.40, 2, 0.44],
+      [0.53, 1, 0.50],
+      [0.66, 2, 0.38],
+      [0.79, 1, 0.62],
+      [0.92, 2, 0.30]
+    ];
+
+    trazo(c, U, 0.11);
+
+    /* el tronco, rematado arriba: de ahí cuelga todo */
+    var alto = Y + S * 0.04;
+    c.beginPath(); c.moveTo(mx, alto); c.lineTo(mx, Y + S * 0.79); c.stroke();
+    c.fillStyle = ACENTO;
+    c.fillRect(mx - S * 0.035, alto - S * 0.035, S * 0.07, S * 0.07);
+
+    /* los tramos de los que cuelgan los hijos de cada bloque */
+    [[0.14, 0.40], [0.53, 0.66], [0.79, 0.92]].forEach(function (g) {
+      c.beginPath();
+      c.moveTo(sx, Y + S * g[0] + h / 2);
+      c.lineTo(sx, Y + S * g[1]);
+      c.stroke();
+    });
+
+    filas.forEach(function (f) {
+      var y = Y + S * f[0];
+      var raiz = f[1] === 1;
+
+      c.beginPath();                              /* el codo hasta la caja */
+      c.moveTo(raiz ? mx : sx, y);
+      c.lineTo(raiz ? x1 : x2, y);
+      c.stroke();
+
+      if (raiz) {
+        caja(c, x1, y - h / 2, S * f[2], h, ACENTO);
+      } else {
+        c.globalAlpha = 0.7;
+        caja(c, x2, y - h / 2, S * f[2], h);
+        c.globalAlpha = 1;
+      }
+    });
+  };
+
   function grafico(c, r, x, y, w, h, U) {
     var dibujo = GRAFICOS[(r.portada || {}).grafico];
     if (!dibujo) return;
