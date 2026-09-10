@@ -639,6 +639,86 @@
     c.setLineDash([]);
   };
 
+  /* --- UGC con Higgsfield: la creadora, las ocho casillas, el clip ------
+     El recorrido entero en una imagen: una cara que se genera una sola vez,
+     la hoja de ocho viñetas —cada una con su encuadre, que es lo que fuerza
+     los cortes— y el vertical con voz que sale de ahí. */
+  GRAFICOS.ugc = function (c, X, Y, S, U) {
+    /* un busto: la cabeza y los hombros, que es todo lo que hace falta */
+    function busto(c, cx, cy, r, color) {
+      c.fillStyle = color;
+      c.beginPath();
+      c.arc(cx, cy, r, 0, Math.PI * 2);
+      c.fill();
+      c.beginPath();
+      c.arc(cx, cy + r * 2.75, r * 1.95, Math.PI, 0);
+      c.closePath();
+      c.fill();
+    }
+
+    trazo(c, U, 0.13);
+
+    /* 1 · la creadora: una ficha 3:4 que ya no se vuelve a tocar */
+    var px = X + S * 0.02, py = Y + S * 0.055, pw = S * 0.185, ph = S * 0.247;
+    c.fillStyle = T.fondo;
+    c.fillRect(px, py, pw, ph);
+    caja(c, px, py, pw, ph);
+    busto(c, px + pw / 2, py + ph * 0.36, S * 0.028, ACENTO);
+
+    /* 2 · las ocho viñetas, cada una con su encuadre distinto: la barra de
+       dentro cambia de alto en cada una, que es justo lo que evita el fundido */
+    var sw = S * 0.068, gap = S * 0.0145, sh = sw * 16 / 9;
+    var sx = X + S * 0.335, sy = Y + S * 0.118;
+    var altos = [0.55, 0.22, 0.14, 0.72, 0.40, 0.16, 0.30, 0.62];
+
+    var ejeY = py + ph / 2;
+    c.beginPath();
+    c.moveTo(px + pw + S * 0.025, ejeY);
+    c.lineTo(sx - S * 0.025, ejeY);
+    c.stroke();
+    poli(c, [[sx - S * 0.075, ejeY - S * 0.038], [sx - S * 0.025, ejeY], [sx - S * 0.075, ejeY + S * 0.038]]);
+    c.stroke();
+
+    altos.forEach(function (f, k) {
+      var x = sx + k * (sw + gap);
+      c.fillStyle = T.fondo;
+      c.fillRect(x, sy, sw, sh);
+      caja(c, x, sy, sw, sh);
+      var bh = sh * f, bw = sw * 0.52;
+      c.fillStyle = conAlfa(ACENTO, 0.55 + f * 0.45);
+      c.fillRect(x + (sw - bw) / 2, sy + sh - bh - sh * 0.09, bw, bh);
+    });
+
+    /* 3 · el clip vertical que sale de la hoja, con la voz ya dentro */
+    var cw = S * 0.30, ch = cw * 16 / 9;
+    var cx = X + (S - cw) / 2, cy = Y + S * 0.40;
+
+    /* baja desde la última viñeta: el octavo tiempo es el que entrega el clip */
+    var codo = Y + S * 0.325, salida = sx + (sw * 8 + gap * 7) - sw / 2;
+    c.beginPath();
+    c.moveTo(salida, sy + sh);
+    c.lineTo(salida, codo);
+    c.lineTo(cx + cw / 2, codo);
+    c.lineTo(cx + cw / 2, cy - S * 0.025);
+    c.stroke();
+    poli(c, [[cx + cw / 2 - S * 0.038, cy - S * 0.075], [cx + cw / 2, cy - S * 0.025], [cx + cw / 2 + S * 0.038, cy - S * 0.075]]);
+    c.stroke();
+
+    caja(c, cx, cy, cw, ch, ACENTO);
+    busto(c, cx + cw / 2, cy + ch * 0.30, S * 0.042, T.fondo);
+
+    /* la onda de voz: el audio es parte del render, no un paso aparte */
+    var barras = [0.30, 0.62, 1, 0.48, 0.80, 0.34];
+    var bw2 = S * 0.017, sep = S * 0.011, alto = S * 0.062;
+    var ox = cx + cw / 2 - (barras.length * bw2 + (barras.length - 1) * sep) / 2;
+    var oy = cy + ch * 0.80;
+    c.fillStyle = T.fondo;
+    barras.forEach(function (f, k) {
+      var h = alto * f;
+      c.fillRect(ox + k * (bw2 + sep), oy - h / 2, bw2, h);
+    });
+  };
+
   /* --- Guiones: el mes en el calendario y el guion con su gancho ------- */
   GRAFICOS.guiones = function (c, X, Y, S, U) {
     /* el calendario: treinta casillas, seis por semana, las de los guiones

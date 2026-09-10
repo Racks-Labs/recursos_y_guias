@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+
+<title>Avatares UGC que no parecen IA, con Higgsfield · Recursos Racks Academy</title>
+<meta name="description" content="La cadena entera para hacer anuncios UGC con avatares en Higgsfield: qué modelo va en cada paso, las frases obligatorias de cada prompt, las que arruinan el render y las cinco plantillas para copiar.">
+<meta property="og:title" content="Avatares UGC que no parecen IA, con Higgsfield">
+<meta property="og:description" content="Cuatro modelos encadenados, ocho cortes dentro de un clip y las plantillas exactas de cada prompt. Con las reglas que separan un UGC creíble de un anuncio de IA.">
+<meta property="og:type" content="article">
+
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/racks.css">
+<script>/* fija el modo antes del primer pintado */(function(){var h=document.documentElement,s=location.search;if(s.indexOf('embed=1')>-1)h.classList.add('is-embed');if(window.self!==window.top)h.classList.add('is-framed');if(s.indexOf('bg=transparent')>-1)h.classList.add('is-transparent');})();</script>
+<script defer src="../assets/racks.js"></script>
+</head>
+
+<body data-resource-id="avatares-ugc-higgsfield">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="watermark-r" aria-hidden="true">R</div>
+
+<header class="topbar" data-embed-hide>
+  <span class="topbar-mark" aria-hidden="true">R</span>
+  <span class="topbar-name">Racks Academy</span>
+  <span class="topbar-sep" aria-hidden="true">/</span>
+  <span class="topbar-here">Avatares UGC con Higgsfield</span>
+</header>
+
+<main class="shell" id="contenido">
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Guía · Vídeo UGC con IA</p>
+  <h1>Una creadora que no existe.<br>Un anuncio que parece <em>grabado</em>.</h1>
+  <p class="standfirst">Un avatar UGC creíble no sale de un botón. Sale de cuatro modelos encadenados, un storyboard de ocho casillas y unos prompts con frases obligatorias que casi nadie escribe. Aquí está la cadena entera, con las plantillas de cada paso listas para copiar y las reglas que separan un anuncio creíble de otro que canta a IA en el primer segundo.</p>
+
+  <nav class="toc">
+    <p>Recorrido</p>
+    <ol>
+      <li><a href="#cantan">Por qué casi todos cantan</a></li>
+      <li><a href="#cadena">La cadena</a> · los cuatro modelos</li>
+      <li><a href="#vias">Las dos vías</a> · rápida y completa</li>
+      <li><a href="#creadora">La creadora</a> · paso 1</li>
+      <li><a href="#guion">El guion</a> · paso 2</li>
+      <li><a href="#storyboard">El storyboard de ocho casillas</a> · paso 3</li>
+      <li><a href="#antislop">El pase anti-slop</a> · paso 4</li>
+      <li><a href="#clip">El clip</a> · paso 5</li>
+      <li><a href="#montaje">Revisión y montaje</a> · paso 6</li>
+      <li><a href="#chuleta">La chuleta de parámetros</a></li>
+      <li><a href="#linea">La línea que no se cruza</a></li>
+      <li><a href="#fallos">Fallos y arreglos</a></li>
+    </ol>
+  </nav>
+</header>
+
+<div class="launch">
+  <p class="launch-label">Sirve para</p>
+  <div class="chips">
+    <span class="chip">Anuncios UGC</span>
+    <span class="chip">Reviews</span>
+    <span class="chip">Unboxing</span>
+    <span class="chip">Try-on</span>
+    <span class="chip">Tutoriales</span>
+    <span class="chip">Ads de SaaS</span>
+  </div>
+  <p class="launch-label">Lo que hace falta</p>
+  <p>Una cuenta de Higgsfield con créditos. Nada más. Los prompts de esta guía se pegan tal cual en la web; si tienes el conector de Higgsfield enchufado a Claude o a otro agente, los mismos prompts se lanzan desde el chat y encadenan solos.</p>
+  <p style="font-size:.92rem;color:var(--muted-foreground)">Todo lo <span class="k" style="font-family:var(--font-mono)">marcado</span> dentro de los bloques se sustituye. El resto se copia literal: no es relleno, cada frase está ahí porque quitarla cambia el render.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+
+<section id="cantan">
+  <p class="phase">Antes de nada</p>
+  <h2>Por qué casi todos cantan</h2>
+  <hr class="rule">
+
+  <p>Un avatar UGC no se detecta por la cara. Se detecta por cuatro cosas que no tienen nada que ver con el parecido, y las cuatro se arreglan en el prompt, no en el modelo.</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Lo que delata</th><th>Qué es en realidad</th><th>Dónde se arregla</th></tr></thead>
+      <tbody>
+        <tr><td>Piel de cera</td><td>Sin poros, sin vello facial, con brillo de filtro de belleza</td><td>El pase anti-slop, paso 4</td></tr>
+        <tr><td>Luz de anuncio</td><td>Hora dorada, tono ámbar, fondo desenfocado</td><td>Luz fría neutra obligatoria, paso 1</td></tr>
+        <tr><td>Plano único</td><td>Quince segundos sin un solo corte</td><td>El storyboard de ocho casillas, paso 3</td></tr>
+        <tr><td>Actuación de teleprompter</td><td>Cara plana, arranque con muletilla, frases de vendedor</td><td>Las reglas del monólogo, paso 2</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Las cuatro comparten una causa: el modelo, si le dejas, tira hacia el anuncio. Su instinto es hacer publicidad bonita. <strong>Todo el trabajo del prompt consiste en frenar ese instinto</strong>, frase a frase. Por eso la mitad de lo que vas a copiar son negaciones.</p>
+
+  <div class="note">
+    <span class="note-title">Los prompts van en inglés</span>
+    <p>Todas las plantillas están en inglés y así se copian. No es postureo: son los modelos los que están entrenados con ese vocabulario, y frases como <code>locked-off static camera</code> o <code>phone-sensor grain</code> disparan comportamientos concretos que su traducción no dispara. El idioma <em>hablado</em> del vídeo es otra cosa y se elige aparte, en el paso 2.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+
+<section id="cadena">
+  <p class="phase">El mapa</p>
+  <h2>La cadena · los cuatro modelos</h2>
+  <hr class="rule">
+
+  <p>No hay un modelo que haga avatares UGC. Hay cuatro haciendo cada uno una cosa, y el orden importa porque cada paso alimenta al siguiente con una imagen.</p>
+
+  <p class="flow">creadora → storyboard 21:9 → pase anti-slop → clip 9:16 con voz → montaje</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Paso</th><th>Modelo</th><th>Formato</th><th>Qué hace</th></tr></thead>
+      <tbody>
+        <tr><td>1 · La creadora</td><td><code>soul_2</code> · Soul 2.0</td><td>Imagen 3:4, calidad 2k</td><td>La cara y el vestuario. Se genera <strong>una sola vez</strong> y no se vuelve a tocar</td></tr>
+        <tr><td>2 · El storyboard</td><td><code>gpt_image_2</code> · GPT Image 2</td><td>Imagen 21:9, 2k, calidad alta</td><td>Ocho viñetas 9:16 en una fila: los ocho planos del clip</td></tr>
+        <tr><td>3 · El anti-slop</td><td><code>seedream_v5_pro</code> · Seedream 5.0 Pro</td><td>Imagen 21:9, 2k</td><td>Repasa esa hoja y le devuelve piel, poros y luz reales</td></tr>
+        <tr><td>4 · El clip</td><td><code>seedance_2_5</code> · Seedance 2.5</td><td>Vídeo 9:16, 1080p, 4–30 s</td><td>Convierte la hoja en vídeo <strong>con voz nativa</strong>, en modo <code>omni_reference</code></td></tr>
+        <tr><td>5 · El montaje</td><td>ffmpeg</td><td>—</td><td>Une los clips con cortes duros, sin recodificar</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>La pieza que no se ve en ningún tutorial es la segunda. <strong>El storyboard no es una ayuda de guionista: es el mecanismo de retención.</strong> Ocho viñetas en una fila se convierten en ocho cortes duros dentro de un único clip de quince segundos. Un plano cada dos segundos. Eso es lo que hace que el ojo no se despegue, y es imposible de conseguir pidiéndole «un vídeo UGC» a un modelo de vídeo.</p>
+
+  <div class="ok">
+    <span class="ok-title">La regla de la identidad</span>
+    <p>La imagen de la creadora se genera <strong>una vez</strong> y su identificador se pasa como referencia a todos los storyboards y a todos los clips. Nunca se regenera a mitad del proceso, nunca se sustituye por una descripción escrita. Regenerarla es la causa número uno de que la cara cambie entre el segundo 14 y el 16.</p>
+  </div>
+
+  <h3>Cuántos clips necesitas</h3>
+
+  <p>Un clip de Seedance aguanta hasta treinta segundos, pero la hoja de ocho viñetas está calculada para quince. A partir de ahí se encadenan hojas, y cada hoja es un clip que luego se pega:</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Duración total</th><th>Hojas</th><th>Duración de cada clip</th></tr></thead>
+      <tbody>
+        <tr><td>4–15 s</td><td>1</td><td>La duración completa</td></tr>
+        <tr><td>16–19 s</td><td>2</td><td>Equilibrados, mínimo 4 s cada uno (18 → 14 + 4)</td></tr>
+        <tr><td>20–30 s</td><td>2</td><td>15 + el resto</td></tr>
+        <tr><td>31–45 s</td><td>3</td><td>15, 15 + el resto</td></tr>
+        <tr><td>46–60 s</td><td>4</td><td>15, 15, 15 + el resto</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Cada hoja lleva además un <strong>papel dentro del arco</strong>, y ese papel decide qué pasa en sus ocho viñetas:</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Hojas</th><th>Papel de cada una</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><code>FULL_ARC</code> — gancho, desarrollo y cierre dentro de la misma hoja</td></tr>
+        <tr><td>2</td><td><code>HOOK+SETUP</code> · <code>APPLY+CLOSER</code></td></tr>
+        <tr><td>3</td><td><code>HOOK</code> · <code>MAIN</code> · <code>CLOSER</code></td></tr>
+        <tr><td>4</td><td><code>HOOK</code> · <code>REVEAL</code> · <code>APPLY</code> · <code>CLOSER</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="warn">
+    <span class="warn-title">Las hojas van en fila india</span>
+    <p>La hoja 2 se genera pasándole la hoja 1 como referencia, la 3 con la 2, y así. Si las lanzas todas a la vez para ir más rápido, la ropa, la luz y la cocina cambian entre clip y clip. Los <em>clips</em> sí se pueden lanzar en paralelo, pero solo cuando las ocho hojas ya existen.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+
+<section id="vias">
+  <p class="phase">Decisión</p>
+  <h2>Las dos vías</h2>
+  <hr class="rule">
+
+  <p>Antes de montar nada, elige. La cadena completa da control total; el Marketing Studio da volumen. No compiten: se usan para cosas distintas.</p>
+
+  <div class="fork">
+    <h3>Vía rápida · Marketing Studio</h3>
+    <p>Dentro de Higgsfield, subes el producto, eliges un avatar del catálogo y un <em>preset</em>: UGC, Product Review, Unboxing, Tutorial o UGC Virtual Try On. Encima puedes añadir dos cosas más: un <strong>hook</strong> (el <em>qué</em>: el mecanismo que capta la atención, del tipo «el objeto entra volando en plano») y un <strong>setting</strong> (el <em>dónde</em>: cocina con luz de mañana, y demás). Salen clips de 12 a 15 segundos con audio.</p>
+    <p class="flow">producto → avatar → preset → hook + setting → clip</p>
+    <p>Para qué sirve: probar diez ángulos de un producto en una tarde y ver cuál engancha antes de invertir en producción.</p>
+  </div>
+
+  <div class="fork pick">
+    <h3>Vía completa · la cadena de cuatro modelos <span class="tag">esta guía</span></h3>
+    <p>Tú decides la cara, el guion palabra por palabra, los ocho planos, dónde cae el corte y qué mano hace qué. Es la única vía que produce los ocho cortes internos, y por tanto la única con la que el clip aguanta la comparación con un UGC grabado de verdad.</p>
+    <p class="flow">creadora → guion → storyboard → anti-slop → clip → montaje</p>
+    <p>Para qué sirve: la pieza que va a llevar presupuesto detrás.</p>
+  </div>
+
+  <div class="note">
+    <span class="note-title">Hay una tercera puerta</span>
+    <p>En Marketing Studio existe también la <strong>referencia de anuncio</strong>: le das un vídeo que ya funciona y el modelo recrea su escenario —composición, ritmo, gancho, narración— con tu producto y tu avatar. Es excluyente con hook y setting: o compones desde bloques, o copias un escenario. No las dos.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+
+<section id="creadora">
+  <p class="phase">Paso 1</p>
+  <h2>La creadora</h2>
+  <hr class="rule">
+
+  <p>Una imagen. 3:4, calidad 2k, modelo Soul 2.0. De aquí sale la persona que va a aparecer en todos los planos de todos los clips, así que es el prompt que más veces vas a reescribir y el que menos veces vas a repetir.</p>
+
+  <div class="warn">
+    <span class="warn-title">Nada en las manos</span>
+    <p>En esta imagen <strong>no hay producto</strong>. Ni botes, ni cajas, ni objetos, ni nada que la persona sujete. El producto se compone después, en el storyboard. Si lo metes aquí, el modelo lo hornea en la cara de la imagen y todo lo que viene detrás falla. El fondo sí: cocina, baño, dormitorio, calle. Las manos, vacías.</p>
+  </div>
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Las cuatro anclas obligatorias</h3>
+    <div class="step-body">
+      <p>Van en todos los prompts, sin excepción. Fijan una estructura facial de modelo y, a la vez, impiden el acabado de plástico. Quitar una sola se nota.</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+<pre>with high model facial features, symmetrical features,
+well-proportioned figure, natural skin texture</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>La luz: fría, neutra y nunca dorada</h3>
+    <div class="step-body">
+      <p>Es la regla que más gente incumple y la que antes delata. La hora dorada es lenguaje de anuncio; una creadora real graba con la luz que tiene.</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Prohibido</th><th>Lo que se escribe en su lugar</th></tr></thead>
+          <tbody>
+            <tr><td><code>golden hour</code>, <code>warm sunset</code>, <code>magic hour</code></td><td><code>cool neutral daylight</code></td></tr>
+            <tr><td><code>amber cast</code>, <code>honey tones</code>, <code>warm wash</code></td><td><code>soft diffused white light</code></td></tr>
+            <tr><td><code>studio strobes</code>, <code>ring light</code>, <code>beauty dish</code></td><td><code>clean midday light</code>, <code>overcast diffusion</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Y siempre con dirección: no «luz natural», sino <code>soft natural daylight streaming in from the left window</code>. Vale también en exteriores: mediodía neutro o cielo cubierto, nunca atardecer.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">03</span>
+    <h3>El bloque iPhone, al final y literal</h3>
+    <div class="step-body">
+      <p>Es lo que convierte un retrato en un selfie. Va tal cual, cerrando el prompt.</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+<pre>Self-portrait selfie shot on iPhone front-facing camera held by the
+subject at arm's length — head and shoulders fill the frame, casual
+handheld framing, slight natural tilt, slightly off-center, slightly
+imperfect, not posed. Phone-sensor grain and realistic skin texture
+preserved, no retouch, no smooth-skin filter. No fisheye lens, no
+ultra-wide distortion. Authentic UGC creator phone selfie, NOT
+editorial portrait, NOT fashion magazine.</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">04</span>
+    <h3>La expresión: nunca «sonríe a cámara»</h3>
+    <div class="step-body">
+      <p><code>warm smile</code> es la frase que produce cara de banco de imágenes. Se sustituye por una expresión capturada a media acción. Elige <strong>una</strong>:</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+<pre><span class="c">// una sola, la que encaje con el tono</span>
+mid-thought, slight half-smile, eyes glancing slightly off-lens
+caught mid-laugh, soft natural laugh, head slightly tilted
+casually glancing toward the lens with a relaxed, neutral expression
+looking up from her phone with a relaxed, unguarded face
+mid-action expression — in the middle of saying something, not posing
+natural unguarded face, soft neutral expression, not smiling at the camera
+wide-eyed mid-gasp, lips parted, brows lifted — caught at the start of a reaction
+mid-react squint — one eye scrunching, half-grin pulling sideways</pre>
+      </div>
+      <p>El cuerpo, en cambio, quieto: <code>body in a calm neutral pose — relaxed standing, one hand resting naturally</code>. Las poses creativas son una apuesta anatómica que se pierde casi siempre: brazos estirados hacia la cámara, manos enmarcando la cara, saltos. Ahí es donde salen los seis dedos. <strong>La energía va en la cara; el cuerpo, quieto.</strong></p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">05</span>
+    <h3>La lista negra</h3>
+    <div class="step-body">
+      <p>Estas frases voltean el render entero hacia editorial de moda. Ninguna aparece en un prompt bueno:</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Frase</th><th>Qué provoca</th></tr></thead>
+          <tbody>
+            <tr><td><code>centered composition at eye-level</code>, <code>straight-on</code></td><td>Encuadre de estudio, demasiado compuesto</td></tr>
+            <tr><td><code>editorial portrait</code>, <code>fashion portrait</code>, <code>editorial mood</code></td><td>Cambia el género de la imagen entera</td></tr>
+            <tr><td><code>minimal depth of field</code>, <code>soft subtle separation</code></td><td>Lenguaje de réflex profesional</td></tr>
+            <tr><td><code>glowing skin</code>, <code>flawless skin</code>, <code>radiant complexion</code></td><td>Piel retocada, el efecto contrario al que buscas</td></tr>
+            <tr><td><code>poised</code>, <code>elegant stance</code>, <code>graceful posture</code>, <code>poses</code></td><td>Lenguaje de sesión de fotos</td></tr>
+            <tr><td><code>flattering and even illumination</code></td><td>Luz de plató</td></tr>
+            <tr><td><code>fisheye</code>, <code>ultra-wide</code></td><td>Deformación de GoPro; la frontal es lente estándar</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">06</span>
+    <h3>Dónde la pones</h3>
+    <div class="step-body">
+      <p>El sitio no es decorativo: tiene que contener de forma natural el mundo del producto. Un batidor vive en una cocina con harina en la encimera. El producto no sale, su hábitat sí.</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Categoría</th><th>Sitio por defecto</th><th>Vestuario</th></tr></thead>
+          <tbody>
+            <tr><td>Cosmética, maquillaje, perfume</td><td>Dormitorio o tocador con detalle arquitectónico</td><td>Bata o conjunto cuidado, según gama</td></tr>
+            <tr><td>Cuidado facial y corporal</td><td>Baño luminoso: azulejo limpio, grifería mate</td><td>Bata de algodón bien cerrada, ropa de estar</td></tr>
+            <tr><td>Comida, bebida, cocina</td><td>Cocina moderna con acabado acorde a la gama</td><td>Casual arreglado: blusa y vaqueros, punto</td></tr>
+            <tr><td>Proteína, suplementos</td><td>Gimnasio en casa o cocina post-entreno</td><td>Ropa deportiva, aire de recién entrenado</td></tr>
+            <tr><td>Ropa, joyería, relojes</td><td>Dormitorio o vestidor con espejo y perchero</td><td>Conjunto ya montado; la pieza es el remate</td></tr>
+            <tr><td>Tecnología, audio</td><td>Escritorio o rincón de estudio</td><td>Casual arreglado</td></tr>
+            <tr><td>Coches</td><td>Exterior junto al coche, luz de día</td><td>Casual con estilo: chaqueta ligera, buen vaquero</td></tr>
+            <tr><td>Cualquier otra</td><td>Casa acogedora: dormitorio o salón</td><td>Ropa de diario</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Dos reglas que se olvidan: describe <strong>materiales y paleta</strong> del espacio, no solo el nombre («cocina» a secas produce una pared lisa), y haz que el <strong>color de la ropa contenga algún tono de esa paleta</strong>. Una camisa blanca impoluta en una habitación de carbón y latón se ve mal aunque no sepas explicar por qué.</p>
+    </div>
+  </div>
+
+  <h3>La plantilla</h3>
+
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+<pre>A spontaneous iPhone snap of a <span class="k">EDAD</span> <span class="k">woman/man</span>, <span class="k">EXPRESIÓN DE LA LISTA</span>,
+with high model facial features, symmetrical features, well-proportioned
+figure, natural skin texture, standing in <span class="k">SITIO CON DETALLE ARQUITECTÓNICO</span>.
+<span class="k">DIRECCIÓN Y CALIDAD DE LUZ — fría y neutra</span> falls across her face — neutral,
+clean, no warm cast, no retouched glow. Skin texture is real, with visible
+pores and natural unevenness. She wears <span class="k">VESTUARIO SEGÚN CATEGORÍA Y GAMA</span>.
+Body in a calm neutral pose — relaxed standing, one hand resting naturally.
+The background features <span class="k">MATERIALES, MUEBLES, COLORES CONCRETOS</span>.
+The color palette is dominated by <span class="k">TONO DOMINANTE + SECUNDARIO + UN ACENTO</span>.
+Casual handheld iPhone selfie taken by her at arm's length — head and
+shoulders fill the frame, slight natural tilt, slightly off-center,
+intuitive composition, captured mid-moment. Subject in clear focus with the
+background naturally falling out as in any phone photo.
+Self-portrait selfie shot on iPhone front-facing camera held by her at arm's
+length. Phone-sensor grain and realistic skin texture preserved, no retouch,
+no smooth-skin filter. No fisheye lens, no ultra-wide distortion. Authentic
+UGC creator phone selfie, NOT editorial portrait, NOT fashion magazine.</pre>
+  </div>
+
+  <h3>Un ejemplo entero, para calibrar</h3>
+
+  <p>Baño, cuidado facial, gama media. Este es el nivel de detalle al que hay que llegar:</p>
+
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+<pre>A spontaneous iPhone snap of a young woman in her mid-20s, casually
+glancing toward the lens with a relaxed, neutral expression, with high model
+facial features, symmetrical features, well-proportioned figure, natural skin
+texture, standing in a bright modern bathroom. Soft diffused daylight from the
+left falls across her face — neutral cool, no warm cast, no retouched glow.
+Skin texture is real, with visible pores and natural unevenness. She wears a
+cozy oversized cream-colored robe tightly tied at the waist with a closed
+modest neckline and lapels overlapping fully, casual and relaxed. Body in a
+calm neutral pose — relaxed standing, one hand resting naturally. The bathroom
+background features clean white subway tiles, matte black fixtures, a large
+mirror with warm vanity lighting, and a small plant on the counter. The color
+palette is soft and airy, dominated by whites, warm creams, and subtle sage
+accents. Casual handheld iPhone selfie taken by her at arm's length — head and
+shoulders fill the frame, slight natural tilt, slightly off-center, intuitive
+composition, captured mid-moment. Subject in clear focus with the background
+naturally falling out as in any phone photo. Self-portrait selfie shot on
+iPhone front-facing camera held by her at arm's length. Phone-sensor grain and
+realistic skin texture preserved, no retouch, no smooth-skin filter. No fisheye
+lens, no ultra-wide distortion. Authentic UGC creator phone selfie, NOT
+editorial portrait, NOT fashion magazine.</pre>
+  </div>
+
+  <div class="caution">
+    <span class="caution-title">Guarda la descripción, no solo la imagen</span>
+    <p>No vas a poder volver a inspeccionar la imagen para saber qué escribiste. <strong>El texto que redactaste es el contrato de continuidad</strong>: edad, pelo, complexión, rasgo distintivo y anclas de vestuario. Apúntalo en un archivo junto al identificador de la imagen. El día que hagas la segunda pieza con la misma creadora lo vas a necesitar.</p>
+  </div>
+
+  <div class="note">
+    <span class="note-title">Deja sitio para que el producto haga algo</span>
+    <p>Si vendes una base de maquillaje y generas a la creadora ya maquillada, no hay «después». La regla es escribir el <em>antes</em>: rutina facial con la cara lavada, producto capilar con el pelo sin peinar. Si el antes ya parece el después, el anuncio está muerto antes de empezar.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+
+<section id="guion">
+  <p class="phase">Paso 2</p>
+  <h2>El guion</h2>
+  <hr class="rule">
+
+  <p>Antes de generar ni un plano, se escribe lo que dice. Todo lo demás —cuántos planos, dónde cae el corte, qué expresión— se cuelga de aquí.</p>
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Cuántas palabras caben</h3>
+    <div class="step-body">
+      <p>Esto no es orientativo. Pasarse hace que el modelo acelere la voz y rompa el sincronismo labial; quedarse corto deja silencios muertos.</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Duración del clip</th><th>Palabras</th></tr></thead>
+          <tbody>
+            <tr><td>Hasta 10 s</td><td>12–20</td></tr>
+            <tr><td>11–12 s</td><td>20–28</td></tr>
+            <tr><td>13–15 s</td><td>28–35</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Suma el total, escribe el monólogo entero y luego pártelo en tantos trozos como hojas tengas. Los ocho tiempos internos de cada hoja no los repartes tú: eso lo hace el prompt del clip.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>La primera palabra</h3>
+    <div class="step-body">
+      <p>Es la regla más barata de cumplir y la que más ganancia da. La primera palabra literal del clip no puede ser ninguna de estas, porque suenan a persona calentando antes de grabar:</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+<pre><span class="c">// prohibidas SOLO como primera palabra — a mitad de frase valen</span>
+OK · Okay · Okay so · Alright · So · Yeah so · Right so
+Um · Well · Like · Wait · Wait what · Hold on
+OMG · Hey guys · Guys · So basically · Story time · Stop scrolling</pre>
+      </div>
+      <p>La primera palabra tiene que ser contenido del gancho. Si el guion te sale empezando por una de estas, no la borres: reescribe la apertura para que arranque directamente por lo que enganchaba.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">03</span>
+    <h3>Las frases que delatan IA</h3>
+    <div class="step-body">
+      <p>Están prohibidas en cualquier posición. No porque suenen mal, sino porque son exactamente lo que escribe un modelo cuando le pides entusiasmo sin darle nada concreto que decir:</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Fuera</th><th>Por qué</th></tr></thead>
+          <tbody>
+            <tr><td><code>I'm obsessed</code>, <code>literally obsessed</code></td><td>El mayor delator de todos, sin excepciones</td></tr>
+            <tr><td><code>you have to try this</code>, <code>you NEED this</code></td><td>Tópico de anuncio generado</td></tr>
+            <tr><td><code>it's amazing</code>, <code>so good</code>, <code>mind-blowing</code></td><td>Elogio sin un solo dato</td></tr>
+            <tr><td><code>game changer</code>, <code>trust me on this</code></td><td>Habla de vendedor</td></tr>
+            <tr><td><code>10/10</code>, <code>100%</code>, <code>1000%</code></td><td>Puntuaciones inventadas</td></tr>
+            <tr><td><code>holy grail</code>, <code>changed my life</code>, <code>hits different</code></td><td>Jerga de creador ya caducada</td></tr>
+            <tr><td><code>elevate</code>, <code>seamless</code>, <code>effortless</code></td><td>Vocabulario corporativo</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Lo que se escribe en su lugar es <strong>mecánica observable</strong>: <em>«the cap twists open with one hand»</em>, <em>«it melts in instantly, no stickiness»</em>, <em>«smells like jasmine and pepper»</em>. Cosas que se ven o se huelen, no valoraciones.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">04</span>
+    <h3>Una historia, un giro</h3>
+    <div class="step-body">
+      <p>El modo por defecto no es la reseña: es la historia. Un escenario recorre el vídeo entero y <strong>el producto entra como actor secundario</strong>, alrededor del 40–60&nbsp;% del metraje. La prueba de que está bien planteado: si borras el producto, la historia sigue en pie.</p>
+      <p>Cada historia lleva <strong>exactamente un giro</strong>. Sin giro es una anécdota plana; con dos no cabe en quince segundos. Estas son las columnas vertebrales que mejor funcionan:</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Forma</th><th>Qué pasa</th></tr></thead>
+          <tbody>
+            <tr><td>Descubrimiento demostrado</td><td>Aparece el problema, se demuestra la función</td></tr>
+            <tr><td>Bucle de mecanismo</td><td>Abre con una acción visible y enseña cómo funciona</td></tr>
+            <tr><td>Uso alternativo</td><td>Un segundo uso que no esperabas</td></tr>
+            <tr><td>Historia interrumpida</td><td>Cuenta otra cosa, el producto interrumpe y la historia nunca acaba</td></tr>
+            <tr><td>Arreglarse con motivo</td><td>Se prepara <em>para</em> algo que importa; lo que importa sostiene el clip</td></tr>
+            <tr><td>Comentario sobre pantalla</td><td>Habla encima de una evidencia visible</td></tr>
+            <tr><td>Pequeña victoria de trabajo</td><td>Trabajo real, un logro pequeño. Nativo para B2B</td></tr>
+            <tr><td>Sin voz / ASMR</td><td>El sonido es el guion; cero o quince palabras susurradas</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">05</span>
+    <h3>El gancho: elige un patrón, uno solo</h3>
+    <div class="step-body">
+      <p>El patrón decide <em>qué clase de momento</em> es la apertura. No se mezclan.</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Patrón</th><th>El fotograma uno es…</th></tr></thead>
+          <tbody>
+            <tr><td>Acción de impacto</td><td>Algo físico en su punto máximo: caja a medio rasgar, objeto al vuelo</td></tr>
+            <tr><td>Confesión a media frase</td><td>Arranca en la cuarta palabra, como si entraras a mitad</td></tr>
+            <tr><td>Interrupción de patrón</td><td>Escena normal con una cosa profundamente mal, y ella ni se inmuta</td></tr>
+            <tr><td>Reacción congelada</td><td>La cara ya en plena reacción, mirada clavada. Medio segundo, y habla</td></tr>
+            <tr><td>Apertura hostil</td><td>La primera frase es un reproche al que mira. Inclinación y dedo ya señalando</td></tr>
+            <tr><td>Mecanismo primero</td><td>Una acción del producto ya en marcha en el fotograma uno</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">06</span>
+    <h3>Escribir la interpretación dentro del texto</h3>
+    <div class="step-body">
+      <p>El modelo de vídeo interpreta por debajo de lo que escribes. Una frase plana produce un presentador de madera. La emoción va <strong>dentro de las palabras</strong>:</p>
+      <ul class="lead-list">
+        <li><strong>Alargar la vocal</strong> en la palabra de la cumbre: <em>«it's SO good»</em>.</li>
+        <li><strong>Una o dos mayúsculas</strong> por línea como máximo, para el pico de volumen.</li>
+        <li><strong>Una frase rota</strong> en el punto álgido: <em>«it's— okay wait. LOOK.»</em></li>
+        <li><strong>Un arco</strong> por clip: plano, pico, y se asienta.</li>
+      </ul>
+      <p>Y una prohibición: <strong>nunca escribas pausas dramáticas</strong>. Hinchan la línea y rompen el render.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">07</span>
+    <h3>El registro: natural por defecto</h3>
+    <div class="step-body">
+      <p>Hay tres registros y solo uno es el que sale si no pides nada. Elegir mal aquí es la diferencia entre una creadora creíble y una teletienda.</p>
+      <div class="mode pick">
+        <h3>Natural <span class="tag">por defecto</span></h3>
+        <p>Cercana, real, con un único pico honesto: una sonrisa que se rompe, un «oh» de sorpresa. Belleza, moda y prácticamente todo lo demás van aquí. Nunca chillidos.</p>
+      </div>
+      <div class="mode">
+        <h3>Eufórico</h3>
+        <p>Solo si lo pides con esas palabras: <em>hyped</em>, <em>energetic</em>, <em>explosive</em>, <em>high-energy</em>. Vocales estiradas, gritos en la revelación. Se agota rápido.</p>
+      </div>
+      <div class="mode">
+        <h3>Calmado</h3>
+        <p>Solo con señales explícitas: <em>goth</em>, <em>deadpan</em>, <em>clinical</em>, <em>quiet</em>, <em>GRWM</em>, <em>routine</em>. Cara neutra, gestos lentos, sin picos.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="note-title">Para que hable en español</span>
+    <p>Por defecto habla en inglés con acento estadounidense. Para cambiarlo hay que decirlo explícitamente y escribir el monólogo directamente en español. Si quieres un acento concreto, descríbelo <strong>dos niveles más fuerte</strong> de lo que te pide el cuerpo y nunca con <em>slight</em> o <em>subtle</em>: así es como los acentos desaparecen. Y jamás lo escribas en fonética, que rompe el sincronismo labial.</p>
+    <p>Con texto solo, el acento sale más o menos una de cada tres veces. Si tienes cinco o diez segundos de una voz que valga, adjúntala como referencia de audio al clip: sube el acierto muchísimo.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+
+<section id="storyboard">
+  <p class="phase">Paso 3</p>
+  <h2>El storyboard de ocho casillas</h2>
+  <hr class="rule">
+
+  <p>Una imagen 21:9 con ocho viñetas verticales 9:16 en <strong>una sola fila</strong>, separadas por márgenes blancos finos. Sin texto de ningún tipo: ni cabeceras, ni números, ni etiquetas. Cada viñeta es un tiempo narrativo, y esos ocho tiempos se convertirán en ocho cortes duros dentro del clip.</p>
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>El orden de las referencias</h3>
+    <div class="step-body">
+      <p>El prompt empieza declarando qué es cada imagen que le pasas, y el orden de las declaraciones tiene que coincidir con el orden en que las adjuntas:</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Situación</th><th><code>@Image1</code></th><th><code>@Image2</code></th><th><code>@Image3</code></th></tr></thead>
+          <tbody>
+            <tr><td>Con producto, primera hoja</td><td>producto</td><td>creadora</td><td>—</td></tr>
+            <tr><td>Con producto, hojas siguientes</td><td>producto</td><td>creadora</td><td>hoja anterior</td></tr>
+            <tr><td>Sin producto, primera hoja</td><td>creadora</td><td>—</td><td>—</td></tr>
+            <tr><td>Sin producto, hojas siguientes</td><td>creadora</td><td>hoja anterior</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>El motor anti-fundido</h3>
+    <div class="step-body">
+      <p>Aquí está el corazón de todo. Seedance convierte el límite entre dos viñetas en un corte seco <strong>solo si esas dos viñetas están visualmente muy lejos</strong>. Si se parecen, no corta: las funde, y el clip se convierte en un plano continuo con la cara derritiéndose. Por eso cada pareja de viñetas contiguas tiene que diferenciarse en tres ejes a la vez:</p>
+      <ol class="lead-list">
+        <li><strong>El punto de vista alterna</strong> en cada viñeta: selfie ↔ cámara fija. Nunca dos seguidas iguales.</li>
+        <li><strong>La banda de distancia rota</strong>: cerrada (primer plano o macro), media, abierta (tres cuartos, plano medio largo, cuerpo entero). Las tres aparecen al menos dos veces en las ocho.</li>
+        <li><strong>La acción física cambia</strong>: nunca la misma configuración de manos y producto dos veces seguidas.</li>
+      </ol>
+      <p>La cadencia por defecto, que ya cumple las tres:</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+<pre>SELFIE-MID → STATIC-WIDE → STATIC-MACRO → SELFIE-TIGHT →
+STATIC-MID → STATIC-MACRO → STATIC-WIDE → SELFIE-TIGHT</pre>
+      </div>
+      <p>Y en cada viñeta hay que escribir la distancia con todas las letras: <code>TIGHT CLOSE-UP</code>, <code>MEDIUM CLOSE-UP</code>, <code>MEDIUM</code>, <code>MACRO</code>, <code>THREE-QUARTER</code>, <code>WAIST-UP</code>, <code>FULL-BODY WIDE</code>, <code>PRODUCT-EXTENDED</code>. Sin ambigüedad.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">03</span>
+    <h3>La ley de las dos manos</h3>
+    <div class="step-body">
+      <p>La persona tiene dos manos. Suena obvio; es la causa del 80&nbsp;% de los brazos fantasma. La regla se aplica <em>contando roles</em>, no manos dibujadas:</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Punto de vista</th><th>Manos disponibles</th><th>Para qué sirve</th></tr></thead>
+          <tbody>
+            <tr><td>Selfie</td><td>Una. La otra sujeta el móvil, fuera de plano</td><td>Hablar, caminar, sujetar un solo objeto</td></tr>
+            <tr><td>Cámara fija</td><td>Dos. El móvil no está en plano</td><td>Abrir, girar un tapón, aplicar mientras sujeta</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>De ahí salen tres consecuencias que hay que escribir en cada viñeta:</p>
+      <ul class="lead-list">
+        <li><strong>Nombra el papel de cada mano.</strong> La que actúa y la que está aparcada: «la izquierda sujeta el móvil fuera de plano, la derecha coge el bote». Una mano sin papel asignado se inventa uno.</li>
+        <li><strong>Nunca dos objetos en selfie.</strong> Si la acción necesita dos, la viñeta está mal: pásala a cámara fija.</li>
+        <li><strong>Un producto suelto al lado de manos ocupadas engendra un tercer brazo.</strong> O está sujeto, o está apoyado en una superficie. Explícitamente.</li>
+      </ul>
+      <p>Y las acciones de varios pasos no se apilan en una viñeta: se reparten entre cortes. Enseñar, corte, abrir.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">04</span>
+    <h3>Qué pasa en cada viñeta según el papel de la hoja</h3>
+    <div class="step-body">
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Papel</th><th>Los ocho tiempos, de la viñeta 1 a la 8</th></tr></thead>
+          <tbody>
+            <tr><td><code>FULL_ARC</code></td><td>gancho → contexto → momento de vida → primer contacto con el producto → acción principal → reacción → resultado → recomendación y cierre</td></tr>
+            <tr><td><code>HOOK</code></td><td>captar → contexto → vida → vida → curiosidad hacia el producto → primer contacto → entrada → entrega a la siguiente hoja</td></tr>
+            <tr><td><code>REVEAL</code></td><td>abrir el envase → revelar → detalle clave → macro → primera impresión → reacción → desarrollo → asentar</td></tr>
+            <tr><td><code>APPLY</code></td><td>empezar a aplicar → a media aplicación → macro del momento → efecto empezando → efecto visible → reacción → desarrollo → asentar</td></tr>
+            <tr><td><code>CLOSER</code></td><td>resultado visible → prueba → recomendación → asentar → momento cálido → aparte → mirada final → tiempo listo para el bucle</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">
+        <span class="note-title">La viñeta 1 no es «enseñar el producto»</span>
+        <p>Es el planteamiento del momento. Si el arranque es de camino a algún sitio, de descubrimiento o de hablar a cámara, el producto puede estar oculto, parcial o directamente ausente. El «enseñar producto» cae en la viñeta donde la historia lo entrega. Y en un vídeo de varias hojas, la historia va <strong>de la persona</strong>: el producto entra alrededor de la mitad del metraje.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>La plantilla</h3>
+
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+<pre>@Image1 <span class="k">producto — ANGLE LOCK: solo su cara frontal, nunca gira</span>.
+@Image2 character reference. <span class="k">@Image3 hoja anterior: preserva identidad,
+localización, luz, vestuario y producto de esta referencia.</span>
+The same person appears in every slot with identical face, hair, body, and
+identity — no changes to features, hair, or proportions between slots.
+
+A single ultra-wide horizontal storyboard sheet composed of exactly EIGHT
+equal-size 9:16 vertical slots arranged in ONE HORIZONTAL ROW, separated by
+thin white gutters on a clean white background, total sheet aspect 21:9.
+Do NOT make two rows and do NOT make a grid — exactly eight panels in one row,
+never ten, never twelve. All eight slots are active photorealistic UGC
+iPhone-style stills that tell one continuous <span class="k">15</span>-second video clip as eight
+sequential beats — slot 1 is beat 1 (opening), slot 8 is beat 8 (closing).
+Each adjacent pair of slots is a DIFFERENT camera setup — a different POV
+(selfie vs static camera), a different distance band (tight/macro vs medium vs
+wide), and a different action — so every beat boundary reads as a crisp hard
+cut, never a morph.
+
+Setting and lighting in all eight slots default to the same environment, time
+of day, and light direction visible in the character reference image. Outfit
+stays identical across slots within the same location.
+
+<span class="k">Product appears at realistic real-world scale, approximately X cm in real size,
+fitting naturally in the character's hand without enlargement. Exactly one
+PRODUCTO appears in frame in every slot where it is visible — never a
+duplicate, never a look-alike clone. Product placement in every slot is clean:
+either fully visible held in one hand, fully hidden inside a closed bag, or
+absent from the frame — never half-sticking out, never balancing awkwardly.</span>
+
+The character has exactly two hands. In selfie POV slots, one hand is occupied
+by the phone (off-frame or visible at edge), so only one hand is available for
+action — never two objects in selfie POV. Every slot names what EACH hand is
+doing — one role per hand, the idle hand parked explicitly. Slots requiring two
+free hands are static camera POV with the phone not in frame.
+
+Slot 1 — exact 9:16 vertical photorealistic UGC iPhone still, <span class="k">SELFIE</span>, <span class="k">MEDIUM
+CLOSE-UP</span>: <span class="k">acción, colocación del producto, papel de CADA mano,
+micro-comportamiento, nota de luz</span>.
+Slot 2 — exact 9:16 vertical still, <span class="k">STATIC</span>, <span class="k">FULL-BODY WIDE</span>: <span class="k">…</span>.
+Slot 3 — exact 9:16 vertical still, <span class="k">STATIC</span>, <span class="k">MACRO</span>: <span class="k">…</span>.
+Slot 4 — exact 9:16 vertical still, <span class="k">SELFIE</span>, <span class="k">TIGHT CLOSE-UP</span>: <span class="k">…</span>.
+Slot 5 — exact 9:16 vertical still, <span class="k">STATIC</span>, <span class="k">MEDIUM</span>: <span class="k">…</span>.
+Slot 6 — exact 9:16 vertical still, <span class="k">STATIC</span>, <span class="k">MACRO</span>: <span class="k">…</span>.
+Slot 7 — exact 9:16 vertical still, <span class="k">STATIC</span>, <span class="k">THREE-QUARTER</span>: <span class="k">…</span>.
+Slot 8 — exact 9:16 vertical still, <span class="k">SELFIE</span>, <span class="k">TIGHT CLOSE-UP</span>: <span class="k">…</span>.
+
+Rendering rules: every slot is an exact 9:16 vertical rectangle, all eight
+identical in size, in ONE HORIZONTAL ROW with thin white gutters on a clean
+white background, total sheet aspect 21:9. No two adjacent slots share both
+their POV and their distance band. The character's identity is identical across
+all eight panels. The character has exactly two hands; total simultaneous hand
+roles never exceed two. Each prop holds exactly one state per slot — a cap is on
+or off, never both. No on-image text of any kind: no header, no captions, no
+pop-text, no badges, no numbers, no subtitles, no watermarks. No shallow depth
+of field, no bokeh, no lens flare, no beauty filter, no cinematic color grade.
+No fisheye lens, no ultra-wide distortion. No mirror or reflection shots. No
+deformed hands. No third arm, no extra hands, no duplicated limbs. No additional
+brands or logos. No invented product claims.</pre>
+  </div>
+
+  <div class="warn">
+    <span class="warn-title">Nada de espejos</span>
+    <p>Ni el del baño, ni el escaparate, ni el reflejo en la pantalla del móvil. Los reflejos generan extremidades de más y personas duplicadas. Las escenas de tocador se montan con el espejo fuera de plano o girado. Es una prohibición dura y aparece en las reglas de render por eso.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+
+<section id="antislop">
+  <p class="phase">Paso 4</p>
+  <h2>El pase anti-slop</h2>
+  <hr class="rule">
+
+  <p>El storyboard que sale de GPT Image 2 tiene la composición bien y la piel mal: acabado de plástico, poros ausentes, brillo de filtro. Si eso pasa al vídeo, el vídeo entero canta. Así que la hoja se vuelve a pasar por Seedream 5.0 Pro con una única orden: <strong>no toques nada, solo la textura</strong>.</p>
+
+  <p class="flow">hoja de GPT Image 2 → Seedream 5.0 Pro → hoja limpia → al vídeo</p>
+
+  <p>Este prompt va literal. Es un equilibrio fino entre «cambia el realismo» y «no cambies nada más», y cualquier palabra que le quites lo desequilibra hacia el reencuadre:</p>
+
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+<pre>KEEP EXACTLY the framing, composition, slot layout, camera distances, poses,
+subjects and product of this horizontal storyboard sheet and every one of its
+side-by-side vertical slots — no reframe, no zoom, no crop, no re-layout, no
+change to the scene, to any person's face / hair / body, or to the product
+design. CHANGE ONLY micro-realism, applied identically in every slot:
+true-to-life pore-level skin with natural texture and fine vellus hair, real
+material detail, even natural daytime light with gentle highlight roll-off and
+faint true sensor noise, a flat authentic iPhone photo, deep focus. PRESERVE
+each face's exact shape / width / proportions 1:1 — do NOT squeeze / narrow /
+slim / stretch any face. AVOID AI-slop: waxy plastic skin, airbrushed poreless
+skin, beauty-filter smoothing, over-saturation, HDR glow / bloom / halos,
+oversharpening, teal-orange grade, shallow depth of field, bokeh, cinematic /
+DSLR look. Keep the product blank / unbranded, no added text, no watermark, no
+baked slot labels.</pre>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Parámetro</th><th>Valor</th></tr></thead>
+      <tbody>
+        <tr><td>Modelo</td><td><code>seedream_v5_pro</code></td></tr>
+        <tr><td>La hoja entra como</td><td>Referencia de imagen</td></tr>
+        <tr><td>Proporción</td><td>21:9</td></tr>
+        <tr><td>Resolución</td><td>2k</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ok">
+    <span class="ok-title">Si lo rechaza</span>
+    <p>Cuando la moderación tumba el pase, se reintenta <strong>una vez</strong> con <code>seedream_v5_lite</code>. Si también falla, tira con la hoja original y anótalo: sabrás por qué ese clip concreto tiene la piel peor que los demás.</p>
+  </div>
+
+  <p>Este paso es el que más gente se salta y el que más diferencia se lleva. La composición se la lleva GPT Image 2 porque entiende una rejilla de ocho casillas; el realismo se lo lleva Seedream porque entiende una instrucción de edición. Ninguno de los dos hace bien las dos cosas.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+
+<section id="clip">
+  <p class="phase">Paso 5</p>
+  <h2>El clip</h2>
+  <hr class="rule">
+
+  <p>Seedance 2.5, vertical 9:16, 1080p, en modo <code>omni_reference</code> y con la generación de audio activada. Le pasas tres imágenes: la hoja limpia, la creadora y, si lo hay, el producto.</p>
+
+  <div class="warn">
+    <span class="warn-title">La voz sale de aquí, no de otro sitio</span>
+    <p>En modo <code>omni_reference</code> y con el audio activado, Seedance 2.5 produce <strong>habla nativa sincronizada</strong>. No hay que generar audio aparte ni pasar por un modelo de doblaje: eso rompe el sincronismo y duplica el coste. La voz es parte del render.</p>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Parámetro</th><th>Valor</th></tr></thead>
+      <tbody>
+        <tr><td>Modelo</td><td><code>seedance_2_5</code></td></tr>
+        <tr><td>Modo</td><td><code>omni_reference</code></td></tr>
+        <tr><td>Audio</td><td>Activado</td></tr>
+        <tr><td>Proporción</td><td>9:16</td></tr>
+        <tr><td>Resolución</td><td>1080p</td></tr>
+        <tr><td>Duración</td><td>La del clip: 4 a 30 s</td></tr>
+        <tr><td>Imágenes</td><td>Hoja limpia · creadora · producto (si lo hay)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Cómo se reparten los ocho cortes</h3>
+    <div class="step-body">
+      <p>La duración se divide entre ocho, casi a partes iguales. Los tiempos rápidos y regulares <em>son</em> el formato. Y las marcas de tiempo se escriben dentro del prompt:</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Duración</th><th>Cada corte</th><th>Cómo se escribe</th></tr></thead>
+          <tbody>
+            <tr><td>8 s</td><td>~1,0 s</td><td><code>Cut 1 (0-1s)</code>, <code>Cut 2 (1-2s)</code>…</td></tr>
+            <tr><td>10 s</td><td>~1,25 s</td><td><code>Cut 1 (0-1.25s)</code>…</td></tr>
+            <tr><td>12 s</td><td>~1,5 s</td><td><code>Cut 1 (0-1.5s)</code>…</td></tr>
+            <tr><td>15 s</td><td>~1,9 s</td><td><code>Cut 1 (0-1.9s)</code>, <code>Cut 2 (1.9-3.8s)</code>…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>La suma tiene que dar exactamente la duración del clip.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>Las siete marcas de corte</h3>
+    <div class="step-body">
+      <p>Entre cada par de cortes consecutivos va, literal:</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+<pre>Hard cut to.</pre>
+      </div>
+      <p>Siete veces: del 1 al 2, del 2 al 3, y así hasta el 7→8. Después del octavo, nada. <strong>Seedance las lee como instrucciones de montaje</strong>; sin ellas los ocho tiempos colapsan en un movimiento continuo y pierdes el mecanismo entero.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">03</span>
+    <h3>La ley de la primera décima</h3>
+    <div class="step-body">
+      <p>El corte 1 abre <strong>ya empezado</strong>: una mano ya en movimiento, la cabeza a medio girar, el producto a medio levantar. Nunca una pose asentada, nunca alguien esperando a empezar a hablar. Y la voz entra inmediatamente: la primera palabra cae entre el segundo 0,0 y el 0,4.</p>
+      <p>Escríbelo así: la <strong>primera frase</strong> de la descripción del corte 1 tiene que ser movimiento, y la línea de audio tiene que abrir en lo más alto del corte 1.</p>
+      <p>El <em>feed</em> decide en lo que dura un deslizamiento de pulgar. Un clip que empieza quieto está muerto antes de su primera frase.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">04</span>
+    <h3>Palabras que envenenan un corte</h3>
+    <div class="step-body">
+      <p>Según el tipo de corte, hay vocabulario que filtra movimiento donde no debe haberlo:</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>En un corte…</th><th>Nunca escribas</th><th>Porque</th></tr></thead>
+          <tbody>
+            <tr><td>de cámara fija</td><td><code>handheld</code>, <code>shake</code>, <code>drift</code>, <code>wobble</code>, <code>sway</code>, <code>subtle movement</code></td><td>Filtran temblor a un plano que debe estar congelado</td></tr>
+            <tr><td>de selfie</td><td><code>mirror selfie</code>, <code>phone in her hand</code>, <code>phone screen visible</code>, <code>reflection</code>, <code>over-the-shoulder</code></td><td>Meten el móvil como objeto en plano. La cámara <em>es</em> el móvil: nunca se ve</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">05</span>
+    <h3>Lo que hace que cada corte parezca humano</h3>
+    <div class="step-body">
+      <p>Cada uno de los ocho cortes lleva cuatro cosas obligatorias:</p>
+      <ol class="lead-list">
+        <li><strong>Dos o tres micro-gestos concretos</strong> del menú del registro que hayas elegido, rotando: cejas levantadas con sonrisa que rompe, risa corta, inclinación hacia el objetivo, parpadeo de sorpresa, asentimiento satisfecho.</li>
+        <li><strong>Al menos un movimiento dentro del corte</strong>: algo que evolucione. El corte no es una foto. «El peso se desplaza hacia delante mientras acerca el bote».</li>
+        <li><strong>Expresión distinta en cada corte.</strong> Repetir expresión está prohibido explícitamente.</li>
+        <li><strong>Un gesto sin guardia, al menos uno por clip</strong>: un titubeo recuperado, un «espera, qué decía», una compostura reencontrada. Las interpretaciones perfectas de principio a fin se leen como IA.</li>
+      </ol>
+      <p>Y un <strong>momento tonto</strong> por clip: una mueca, un gesto de payaso medio segundo, algo que rompa el marco de «estoy vendiendo». Uno solo, y se salta si el tono es frío o clínico.</p>
+      <p>Nunca escribas <code>smiles at the camera</code>, <code>looks at the camera</code> ni <code>holds the product and talks</code>. Son las tres frases que producen un maniquí.</p>
+    </div>
+  </div>
+
+  <h3>La plantilla, para un clip de 15 s</h3>
+
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+<pre>Style &amp; Mood: UGC iPhone aesthetic, <span class="k">luz igual que en la hoja</span>, MIXED: starts
+SELFIE handheld, hard-cuts to STATIC locked-off, hard-cuts back to SELFIE
+handheld — POV alternates per cut, social media vertical format.
+
+Narrative Summary: <span class="k">una frase con lo que pasa en este clip</span>, performed by a
+natural, engaged creator — genuine reactions, lively but human, never staged
+screaming energy.
+
+Dynamic Description:
+Cut 1 (0-1.9s) — <span class="k">MEDIUM CLOSE-UP, SELFIE</span>: <span class="k">acción ya empezada, papel de cada
+mano, dos micro-gestos, expresión</span>. Hard cut to.
+Cut 2 (1.9-3.8s) — <span class="k">FULL-BODY WIDE, STATIC</span>: <span class="k">…</span>. Hard cut to.
+Cut 3 (3.8-5.6s) — <span class="k">MACRO, STATIC</span>: <span class="k">…</span>. Hard cut to.
+Cut 4 (5.6-7.5s) — <span class="k">TIGHT CLOSE-UP, SELFIE</span>: <span class="k">…</span>. Hard cut to.
+Cut 5 (7.5-9.4s) — <span class="k">MEDIUM, STATIC</span>: <span class="k">…</span>. Hard cut to.
+Cut 6 (9.4-11.3s) — <span class="k">MACRO, STATIC</span>: <span class="k">…</span>. Hard cut to.
+Cut 7 (11.3-13.1s) — <span class="k">THREE-QUARTER, STATIC</span>: <span class="k">…</span>. Hard cut to.
+Cut 8 (13.1-15s) — <span class="k">TIGHT CLOSE-UP, SELFIE</span>: <span class="k">…</span>.
+
+Static Description: <span class="k">una o dos frases: escenario, detalles de ambiente, atrezo,
+dirección de la luz — coincidiendo con la hoja</span>.
+
+Audio: She speaks to camera, iPhone microphone audio with natural room tone
+<span class="k">[*small bright laugh*] [*soft gasp*] — solo en el primer clip</span>: "<span class="k">EL MONÓLOGO
+LITERAL, repartido entre los ocho cortes por límites naturales de frase</span>"
+
+Facial features clear and undistorted, consistent clothing throughout. Shot on
+iPhone, natural lighting, social media aesthetic, handheld micro-shake during
+selfie cuts, locked-off frozen frame during static-camera cuts. No on-screen
+text, no subtitles, no captions, no watermarks, no legible text on any object
+except the product's own label, no real brand logos anywhere, no cinematic
+grade, no film grain, no bokeh, no lens flare, no fisheye lens, no ultra-wide
+distortion, no slow motion, no beauty filter, no third arm, no extra hands, no
+duplicated limbs, no deformed hands.</pre>
+  </div>
+
+  <div class="note">
+    <span class="note-title">Sonidos entre corchetes: solo en el primer clip</span>
+    <p>De uno a tres sonidos no verbales al principio de la línea de audio venden la apertura: <code>[*small bright laugh*]</code>, <code>[*soft gasp*]</code>, <code>[*delighted 'oh!'*]</code>, <code>[*incredulous scoff*]</code>. Van <strong>solo en el clip 1</strong>. Del segundo en adelante, el audio arranca a mitad de pensamiento: nada de saludos, nada de volver a presentar el producto. Ya lo presentó el clip anterior.</p>
+  </div>
+
+  <div class="caution">
+    <span class="caution-title">Música: apagada salvo que la pidas</span>
+    <p>El audio por defecto es voz más sonido de sala. Si quieres música, va una sola línea después del audio, siempre por debajo de la voz y <strong>sin letra</strong>: la letra pelea con el sincronismo labial. Una línea por clip, nunca música descrita corte a corte.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+
+<section id="montaje">
+  <p class="phase">Paso 6</p>
+  <h2>Revisión y montaje</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>La revisión de fotogramas congelados</h3>
+    <div class="step-body">
+      <p>Antes de pegar nada, se paran fotogramas repartidos por el clip, todos los primeros planos del producto y dos o tres fotogramas <strong>a mitad de palabra</strong>, que es donde revientan los labios. Se comprueba:</p>
+      <ul class="lead-list">
+        <li><strong>Un solo producto</strong> por plano. Sin clones ni copias en el fondo.</li>
+        <li><strong>Dos manos como máximo</strong> por persona, contando bordes de plano y reflejos.</li>
+        <li><strong>Lo que no existe sigue sin existir</strong>: si el bote no tiene botón, no aparece un botón. El tapón está puesto o quitado, no las dos cosas.</li>
+        <li><strong>Las etiquetas no son galimatías</strong>, ni están del revés, ni son de otra marca real.</li>
+        <li><strong>La escala cuadra</strong> con la mano que lo sujeta.</li>
+        <li><strong>Sin labios dobles, sin deriva de cara, sin texto ni subtítulos horneados.</strong></li>
+      </ul>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Lo que falla</th><th>Qué se hace</th></tr></thead>
+          <tbody>
+            <tr><td>Un error de puesta en escena</td><td>Se corrige el prompt y se relanza <strong>solo ese clip</strong></td></tr>
+            <tr><td>Artefactos en la boca</td><td>Se recortan palabras del guion antes de tocar nada más</td></tr>
+            <tr><td>Texto horneado en la imagen</td><td>Se relanza una vez; si vuelve, se quita en postproducción</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Los clips que pasan se congelan y no se vuelven a tocar. Relanzar un clip aprobado «a ver si sale mejor» es como se pierde la continuidad.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>Pegar los clips</h3>
+    <div class="step-body">
+      <p>Si solo hay un clip, ese es el vídeo final: no hay nada que montar. Con dos o más, se concatenan en orden <strong>copiando el flujo</strong>, sin recodificar y sin transiciones:</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+<pre><span class="c"># clips.txt lleva una línea por clip, en orden:</span>
+<span class="c">#   file 'clip1.mp4'</span>
+<span class="c">#   file 'clip2.mp4'</span>
+ffmpeg -f concat -safe 0 -i clips.txt -c copy final.mp4</pre>
+      </div>
+      <p>Cortes duros y nada más. Un fundido entre clips rompe el ritmo que has construido a base de ocho cortes por clip.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">03</span>
+    <h3>Subtítulos, si los quieres</h3>
+    <div class="step-body">
+      <p>Se queman <strong>después</strong> del montaje, nunca en la generación: pedirle texto a un modelo de vídeo produce galimatías. Y los tiempos salen de una <strong>transcripción palabra a palabra del audio final</strong>, jamás de los tiempos que planeaste. La voz generada nunca cae exactamente donde la habías puesto.</p>
+      <p>Guarda siempre el montaje limpio aparte del subtitulado. Un master sin texto vale para otro idioma, otra plataforma y otro recorte; uno con los subtítulos quemados, no.</p>
+    </div>
+  </div>
+
+  <div class="ok">
+    <span class="ok-title">Y si necesitas más resolución</span>
+    <p>Hay un escalador de vídeo con un preajuste específico para material UGC. Se pasa al final, sobre el montaje ya cerrado, nunca sobre los clips sueltos: escalar antes de pegar multiplica el coste por el número de clips y añade diferencias de nitidez entre ellos.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+
+<section id="chuleta">
+  <p class="phase">Referencia</p>
+  <h2>La chuleta de parámetros</h2>
+  <hr class="rule">
+
+  <p>Todo lo que hay que fijar, en una tabla. Si algo te sale raro, empieza comprobando esto.</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Paso</th><th>Modelo</th><th>Proporción</th><th>Calidad</th><th>Entra</th></tr></thead>
+      <tbody>
+        <tr><td>Creadora</td><td><code>soul_2</code></td><td>3:4</td><td>2k</td><td>Solo texto</td></tr>
+        <tr><td>Storyboard</td><td><code>gpt_image_2</code></td><td>21:9</td><td>2k · alta</td><td>Producto + creadora + hoja anterior</td></tr>
+        <tr><td>Anti-slop</td><td><code>seedream_v5_pro</code></td><td>21:9</td><td>2k</td><td>La hoja como referencia</td></tr>
+        <tr><td>Clip</td><td><code>seedance_2_5</code></td><td>9:16</td><td>1080p</td><td>Hoja limpia + creadora + producto</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Regla</th><th>Valor</th></tr></thead>
+      <tbody>
+        <tr><td>Identidad de la creadora</td><td>Una sola imagen, reutilizada en todo. Nunca se regenera</td></tr>
+        <tr><td>Viñetas por hoja</td><td>Siempre 8, todas activas, una sola fila</td></tr>
+        <tr><td>Marcas <code>Hard cut to.</code></td><td>7 por clip, literales</td></tr>
+        <tr><td>Primera palabra o sonido</td><td>Entre 0,0 y 0,4 s</td></tr>
+        <tr><td>Picos de reacción</td><td>1 o 2 por clip, motivados por el producto</td></tr>
+        <tr><td>Roles de mano simultáneos</td><td>Nunca más de 2</td></tr>
+        <tr><td>Interacciones con el producto</td><td>1 por corte como máximo</td></tr>
+        <tr><td>Cambios de estado</td><td>1 por corte como máximo</td></tr>
+        <tr><td>Entrada del producto en la historia</td><td>Entre el 40 y el 60&nbsp;% del metraje</td></tr>
+        <tr><td>Boca cerrada</td><td>Al menos un momento por clip, entre frases</td></tr>
+        <tr><td>Personas en plano</td><td>3 como máximo</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Una prueba entera —creadora, hoja, anti-slop y clip— se puede lanzar a resolución baja para validar el guion y los ocho tiempos antes de gastar en 1080p. Cuando el ritmo funciona en 480p, funciona en 1080p; al revés no pasa nunca.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+
+<section id="linea">
+  <p class="phase">Importante</p>
+  <h2>La línea que no se cruza</h2>
+  <hr class="rule">
+
+  <p>Esto no es letra pequeña. Es lo que separa una campaña de un problema, y buena parte está además bloqueado en el propio flujo de Higgsfield.</p>
+
+  <div class="warn">
+    <span class="warn-title">La cara</span>
+    <p>O es una persona <strong>generada, adulta</strong>, o es una persona real adulta que ha dado su consentimiento y cuya imagen estás autorizado a usar. <strong>Tener una foto no es tener permiso.</strong> Personajes públicos, famosos y menores quedan fuera, siempre. Y la voz de una persona real no se clona ni se imita.</p>
+  </div>
+
+  <div class="warn">
+    <span class="warn-title">El testimonio</span>
+    <p>Una creadora generada es una <strong>presentadora</strong>, nunca una clienta. No se le inventa que compró, que lo usa, que le funcionó, ni un antes y un después, ni una valoración, ni una relación con la marca. La experiencia en primera persona solo es legítima cuando una persona real aporta el guion exacto y confirma que describe lo suyo.</p>
+  </div>
+
+  <div class="caution">
+    <span class="caution-title">Las afirmaciones</span>
+    <p>Solo van las afirmaciones concretas que te ha dado el cliente, <strong>literales</strong>. No se refuerzan, no se combinan, no se deducen otras nuevas. Si no hay lista de afirmaciones aprobadas, el guion se escribe con mecánica observable: lo que se ve, cómo se abre, qué textura tiene. Sin inventar ni un número, ni una duración, ni una comparación.</p>
+  </div>
+
+  <div class="note">
+    <span class="note-title">Cómo se presenta</span>
+    <p>Un vídeo con producto es <strong>una demostración de marca o una pieza publicitaria</strong>, no una reseña orgánica de clienta. Cuando se publica, lleva su indicación de publicidad o patrocinio. Es lo que exige la plataforma y lo que evita que la cuenta se queme.</p>
+  </div>
+
+  <p>Y hay categorías que quedan fuera del flujo directamente: persuasión política, contenido y productos para adultos, apuestas, drogas y medicación con receta, tabaco y nicotina, armas, falsificaciones, servicios financieros engañosos o de alto riesgo, programas maliciosos, fraude y vigilancia encubierta.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+
+<section id="fallos">
+  <p class="phase">Cuando algo sale mal</p>
+  <h2>Fallos y arreglos</h2>
+  <hr class="rule">
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Lo que ves</th><th>La causa real</th><th>El arreglo</th></tr></thead>
+      <tbody>
+        <tr><td>Los ocho planos se funden en uno continuo</td><td>Dos viñetas contiguas comparten punto de vista y distancia</td><td>Reescribe la segunda hasta que cambie en los dos ejes. Comprueba que están las siete marcas de corte</td></tr>
+        <tr><td>Un tercer brazo, o dedos de más</td><td>Más de dos roles de mano simultáneos en un corte</td><td>Cuenta roles, no manos. Aparca la mano libre explícitamente y reparte la acción entre cortes</td></tr>
+        <tr><td>Aparecen dos o tres unidades del producto</td><td>El contexto sugiere abundancia y el modelo multiplica</td><td>Escribe <code>exactly one bottle</code>, <code>single product instance</code> en la descripción del corte</td></tr>
+        <tr><td>Piel de plástico y brillo de filtro</td><td>Falta el pase anti-slop</td><td>Pasa la hoja por Seedream 5.0 Pro antes del vídeo. No es opcional</td></tr>
+        <tr><td>Subtítulos quemados que no pediste</td><td>El modelo los añade solo, sobre todo en modo ASMR</td><td>Relanza una vez con la negación de texto reforzada; si vuelve, se quita en post</td></tr>
+        <tr><td>El clip arranca con medio segundo muerto</td><td>El corte 1 abre en una pose asentada</td><td>Primera frase del corte 1 = movimiento. Audio abriendo en lo más alto</td></tr>
+        <tr><td>La cara cambia entre el clip 1 y el 2</td><td>Se regeneró la creadora o falta la hoja anterior como referencia</td><td>Un solo identificador de creadora en todo. Las hojas, en fila india</td></tr>
+        <tr><td>El acento no se oye</td><td>Se escribió <code>slight</code> o <code>subtle</code></td><td>Descríbelo dos niveles más fuerte, y añade <code>no neutral accent, no generic American voice</code></td></tr>
+        <tr><td>Se ve el móvil en plano</td><td>Se coló <code>phone</code>, <code>mirror</code> o <code>reflection</code> en un corte de selfie</td><td>La cámara <em>es</em> el móvil. Solo el antebrazo puede asomar por el borde</td></tr>
+        <tr><td>Interpretación de madera</td><td>Prompt neutro: el modelo interpreta por debajo de lo que lees</td><td>Micro-gestos concretos en cada corte, expresión distinta en cada uno, un gesto sin guardia</td></tr>
+        <tr><td>Se dispara el gasto en pruebas</td><td>Iterar el guion en 1080p</td><td>Valida ritmo y guion en resolución baja; sube solo la versión buena</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  Verificado contra el conector oficial de Higgsfield: catálogo de modelos y flujo <code>ugc-review-video</code> v1.1 · septiembre de 2026.<br>
+  Nota de vigencia: los identificadores de modelo y los rangos de duración cambian cuando Higgsfield añade versiones. Las reglas de prompt —las anclas, las prohibiciones, el motor anti-fundido y la ley de las dos manos— son las que más aguantan; los nombres de modelo son lo primero que caduca.
+</footer>
+
+</div>
+</main>
+
+</body>
+</html>

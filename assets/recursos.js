@@ -28,8 +28,7 @@
      resto      tercera línea, mediana
      grafico    'skills' | 'mods' | 'apps' | 'validacion' | 'gpu' | 'webs' |
                 'agentes' | 'hermes' | 'conceptos' | 'encargo' | 'pipeline' |
-                'guiones'; la
-                ilustración,
+                'ugc' | 'guiones'; la ilustración,
                 que dibuja lo que se lleva el lector, no un adorno
      color      acento de la portada, elegido por el tema del recurso
      promesa    banda inferior; una línea por salto, *entre asteriscos* va en negrita
@@ -55,6 +54,24 @@ window.RACKS_RESOURCES = [
       grafico: 'guiones',
       color: '#fbba23',
       promesa: 'LOS TRES PROMPTS Y LA *SKILL* QUE ESCRIBE\nCOMO TÚ *CADA VEZ QUE LE DAS UN TEMA*'
+    }
+  },
+  {
+    slug: 'avatares-ugc-higgsfield',
+    titulo: 'Avatares UGC que no parecen IA, con Higgsfield',
+    kicker: 'Guía · Vídeo UGC con IA',
+    resumen: 'La cadena entera para producir un anuncio UGC con avatar en Higgsfield: qué modelo va en cada paso, el storyboard de ocho casillas que se convierte en ocho cortes, el pase anti-slop y las plantillas de cada prompt. Con las frases obligatorias, las que arruinan el render y la tabla de fallos.',
+    etiquetas: ['Higgsfield', 'UGC', 'Vídeo', 'Prompts'],
+    estado: 'live',
+    fecha: '2026-09',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Guía:',
+      destacado: 'Avatares UGC que no parecen IA',
+      resto: 'con Higgsfield',
+      grafico: 'ugc',
+      color: '#9a72f8',
+      promesa: 'LOS CUATRO MODELOS *EN ORDEN*\nY LA PLANTILLA DE *CADA PROMPT*'
     }
   },
   {
