@@ -639,6 +639,61 @@
     c.setLineDash([]);
   };
 
+  /* --- Guiones: el mes en el calendario y el guion con su gancho ------- */
+  GRAFICOS.guiones = function (c, X, Y, S, U) {
+    /* el calendario: treinta casillas, seis por semana, las de los guiones
+       ya escritos llenas y el resto esperando */
+    var cols = 6, filas = 5;
+    var cw = S * 0.075, hueco = S * 0.022;
+    var cx0 = X + S * 0.02, cy0 = Y + S * 0.08;
+    var escritos = 17;
+    trazo(c, U, 0.09);
+    for (var i = 0; i < cols * filas; i++) {
+      var col = i % cols, fila = Math.floor(i / cols);
+      var x = cx0 + col * (cw + hueco), y = cy0 + fila * (cw + hueco);
+      if (i < escritos) caja(c, x, y, cw, cw, ACENTO);
+      else { c.globalAlpha = 0.55; caja(c, x, y, cw, cw); c.globalAlpha = 1; }
+    }
+
+    /* la hoja del guion, a la derecha, con el gancho en grande arriba */
+    var hx = X + S * 0.66, hy = Y + S * 0.02, hw = S * 0.32, hh = S * 0.60;
+    trazo(c, U, 0.13);
+    c.fillStyle = T.fondo;
+    c.fillRect(hx, hy, hw, hh);
+    caja(c, hx, hy, hw, hh);
+    c.fillStyle = ACENTO;                              /* el gancho */
+    c.fillRect(hx + S * 0.04, hy + S * 0.05, hw - S * 0.08, S * 0.06);
+    c.fillStyle = conAlfa(ACENTO, 0.45);               /* el desarrollo */
+    [0, 1, 2, 3, 4].forEach(function (k) {
+      c.fillRect(hx + S * 0.04, hy + S * 0.16 + k * S * 0.055,
+                 (hw - S * 0.08) * (k === 4 ? 0.45 : 1 - (k % 2) * 0.22), S * 0.025);
+    });
+    c.fillStyle = ACENTO;                              /* la llamada a la acción */
+    c.fillRect(hx + S * 0.04, hy + hh - S * 0.11, (hw - S * 0.08) * 0.55, S * 0.045);
+
+    /* del guion al calendario: entra en el primer día que queda por escribir */
+    var dia = escritos;
+    var dx = cx0 + (dia % cols) * (cw + hueco) + cw;
+    var dy = cy0 + Math.floor(dia / cols) * (cw + hueco) + cw / 2;
+    c.beginPath();
+    c.moveTo(hx, dy);
+    c.lineTo(dx + S * 0.02, dy);
+    c.stroke();
+    poli(c, [[dx + S * 0.075, dy - S * 0.04], [dx + S * 0.02, dy], [dx + S * 0.075, dy + S * 0.04]]);
+    c.stroke();
+
+    /* la skill, debajo: la voz de la que sale cada guion */
+    var sd = S * 0.10, sx = hx + hw / 2 - sd / 2, sy = hy + hh + S * 0.12;
+    c.beginPath(); c.moveTo(hx + hw / 2, sy); c.lineTo(hx + hw / 2, hy + hh); c.stroke();
+    poli(c, [[hx + hw / 2 - S * 0.04, hy + hh + S * 0.055], [hx + hw / 2, hy + hh], [hx + hw / 2 + S * 0.04, hy + hh + S * 0.055]]);
+    c.stroke();
+    c.fillStyle = T.fondo;
+    c.fillRect(sx, sy, sd, sd);
+    c.setLineDash([U * 0.34, U * 0.28]);
+    caja(c, sx, sy, sd, sd);
+    c.setLineDash([]);
+  };
+
   function grafico(c, r, x, y, w, h, U) {
     var dibujo = GRAFICOS[(r.portada || {}).grafico];
     if (!dibujo) return;

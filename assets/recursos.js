@@ -27,7 +27,8 @@
      destacado  la línea grande, en naranja
      resto      tercera línea, mediana
      grafico    'skills' | 'mods' | 'apps' | 'validacion' | 'gpu' | 'webs' |
-                'agentes' | 'hermes' | 'conceptos' | 'encargo' | 'pipeline'; la
+                'agentes' | 'hermes' | 'conceptos' | 'encargo' | 'pipeline' |
+                'guiones'; la
                 ilustración,
                 que dibuja lo que se lleva el lector, no un adorno
      color      acento de la portada, elegido por el tema del recurso
@@ -38,6 +39,24 @@
    ========================================================================== */
 
 window.RACKS_RESOURCES = [
+  {
+    slug: 'guiones-con-tu-voz',
+    titulo: 'Treinta días de guiones con tu voz y la skill que los escribe',
+    kicker: 'Guía · Contenido con IA',
+    resumen: 'Los tres prompts del reel, completos: el estratega que analiza lo que funciona en tu nicho, los treinta días de guiones con tu voz y el calendario por horas, y skill-creator para convertir tu voz en una skill que escribe un guion cada vez que le das un tema. Con lo que hay que preparar antes para que no se invente nada.',
+    etiquetas: ['Claude', 'Contenido', 'Skills', 'Reels'],
+    estado: 'live',
+    fecha: '2026-09',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Guía:',
+      destacado: 'Treinta días de guiones con tu voz',
+      resto: 'y la skill que los escribe',
+      grafico: 'guiones',
+      color: '#fbba23',
+      promesa: 'LOS TRES PROMPTS Y LA *SKILL* QUE ESCRIBE\nCOMO TÚ *CADA VEZ QUE LE DAS UN TEMA*'
+    }
+  },
   {
     slug: 'equipo-marketing-claude',
     titulo: 'Un equipo de marketing completo con Claude, que trabaja solo',
