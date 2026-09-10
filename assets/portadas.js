@@ -574,6 +574,71 @@
     c.stroke();
   };
 
+  /* --- Pipeline: los roles en cadena, la salida de uno entrando en el
+         siguiente, con el punto donde para a esperar a la persona -------- */
+  GRAFICOS.pipeline = function (c, X, Y, S, U) {
+    var w = S * 0.27, h = S * 0.15;                 /* cada rol, una caja */
+    var paso = S * 0.235;
+    var cajas = [0, 1, 2, 3].map(function (k) {
+      return { x: X + S * 0.02 + k * paso, y: Y + S * 0.02 + k * paso };
+    });
+
+    trazo(c, U, 0.13);
+
+    /* de cada rol al siguiente: baja desde su salida, dobla, y entra por
+       la izquierda del que viene */
+    cajas.forEach(function (b, k) {
+      if (k === cajas.length - 1) return;
+      var n = cajas[k + 1];
+      var sx = b.x + w * 0.62, ey = n.y + h / 2;
+      c.beginPath();
+      c.moveTo(sx, b.y + h);
+      c.lineTo(sx, ey);
+      c.lineTo(n.x - S * 0.02, ey);
+      c.stroke();
+      poli(c, [[n.x - S * 0.07, ey - S * 0.04], [n.x - S * 0.02, ey], [n.x - S * 0.07, ey + S * 0.04]]);
+      c.stroke();
+    });
+
+    cajas.forEach(function (b, k) {
+      var primera = k === 0, ultima = k === cajas.length - 1;
+      if (primera) {
+        /* la tarjeta de Notion que lo dispara */
+        caja(c, b.x, b.y, w, h, conAlfa(ACENTO, 0.30));
+        c.fillStyle = ACENTO;
+        c.fillRect(b.x + S * 0.03, b.y + S * 0.03, S * 0.04, S * 0.04);
+        c.fillRect(b.x + S * 0.09, b.y + S * 0.035, w * 0.55, S * 0.03);
+        c.fillRect(b.x + S * 0.03, b.y + S * 0.095, w * 0.75, S * 0.02);
+      } else if (ultima) {
+        /* la pieza terminada */
+        caja(c, b.x, b.y, w, h, ACENTO);
+        c.fillStyle = T.fondo;
+        c.fillRect(b.x + S * 0.03, b.y + S * 0.03, w * 0.55, S * 0.03);
+        c.fillRect(b.x + S * 0.03, b.y + S * 0.08, w * 0.35, S * 0.02);
+        c.fillRect(b.x + w - S * 0.07, b.y + h - S * 0.07, S * 0.04, S * 0.04);
+      } else {
+        /* un rol: caja vacía con su salida, que es lo que baja al siguiente */
+        c.fillStyle = T.fondo;
+        c.fillRect(b.x, b.y, w, h);
+        caja(c, b.x, b.y, w, h);
+        c.fillStyle = conAlfa(ACENTO, 0.45);
+        c.fillRect(b.x + S * 0.03, b.y + S * 0.035, w * 0.5, S * 0.025);
+        c.fillStyle = ACENTO;
+        c.fillRect(b.x + w * 0.52, b.y + h - S * 0.045, w * 0.20, S * 0.045);
+      }
+    });
+
+    /* el punto de control: la persona, antes de la pieza final */
+    var ult = cajas[cajas.length - 1], pen = cajas[cajas.length - 2];
+    var px = pen.x + w * 0.62, py = ult.y + h / 2;
+    var d = S * 0.09;
+    c.fillStyle = T.fondo;
+    c.fillRect(px - d / 2, py - d / 2, d, d);
+    c.setLineDash([U * 0.34, U * 0.28]);
+    caja(c, px - d / 2, py - d / 2, d, d);
+    c.setLineDash([]);
+  };
+
   function grafico(c, r, x, y, w, h, U) {
     var dibujo = GRAFICOS[(r.portada || {}).grafico];
     if (!dibujo) return;

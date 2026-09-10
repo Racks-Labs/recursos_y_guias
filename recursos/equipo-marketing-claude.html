@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Un equipo de marketing completo con Claude, que trabaja solo · Recursos Racks Academy</title>
+<meta name="description" content="Cómo montar un pipeline de marketing entero con Claude: la carpeta de marca, el prompt que define cada rol, la skill que lo fija, las herramientas conectadas y el disparador desde Notion. Con los prompts exactos para copiar.">
+<meta property="og:title" content="Un equipo de marketing completo con Claude, que trabaja solo">
+<meta property="og:description" content="La salida de un rol es la entrada del siguiente y el flujo entero corre solo: de la tarjeta en Notion a la pieza lista para publicar. Con los prompts exactos.">
+<meta property="og:type" content="article">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/racks.css">
+<script>/* fija el modo antes del primer pintado */(function(){var h=document.documentElement,s=location.search;if(s.indexOf('embed=1')>-1)h.classList.add('is-embed');if(window.self!==window.top)h.classList.add('is-framed');if(s.indexOf('bg=transparent')>-1)h.classList.add('is-transparent');})();</script>
+<script defer src="../assets/racks.js"></script>
+</head>
+
+<body data-resource-id="equipo-marketing-claude">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="watermark-r" aria-hidden="true">R</div>
+
+<header class="topbar" data-embed-hide>
+  <span class="topbar-mark" aria-hidden="true">R</span>
+  <span class="topbar-name">Racks Academy</span>
+  <span class="topbar-sep" aria-hidden="true">/</span>
+  <span class="topbar-here">Equipo de marketing con Claude</span>
+</header>
+
+<main class="shell" id="contenido">
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Guía · Marketing con IA</p>
+  <h1>Un equipo de marketing.<br>Entero. Dentro de <em>Claude</em>.</h1>
+  <p class="standfirst">La mayoría usa Claude para tareas sueltas: un copy, ideas de posts. Lo potente es otra cosa: un pipeline donde la salida de un rol es la entrada del siguiente y el flujo completo corre solo, de la tarjeta en Notion a la pieza lista para publicar. Aquí está el flujo entero, los prompts exactos para copiar, la skill completa y los tres puntos donde intervienes tú.</p>
+
+  <nav class="toc">
+    <p>Recorrido</p>
+    <ol>
+      <li><a href="#que">Qué vas a montar</a> · los seis roles</li>
+      <li><a href="#carpeta">La carpeta de marca</a> · paso 1</li>
+      <li><a href="#prompt">El prompt del pipeline</a> · paso 2</li>
+      <li><a href="#probar">Probar y ajustar</a> · paso 3</li>
+      <li><a href="#skill">Convertirlo en skill</a> · paso 4</li>
+      <li><a href="#herramientas">Conectar las herramientas</a> · paso 5</li>
+      <li><a href="#disparo">Resultado final y disparador</a> · paso 6</li>
+      <li><a href="#trampas">Las trampas</a></li>
+    </ol>
+  </nav>
+</header>
+
+<div class="launch">
+  <p class="launch-label">Sirve para</p>
+  <div class="chips">
+    <span class="chip">Posts y reels</span>
+    <span class="chip">Anuncios</span>
+    <span class="chip">Newsletter</span>
+    <span class="chip">Lanzamientos</span>
+    <span class="chip">Blog</span>
+    <span class="chip">Piezas de cliente</span>
+  </div>
+  <p class="launch-label">La orden que lo arranca, cuando ya está montado</p>
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+    <pre>Ejecuta la skill equipo-marketing con la tarjeta "<span class="k">Lanzamiento septiembre</span>" de Notion.</pre>
+  </div>
+  <p style="font-size:.92rem;color:var(--muted-foreground)">Funciona en Claude Cowork (la app de escritorio) y en Claude Code. Todo lo que hay aquí se copia tal cual y se cambia lo que va <span class="k" style="font-family:var(--font-mono)">marcado</span>.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+
+<section id="que">
+  <p class="phase">Antes de nada</p>
+  <h2>Qué vas a montar</h2>
+  <hr class="rule">
+
+  <p>Un pipeline es una cadena de roles con una regla: <strong>cada rol recibe lo que produjo el anterior y entrega algo con un formato fijo</strong>, que el siguiente sabe leer. Sin esa regla no hay pipeline, hay un prompt largo. Con ella, el flujo corre solo y tú solo apareces donde has decidido aparecer.</p>
+
+  <p class="flow">[ tarjeta en Notion ] → estratega → copywriter → director de arte → fotógrafo → diseñador → revisor → [ pieza lista + resumen en Notion ]</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Rol</th><th>Recibe</th><th>Entrega</th></tr></thead>
+      <tbody>
+        <tr><td>Estratega</td><td>El encargo, tal cual lo escribes en la tarjeta</td><td><code>brief.md</code>: objetivo, público, mensaje único, canal, CTA</td></tr>
+        <tr><td>Copywriter</td><td><code>brief.md</code> + guía de marca</td><td><code>copy.md</code>: titular, cuerpo, CTA, tres variantes de titular</td></tr>
+        <tr><td>Director de arte</td><td><code>brief.md</code> + <code>copy.md</code></td><td><code>arte.md</code>: composición, jerarquía, colores, dónde va el logo</td></tr>
+        <tr><td>Fotógrafo</td><td><code>arte.md</code></td><td>El prompt de imagen y, si hay generador conectado, la imagen</td></tr>
+        <tr><td>Diseñador gráfico</td><td>Copy + imagen + logo + <code>arte.md</code></td><td>La pieza montada, en Figma o Canva si están conectados</td></tr>
+        <tr><td>Revisor</td><td>La pieza y el brief</td><td><code>revision.md</code>: OK, o la lista de cambios y a qué rol vuelve</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <span class="note-title">Los roles son los tuyos</span>
+    <p>Estos seis son los del reel. Si no haces piezas visuales, quita fotógrafo y diseñador y mete un editor de vídeo o un gestor de comunidad. La estructura es la misma: cada rol, su entrada, su salida y su formato.</p>
+  </div>
+
+  <div class="ok">
+    <span class="ok-title">Tú, en tres sitios</span>
+    <p>Después del copy (antes de gastar imágenes), después de la pieza montada (antes de que llegue a Notion) y en el estado <strong>Revisar</strong> de Notion, que es la última puerta: nada se publica sin que tú lo muevas de ahí.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+
+<section id="carpeta">
+  <p class="phase">Paso 1</p>
+  <h2>La carpeta de marca</h2>
+  <hr class="rule">
+
+  <p>Primero le das a Claude acceso a una carpeta. Dentro va todo lo que un empleado nuevo necesitaría el primer día: el logo, la guía de marca, ejemplos de piezas que te gustan y de las que no. La marca vive en la carpeta, <strong>no en el prompt</strong>: así cada rol la lee cuando la necesita y tú la cambias en un solo sitio.</p>
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Crea la estructura</h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre><span class="k">marketing</span>/
+├── marca/
+│   ├── BRAND.md            <span class="c"># tono, colores, tipografías, lo prohibido</span>
+│   ├── logo.png            <span class="c"># y logo-blanco.png si lo tienes</span>
+│   ├── ejemplos-buenos/    <span class="c"># 3–5 piezas que sí</span>
+│   └── ejemplos-malos/     <span class="c"># 2–3 piezas que no, y por qué</span>
+├── pipeline.md             <span class="c"># las correcciones que vas acumulando (paso 3)</span>
+└── salida/                 <span class="c"># aquí deja cada encargo, en su carpeta</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>Escribe BRAND.md</h3>
+    <div class="step-body">
+      <p>Es el archivo que más pesa en el resultado. Corto y con órdenes, no con adjetivos: «cercano» no dice nada, «tuteo, frases de menos de quince palabras, cero exclamaciones» sí.</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre># BRAND.md — <span class="k">Nombre de la marca</span>
+
+## Qué somos, en una frase
+<span class="k">Formación en IA aplicada para gente que no programa.</span>
+
+## Público
+<span class="k">Hombres de 25 a 40, no técnicos, que quieren usar la IA en su trabajo hoy.</span>
+
+## Tono
+- Tuteo. Directo. Frases cortas.
+- Cero exclamaciones, cero emojis, cero "¡descubre!".
+- Ejemplos concretos antes que conceptos.
+- Palabras prohibidas: <span class="k">revolucionario, potenciar, sinergia, desbloquea</span>.
+
+## Colores (solo estos)
+- Fondo <span class="k">#121212</span> · Texto <span class="k">#f7f7f7</span> · Acento <span class="k">#f5911a</span>
+- El acento se usa una vez por pieza. Nunca dos elementos compitiendo.
+
+## Tipografía
+- Titulares: <span class="k">Inter</span> · Cuerpo: <span class="k">Inter</span> · Cifras y etiquetas: <span class="k">JetBrains Mono</span>
+
+## Logo
+- marca/logo.png. Siempre abajo a la derecha. Nunca deformado ni con sombra.
+
+## Formatos por canal
+- Instagram post 1080×1350 · Reel portada 1080×1920 · Newsletter cabecera 1200×600
+
+## Lo que nunca hacemos
+- Prometer resultados con cifras que no tenemos.
+- Imágenes con texto generado dentro: el texto lo pone el diseñador.</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">03</span>
+    <h3>Dale acceso a Claude</h3>
+    <div class="step-body">
+      <div class="mode pick">
+        <h3>Claude Cowork <span class="tag">sin terminal</span></h3>
+        <p>En la app de escritorio de Claude, abre Cowork y elige la carpeta <code>marketing</code>. A partir de ahí Claude puede leer, crear y editar archivos dentro, y solo dentro.</p>
+      </div>
+      <div class="mode">
+        <h3>Claude Code</h3>
+        <p>Desde la terminal, entra en la carpeta y arranca: <code>cd marketing &amp;&amp; claude</code>. Es la vía si quieres programar el disparador con un comando (paso 6).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+
+<section id="prompt">
+  <p class="phase">Paso 2</p>
+  <h2>El prompt del pipeline</h2>
+  <hr class="rule">
+
+  <p>Un solo prompt que explica el pipeline entero: qué hace cada rol, en qué orden, qué entrega y dónde paras tú. Se pega en un chat nuevo dentro de la carpeta, con un encargo real debajo. <strong>Este es el prompt que se pide en el reel.</strong></p>
+
+  <div class="code">
+    <button class="copy" type="button">Copiar</button>
+    <pre>Vas a actuar como un equipo de marketing completo. Trabajas dentro de esta
+carpeta. Antes de hacer nada, lee marca/BRAND.md, mira el logo y los ejemplos
+de marca/ejemplos-buenos y marca/ejemplos-malos. Si existe pipeline.md, léelo
+también: son correcciones de encargos anteriores y mandan sobre todo lo demás.
+
+EL ENCARGO
+<span class="k">Pieza: post de Instagram para anunciar el curso de agentes.
+Objetivo: inscripciones. Público: el de BRAND.md. Fecha: viernes.
+Debe decir: plazas limitadas, empieza el día 20. No debe decir: precio.</span>
+
+EL EQUIPO Y EL ORDEN
+Ejecuta los roles en este orden. Cada rol recibe la salida del anterior y
+produce una salida con el formato que se indica. No te saltes ninguno y no
+mezcles dos roles en el mismo paso.
+
+1. ESTRATEGA. Convierte el encargo en un brief de una página: objetivo,
+   público, mensaje único (una frase), canal y formato con medidas, llamada
+   a la acción, y lo que NO hay que decir. Si el encargo no da para rellenar
+   alguno de esos campos, pregunta antes de seguir. Salida: brief.md
+
+2. COPYWRITER. A partir de brief.md y del tono de BRAND.md, escribe el texto
+   de la pieza: titular, cuerpo y CTA. Da tres variantes de titular, elige
+   una y di en una línea por qué. Salida: copy.md
+
+3. DIRECTOR DE ARTE. A partir de brief.md y copy.md, describe la pieza:
+   composición, jerarquía (qué se lee primero), colores solo de BRAND.md,
+   tipografías, dónde va el logo y dónde va cada bloque de texto.
+   Salida: arte.md
+
+4. FOTÓGRAFO (generación de imágenes). A partir de arte.md, escribe el
+   prompt de imagen para <span class="k">Nano Banana</span>, en inglés: sujeto, estilo, luz,
+   encuadre, formato y lo que no debe aparecer. Sin texto dentro de la
+   imagen. Si tienes el generador conectado, genera la imagen y guárdala.
+   Salida: imagen.md y, si la hay, imagen.png
+
+5. DISEÑADOR GRÁFICO. Monta la pieza final combinando copy.md, la imagen y
+   el logo, siguiendo arte.md al pie de la letra. Si tienes <span class="k">Figma o Canva</span>
+   conectado, créala ahí y devuelve el enlace; si no, entrega un esquema
+   exacto de la pieza (posición y tamaño de cada elemento) para montarla
+   a mano. Salida: pieza final
+
+6. REVISOR. Comprueba la pieza contra BRAND.md y contra brief.md: tono,
+   palabras prohibidas, colores, ortografía, que la CTA esté, que las
+   medidas sean las del canal. Si algo falla, devuélvelo al rol que toca
+   con la corrección concreta. Máximo dos vueltas. Salida: revision.md
+   con OK o con la lista de cambios.
+
+REGLAS
+- Español de España en todo, salvo el prompt de imagen.
+- Nunca inventes datos de producto, precios, fechas ni resultados. Si
+  faltan, pregunta antes de empezar, no a mitad.
+- Guarda todas las salidas en salida/<span class="k">AAAA-MM-DD</span>-<span class="k">nombre-de-la-pieza</span>/
+  con los nombres de archivo indicados.
+- PUNTO DE CONTROL 1: después del rol 2, para y enséñame copy.md. Espera
+  mi OK antes de seguir.
+- PUNTO DE CONTROL 2: después del rol 6, para y enséñame la pieza y
+  revision.md. No la des por entregada sin mi OK.
+- Al terminar, un resumen de cinco líneas: qué se ha hecho, dónde está
+  cada archivo, y qué decisiones has tomado sin consultarme.</pre>
+  </div>
+
+  <div class="note">
+    <span class="note-title">Por qué cada rol tiene un archivo</span>
+    <p>Porque el archivo es el contrato. Si el copywriter deja el titular en <code>copy.md</code> con ese nombre de sección, el diseñador lo encuentra siempre en el mismo sitio. Cuando algo sale mal, miras el archivo del rol y ves exactamente dónde se torció. Sin archivos, todo se mezcla en una conversación larga y no sabes a quién corregir.</p>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+
+<section id="probar">
+  <p class="phase">Paso 3</p>
+  <h2>Probar y ajustar</h2>
+  <hr class="rule">
+
+  <p>Lo dejas correr, miras lo que sale y lo corriges. No con «hazlo mejor»: con una corrección concreta y con una orden extra, <strong>que se apunte la lección</strong>. Así cada encargo mejora el siguiente, y cuando conviertas esto en skill, las correcciones ya estarán escritas.</p>
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Pasa el primer encargo y mira estas cinco cosas</h3>
+    <div class="step-body">
+      <ul class="lead-list">
+        <li><strong>¿Ha parado en los puntos de control?</strong> Si ha seguido de largo, la regla no está lo bastante arriba en el prompt.</li>
+        <li><strong>¿Cada archivo tiene lo que dice el contrato?</strong> Abre <code>copy.md</code>: si falta una de las tres variantes, el rol se ha saltado el formato.</li>
+        <li><strong>¿El tono es el de BRAND.md o el de Claude por defecto?</strong> Busca palabras prohibidas. Es el fallo más frecuente.</li>
+        <li><strong>¿Ha inventado algo?</strong> Precios, fechas, cifras. Si sí, la regla de «pregunta antes» no ha funcionado.</li>
+        <li><strong>¿Los roles se han pisado?</strong> Si el copywriter ha decidido colores, no está respetando la cadena.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>Corrige con este prompt</h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>Corrección: <span class="k">el titular usa "desbloquea", que está prohibido en BRAND.md, y
+el revisor no lo ha visto.</span>
+
+1. Arregla la pieza ahora.
+2. Dime qué rol ha fallado y por qué ha fallado.
+3. Reescribe la instrucción de ese rol para que no vuelva a pasar y
+   añádela a pipeline.md, en la sección del rol, con la fecha. Cuando
+   sea el revisor el que falla, añade el punto a su lista de comprobación.</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">03</span>
+    <h3>Repite con encargos distintos</h3>
+    <div class="step-body">
+      <p>Tres encargos como mínimo antes de dar el pipeline por bueno, y que no sean los tres fáciles: uno completo, uno al que le falten datos a propósito y uno de un canal que no esté en BRAND.md. Los dos últimos son los que enseñan de verdad cómo se comporta el equipo cuando no todo está claro.</p>
+    </div>
+  </div>
+
+  <div class="warn">
+    <span class="warn-title">No lo conviertas en skill antes de tiempo</span>
+    <p>Una skill fija lo que hay. Si fijas un pipeline que funciona a medias, vas a repetir los mismos fallos en cada encargo, y ahora con menos ganas de mirar. La skill llega cuando tres encargos seguidos salen sin corrección o con una sola.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+
+<section id="skill">
+  <p class="phase">Paso 4</p>
+  <h2>Convertirlo en skill</h2>
+  <hr class="rule">
+
+  <p>Cuando ya funciona, lo conviertes en una skill que agrupe a todos los roles. Una skill es una carpeta con un archivo <code>SKILL.md</code>: instrucciones que Claude carga solas cuando tu petición encaja con su descripción, o a mano con <code>/equipo-marketing</code>. Lo que tiene que explicar, en este orden: <strong>el orden del pipeline, cómo son las salidas para que el siguiente rol pueda trabajar, los casos límite, qué hacer si algo falla y dónde intervienes tú</strong>.</p>
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Pídesela a Claude desde la conversación que ya funciona</h3>
+    <div class="step-body">
+      <p>No la escribas de cero: Claude tiene delante el prompt, las correcciones de <code>pipeline.md</code> y tres encargos hechos. Que la redacte él y tú la podas.</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>Convierte todo lo que hemos hecho en esta conversación en una skill llamada
+equipo-marketing. Créala en <span class="k">.claude/skills/equipo-marketing/SKILL.md</span>.
+
+Tiene que incluir, en este orden y como órdenes, no como teoría:
+1. Cuándo se dispara: cuando pida una pieza de marketing, un post, un
+   anuncio, una newsletter, o diga "ejecuta el pipeline".
+2. El orden del pipeline con los seis roles y qué archivo lee cada uno.
+3. El contrato de salida de cada rol: nombre del archivo, secciones
+   obligatorias y qué necesita exactamente el rol siguiente para trabajar.
+4. Los puntos de control: dónde paras, qué me enseñas y qué esperas de mí.
+5. Casos límite: encargo incompleto, canal sin medidas en BRAND.md, pieza
+   sin imagen, varias piezas en el mismo encargo, otro idioma.
+6. Qué hacer si algo falla: herramienta desconectada, imagen que no cumple,
+   revisor que rechaza dos veces, archivo de marca que falta.
+7. El formato del resumen final.
+Incorpora todas las correcciones de pipeline.md. Si pasa de 200 líneas,
+mueve los ejemplos a archivos de apoyo en la misma carpeta y cítalos.</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>Lo que tiene que salir</h3>
+    <div class="step-body">
+      <p>Esta es la skill completa, ya con la forma que funciona. Sirve para comparar con lo que te genere Claude o para pegarla directamente y adaptar lo marcado.</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre><span class="c"># .claude/skills/equipo-marketing/SKILL.md</span>
+---
+name: equipo-marketing
+description: Ejecuta el pipeline de marketing completo (estratega, copywriter,
+  director de arte, fotógrafo, diseñador, revisor) para producir una pieza
+  lista para publicar. Usar cuando pidan un post, un anuncio, una newsletter,
+  una pieza de marketing o "ejecuta el pipeline".
+---
+
+## Antes de empezar
+1. Lee marca/BRAND.md y pipeline.md. pipeline.md manda sobre esta skill.
+2. Si el encargo llega desde Notion, la tarjeta es el encargo: título,
+   descripción, canal, fecha y adjuntos.
+3. Crea salida/AAAA-MM-DD-nombre-de-la-pieza/ y trabaja solo ahí.
+4. Si falta alguno de estos datos, pregunta ANTES de arrancar: canal,
+   objetivo, qué debe decir, qué no debe decir, fecha.
+
+## Orden del pipeline
+Cada rol lee solo lo que se indica y escribe solo su archivo. Nunca dos
+roles en el mismo paso. Nunca un rol decide algo que le toca a otro.
+
+| # | Rol             | Lee                          | Escribe          |
+|---|-----------------|------------------------------|------------------|
+| 1 | Estratega       | encargo, BRAND.md            | brief.md         |
+| 2 | Copywriter      | brief.md, BRAND.md           | copy.md          |
+| 3 | Director de arte| brief.md, copy.md, BRAND.md  | arte.md          |
+| 4 | Fotógrafo       | arte.md                      | imagen.md, imagen.png |
+| 5 | Diseñador       | copy.md, arte.md, imagen.png, logo | pieza final |
+| 6 | Revisor         | todo lo anterior             | revision.md      |
+
+## Contratos de salida
+brief.md: secciones "Objetivo", "Público", "Mensaje único" (una frase),
+  "Canal y medidas", "CTA", "No decir". Todas obligatorias.
+copy.md: "Titular elegido", "Variantes" (tres), "Por qué", "Cuerpo"
+  (máximo <span class="k">60</span> palabras), "CTA" (una frase, empieza por verbo).
+arte.md: "Composición", "Jerarquía" (orden de lectura numerado),
+  "Colores" (solo hex de BRAND.md), "Tipografía", "Logo" (posición y
+  tamaño), "Bloques de texto" (cada uno con posición).
+imagen.md: "Prompt" (inglés, sin texto en la imagen), "Formato", "Evitar".
+pieza final: enlace de Figma/Canva o esquema con posición y tamaño de
+  cada elemento en píxeles, más exportación PNG en las medidas del canal.
+revision.md: "Resultado: OK" o "Resultado: CAMBIOS" seguido de una lista
+  con [rol] + [qué cambiar] + [por qué, citando BRAND.md o brief.md].
+
+## Puntos de control (parar y esperar)
+- Después del rol 2: enseñar copy.md entero. Esperar "ok" o cambios.
+- Después del rol 6: enseñar la pieza y revision.md. Esperar "ok".
+- Nunca marcar nada como terminado, publicar ni cambiar un estado de
+  Notion a "Publicado". Lo hace la persona.
+
+## Casos límite
+- Encargo incompleto: preguntar los campos que faltan, todos en un solo
+  mensaje, y no arrancar hasta tenerlos.
+- Canal sin medidas en BRAND.md: usar las medidas estándar del canal,
+  decirlo en brief.md y proponer añadirlas a BRAND.md.
+- Pieza sin imagen (solo texto): saltar roles 4 y 5; el diseñador solo
+  maqueta texto.
+- Varias piezas en un encargo: un pipeline completo por pieza, en
+  carpetas separadas, con el mismo brief.md.
+- Otro idioma: se pide en el encargo; el revisor comprueba que el tono de
+  BRAND.md sobrevive a la traducción.
+
+## Si algo falla
+- Generador de imágenes desconectado: dejar imagen.md con el prompt y
+  seguir con un marcador; avisar en el resumen.
+- Figma/Canva desconectado: entregar el esquema y avisar.
+- Imagen que no cumple arte.md: regenerar una vez cambiando el prompt;
+  a la segunda, parar y enseñar las dos.
+- El revisor rechaza dos veces: parar, enseñar revision.md y preguntar.
+- Falta BRAND.md o el logo: parar. No inventar una marca.
+
+## Resumen final (cinco líneas, siempre)
+1. Pieza y canal.
+2. Dónde está cada archivo.
+3. Estado de la revisión.
+4. Decisiones tomadas sin consultar.
+5. Qué queda para la persona.</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Dónde vive</th><th>Cuándo</th></tr></thead>
+      <tbody>
+        <tr><td><code>marketing/.claude/skills/equipo-marketing/</code></td><td>Solo en esta carpeta. Lo normal: la skill va con la marca.</td></tr>
+        <tr><td><code>~/.claude/skills/equipo-marketing/</code></td><td>En todos tus proyectos. Si llevas varias marcas, mejor una copia por carpeta.</td></tr>
+        <tr><td>Ajustes de Claude → Capacidades → Skills</td><td>Para usarla en la app y en Cowork: se sube la carpeta comprimida en un zip.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+
+<section id="herramientas">
+  <p class="phase">Paso 5</p>
+  <h2>Conectar las herramientas</h2>
+  <hr class="rule">
+
+  <p>Hasta aquí el equipo escribe. Para que trabaje de verdad, hay que enchufarlo a tus herramientas: el fotógrafo tiene que generar imágenes, el diseñador tiene que montar en Figma o Canva, y el pipeline tiene que leer y escribir en Notion. Todo eso se hace con conectores (MCP): la herramienta te da una dirección, la pegas, inicias sesión y Claude ya puede usarla.</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Herramienta</th><th>Para qué rol</th><th>Dirección del conector</th></tr></thead>
+      <tbody>
+        <tr><td>Notion</td><td>El encargo entra y la pieza sale</td><td><code>https://mcp.notion.com/mcp</code></td></tr>
+        <tr><td>Figma</td><td>Diseñador</td><td><code>https://mcp.figma.com/mcp</code></td></tr>
+        <tr><td>Canva</td><td>Diseñador (si no usas Figma)</td><td><code>https://mcp.canva.com/mcp</code></td></tr>
+        <tr><td>Generador de imágenes</td><td>Fotógrafo</td><td>El de tu generador. En Racks usamos Nano Banana.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mode pick">
+    <h3>En la app y en Cowork <span class="tag">sin terminal</span></h3>
+    <p>Personalizar → Conectores → Añadir conector personalizado, pegas la dirección, inicias sesión en la herramienta y listo. Notion, Figma y Canva aparecen además en el directorio de conectores: un clic y no hay que pegar nada.</p>
+  </div>
+  <div class="mode">
+    <h3>En Claude Code</h3>
+    <div class="code">
+      <button class="copy" type="button">Copiar</button>
+      <pre>claude mcp add --transport http notion https://mcp.notion.com/mcp
+claude mcp add --transport http figma  https://mcp.figma.com/mcp
+claude mcp add --transport http canva  https://mcp.canva.com/mcp
+<span class="c"># dentro de la sesión, para iniciar sesión en cada uno:</span>
+/mcp</pre>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="note-title">Claude no genera imágenes por sí mismo</span>
+    <p>Escribe el prompt y se lo pasa a un generador conectado. Si el tuyo no tiene conector, la vía corta es que el fotógrafo deje el prompt en <code>imagen.md</code>, tú lo pegues en tu generador y sueltes el resultado en la carpeta: el pipeline sigue desde ahí. Se pierde la automatización de un paso, no del flujo.</p>
+  </div>
+
+  <div class="warn">
+    <span class="warn-title">Léelo antes de conectarlo</span>
+    <p>Un conector da a Claude permiso para actuar en esa herramienta con tu cuenta. Conecta los oficiales, mira qué permisos pide, y en Notion dale acceso solo a la base de datos del pipeline, no al espacio entero.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+
+<section id="disparo">
+  <p class="phase">Paso 6</p>
+  <h2>Resultado final y disparador</h2>
+  <hr class="rule">
+
+  <p>Quedan dos decisiones: cómo tiene que ser exactamente lo que sale, y qué hace que el pipeline arranque. Las dos viven en Notion, que es donde tú ya trabajas.</p>
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Define el resultado final</h3>
+    <div class="step-body">
+      <p>Una base de datos en Notion, <span class="k" style="font-family:var(--font-mono)">Contenido</span>, con estas propiedades. Es a la vez el encargo y la entrega.</p>
+      <dl>
+        <div class="field"><dt>Título</dt><dd>El nombre de la pieza. Da nombre a la carpeta de salida.</dd></div>
+        <div class="field"><dt>Estado</dt><dd><strong>To do → En curso → Revisar → Publicado</strong>. El pipeline mueve los tres primeros. El último lo mueves tú.</dd></div>
+        <div class="field"><dt>Canal</dt><dd>Instagram, newsletter, anuncio… Fija las medidas.</dd></div>
+        <div class="field"><dt>Brief</dt><dd>Qué debe decir, qué no, objetivo y fecha. El texto de la tarjeta es el encargo.</dd></div>
+        <div class="field"><dt>Entrega</dt><dd>La rellena el pipeline: enlace a la pieza, el copy final y el resumen de cinco líneas.</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>El prompt de disparo</h3>
+    <div class="step-body">
+      <p>Es lo único que se ejecuta una vez montado todo. Lo lanzas tú, lo lanza una tarea programada o lo lanza Notion: el texto es el mismo.</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>Ejecuta la skill equipo-marketing.
+Busca en la base de datos "<span class="k">Contenido</span>" de Notion las tarjetas con estado "To do".
+Para cada una, en orden de fecha:
+1. Pon el estado en "En curso".
+2. Ejecuta el pipeline con la tarjeta como encargo, respetando los puntos
+   de control.
+3. Al terminar, escribe en la propiedad "Entrega" el enlace a la pieza,
+   el copy final y el resumen, y pon el estado en "Revisar".
+Si no hay tarjetas en "To do", no hagas nada y responde solo "sin tareas".</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">03</span>
+    <h3>Elige cuándo se dispara</h3>
+    <div class="step-body">
+      <div class="fork">
+        <h3>A mano</h3>
+        <p>Pegas el prompt de disparo cuando quieras. Es por donde empiezas: cero configuración y ves cada ejecución.</p>
+        <p class="flow">tú → prompt → pipeline → Revisar</p>
+      </div>
+      <div class="fork pick">
+        <h3>Programado <span class="tag">recomendado</span></h3>
+        <p>Cowork permite programar tareas: pídeselo en el chat («programa esto cada día laborable a las 9») con el prompt de disparo. Claude mira Notion a esa hora y, si hay algo en To do, arranca. Si no, «sin tareas» y a otra cosa. En Claude Code, el mismo prompt con <code>claude -p "…"</code> en una tarea programada del sistema.</p>
+        <p class="flow">reloj → mira Notion → pipeline → Revisar</p>
+      </div>
+      <div class="fork">
+        <h3>Al instante, desde Notion</h3>
+        <p>Una automatización de Notion («cuando Estado pasa a To do → enviar webhook») que llama a un flujo tuyo (n8n, Make o un script) y este lanza <code>claude -p</code> con el prompt de disparo. Es el «cuando el estado se pone en To do» literal, pero necesita una máquina encendida esperando. Para cuando el programado se quede corto.</p>
+        <p class="flow">Notion → webhook → claude -p → pipeline → Revisar</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ok">
+    <span class="ok-title">Ya está montado</span>
+    <p>Escribes una tarjeta en Notion, la pones en To do, y aparece en Revisar con la pieza, el copy y un resumen de lo que ha decidido el equipo. Tú apruebas, cambias o devuelves. Lo demás corre solo.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+
+<section id="trampas">
+  <p class="phase">Diagnóstico</p>
+  <h2>Las trampas</h2>
+  <hr class="rule">
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Lo que pasa</th><th>Por qué</th><th>Qué hacer</th></tr></thead>
+      <tbody>
+        <tr><td>Cada encargo sale distinto</td><td>Los roles no tienen contrato de salida: cada uno interpreta.</td><td>Archivo y secciones obligatorias por rol. Si falta una sección, el rol no ha terminado.</td></tr>
+        <tr><td>El tono es el de Claude, no el tuyo</td><td>BRAND.md tiene adjetivos, no órdenes.</td><td>Reglas comprobables: palabras prohibidas, largo máximo, tuteo. Y ejemplos malos con el motivo.</td></tr>
+        <tr><td>Publica sin que lo veas</td><td>No hay puntos de control o están al final del prompt.</td><td>Los dos «PARA» arriba, en mayúsculas, y el estado Publicado solo lo mueves tú.</td></tr>
+        <tr><td>Inventa precios o fechas</td><td>El encargo estaba incompleto y rellenó el hueco.</td><td>«Si falta un dato, pregunta antes de arrancar». Y prueba a propósito con encargos incompletos.</td></tr>
+        <tr><td>El copywriter elige colores</td><td>Los roles se pisan.</td><td>Cada rol lee solo sus entradas y escribe solo su archivo. Está en la skill; si lo hace igual, súbelo a pipeline.md.</td></tr>
+        <tr><td>Texto ilegible dentro de la imagen</td><td>El generador ha metido el titular.</td><td>«Sin texto en la imagen» en el prompt del fotógrafo. El texto lo pone el diseñador.</td></tr>
+        <tr><td>El tercer encargo de la sesión sale peor</td><td>La conversación arrastra demasiado contexto.</td><td>Un encargo por sesión. La skill carga fresca cada vez; la memoria está en la carpeta, no en el chat.</td></tr>
+        <tr><td>La skill no se dispara sola</td><td>La descripción no usa las palabras con las que tú pides.</td><td>Escribe en <code>description</code> cómo lo pides tú: «post», «anuncio», «pieza». O llámala con <code>/equipo-marketing</code>.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="flow">[ carpeta de marca ] → prompt → probar × 3 → skill → conectores → disparador desde Notion</p>
+</section>
+
+<footer>
+  Verificado con Claude Cowork y Claude Code, y con los conectores oficiales de Notion, Figma y Canva · septiembre de 2026.<br>
+  Las direcciones de los conectores y la ruta de las skills pueden cambiar; los prompts y la estructura del pipeline no dependen de ninguna versión.
+</footer>
+
+</div>
+</main>
+</body>
+</html>

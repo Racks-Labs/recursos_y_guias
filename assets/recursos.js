@@ -27,7 +27,8 @@
      destacado  la línea grande, en naranja
      resto      tercera línea, mediana
      grafico    'skills' | 'mods' | 'apps' | 'validacion' | 'gpu' | 'webs' |
-                'agentes' | 'hermes' | 'conceptos' | 'encargo'; la ilustración,
+                'agentes' | 'hermes' | 'conceptos' | 'encargo' | 'pipeline'; la
+                ilustración,
                 que dibuja lo que se lleva el lector, no un adorno
      color      acento de la portada, elegido por el tema del recurso
      promesa    banda inferior; una línea por salto, *entre asteriscos* va en negrita
@@ -37,6 +38,24 @@
    ========================================================================== */
 
 window.RACKS_RESOURCES = [
+  {
+    slug: 'equipo-marketing-claude',
+    titulo: 'Un equipo de marketing completo con Claude, que trabaja solo',
+    kicker: 'Guía · Marketing con IA',
+    resumen: 'El pipeline entero, de la tarjeta en Notion a la pieza lista para publicar: la carpeta de marca, el prompt que define los seis roles, la skill que lo fija, los conectores de Notion, Figma y Canva y el disparador. Con los prompts exactos para copiar y los tres puntos donde intervienes tú.',
+    etiquetas: ['Claude', 'Marketing', 'Skills', 'Notion'],
+    estado: 'live',
+    fecha: '2026-09',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Guía:',
+      destacado: 'Un equipo de marketing completo',
+      resto: 'con Claude, que trabaja solo',
+      grafico: 'pipeline',
+      color: '#468af6',
+      promesa: 'LOS PROMPTS *PARA COPIAR* Y EL FLUJO ENTERO\nDE LA CARPETA DE MARCA A *NOTION*'
+    }
+  },
   {
     slug: 'clonar-web-negocio',
     titulo: 'Claude + Google Maps: webs de negocios locales que puedes vender',
