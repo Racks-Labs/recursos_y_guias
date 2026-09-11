@@ -62,6 +62,30 @@ un `<link>` a Google Fonts**: un recurso incrustado en otra web no debe
 depender de un tercero para pintarse bien. La página no hace ni una petición
 externa, y así se queda.
 
+### El índice va con clave, los recursos no
+
+`index.html` carga `assets/acceso.js` de forma **síncrona en el `<head>`**: marca
+`is-locked` antes del primer pintado y el catálogo no llega a asomar. Lo que el
+índice monte al cargar va dentro de `RacksAcceso.cuandoAbra(...)`.
+
+La clave **no está en el repositorio**. Sólo vive su huella (PBKDF2-SHA256,
+250.000 vueltas, sal `racks-academy/indice/v1`). Para cambiarla, genera la
+nueva y sustituye `HUELLA` en `assets/acceso.js`:
+
+```sh
+python3 -c "import hashlib,binascii;print(binascii.hexlify(hashlib.pbkdf2_hmac('sha256',b'LA-CLAVE',b'racks-academy/indice/v1',250000,32)).decode())"
+```
+
+Sube también el número de `MEMORIA` (`racks.acceso.indice.v1`) si quieres echar
+a quien ya tenía el acceso guardado en su navegador.
+
+Dos cosas que conviene tener claras:
+
+- **Los recursos siguen abiertos**, a propósito. Cerrarlos rompería la
+  incrustación, que es para lo que existen.
+- **Es una puerta de navegador, no un muro.** Frena a quien llega por la URL;
+  no a quien lee el código. Si algún día hace falta de verdad, toca servidor.
+
 ### Desde un recurso no se vuelve al índice
 
 Ni botón, ni el nombre de la barra, ni enlace en el cuerpo o el pie. La barra

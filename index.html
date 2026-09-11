@@ -14,6 +14,7 @@
 <link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/racks.css">
 <script>/* fija el modo antes del primer pintado */(function(){var h=document.documentElement,s=location.search;if(s.indexOf('embed=1')>-1)h.classList.add('is-embed');if(window.self!==window.top)h.classList.add('is-framed');if(s.indexOf('bg=transparent')>-1)h.classList.add('is-transparent');})();</script>
+<script src="assets/acceso.js"></script>
 <script defer src="assets/racks.js"></script>
 </head>
 <body data-resource-id="indice">
@@ -231,14 +232,20 @@
     return el;
   }
 
-  if (grid) {
+  /* El catálogo se compone cuando se abre la puerta: sin clave no hay nada
+     que dibujar. Si acceso.js no estuviera, se monta igual. */
+  var cuandoAbra = (window.RacksAcceso && RacksAcceso.cuandoAbra) ||
+                   function(fn){ fn(); };
+
+  cuandoAbra(function(){
+    if (!grid) return;
     if (!recursos.length) {
       grid.innerHTML = '<div class="note"><span class="note-title">Vacío</span>' +
                        '<p>Todavía no hay recursos en <code>assets/recursos.js</code>.</p></div>';
     } else {
       recursos.forEach(function(r){ grid.appendChild(card(r)); });
     }
-  }
+  });
 
   /* --- diálogo de incrustación ---------------------------------------- */
 

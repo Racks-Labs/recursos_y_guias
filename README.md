@@ -5,7 +5,9 @@ Recursos en HTML estático con el estilo del sistema de producción de Racks
 GitHub Pages y listos para incrustar como iframe en cualquier página.
 
 - **Índice:** `index.html` — catálogo, generador de código de incrustación y
-  resumen del sistema de estilo.
+  resumen del sistema de estilo. Va **detrás de una clave**
+  (`assets/acceso.js`); los recursos sueltos siguen abiertos para poder
+  incrustarlos.
 - **Recursos:** `recursos/` — un archivo por recurso. Hoy: las guías de
   modernizar webs con agentes de IA (`webs-ia`), de agentes de IA desde cero
   (`agentes-ia`) y de Hermes (`hermes`); las de skills, mods y apps con
