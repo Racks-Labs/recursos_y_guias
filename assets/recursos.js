@@ -42,8 +42,8 @@ window.RACKS_RESOURCES = [
     slug: 'prompts-fotos-scroll',
     titulo: '3 prompts para que tus fotos paren el scroll',
     kicker: 'Prompts · Imagen con IA',
-    resumen: 'Sube una foto de tu cara a Nano Banana Pro o ChatGPT, pega el prompt y genera en 4:5. Tres ilusiones ópticas listas para copiar: minifigura cabezona, cabeza gigante en Mallorca y gigante sobre la Puerta de Alcalá.',
-    etiquetas: ['Nano Banana Pro', 'ChatGPT', 'Imagen', 'Prompts'],
+    resumen: 'Sube una foto de tu cara a Magnific, pega el prompt y genera en 4:5. Tres ilusiones ópticas listas para copiar: minifigura cabezona, cabeza gigante en Mallorca y gigante sobre la Puerta de Alcalá.',
+    etiquetas: ['Magnific', 'Imagen', 'Prompts'],
     estado: 'live',
     fecha: '2026-09',
     portada: {

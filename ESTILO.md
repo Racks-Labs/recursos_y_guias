@@ -69,7 +69,7 @@ recurso incrustado en otra web no debe depender de un tercero para pintarse.
 
 ```css
 --radius: 0;        /* el sistema es de esquina recta, en todo */
---measure: 46rem;   /* ancho de lectura de un recurso */
+--measure: 74rem;   /* ancho de un recurso: el mismo que el catálogo */
 --shell: 74rem;     /* ancho del catálogo */
 ```
 
