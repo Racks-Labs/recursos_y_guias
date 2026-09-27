@@ -529,6 +529,17 @@ input[type=range]{width:100%;accent-color:var(--academy-orange);margin:0}
 .lead-list{font-size:.95rem}
 .lead-list li strong{color:var(--foreground);font-weight:500}
 
+/* --- figura · captura o ejemplo, con pie en mono ------------------------ */
+
+.figure{margin:1.5rem 0}
+.figure img{display:block;width:100%;height:auto;border:1px solid var(--border);background:var(--card)}
+.figure figcaption{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.04em;color:var(--mid-gray);margin:.6rem 0 0}
+.figure--result{max-width:26rem}                          /* un 4:5 no necesita todo el ancho */
+.figure--light img{background:var(--foreground);padding:1.25rem 1.5rem;box-sizing:border-box}  /* logo negro sobre transparente */
+.figure-pair{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;align-items:start}
+.figure-pair img{aspect-ratio:4/5;object-fit:cover}
+@media (max-width:32rem){.figure-pair{grid-template-columns:1fr}}
+
 /* ==========================================================================
    13. Catálogo de recursos (index)
    ========================================================================== */

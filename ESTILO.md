@@ -145,6 +145,7 @@ Esqueleto mínimo:
 | `.launch` + `.launch-label` | Panel de arranque: para qué sirve y frase con la que empezar |
 | `.verdict-card` + `.go` / `.hold` / `.stop` | Veredictos en semáforo: avanzar, esperar, parar |
 | `.lead-list` | Lista destacada, con los `<strong>` en blanco |
+| `.figure` (+ `--result`, `--light`, `.figure-pair`) | Imagen con pie; `--result` la limita a ancho de 4:5, `--light` pone fondo claro a un logo negro, `.figure-pair` pone dos lado a lado |
 | `.meter`, `.readout`, `.scale` | Medidores y calculadoras |
 | `.res-grid`, `.res-card`, `.pill` | Tarjetas del catálogo |
 | `.swatches`, `.swatch` | Muestrario de color |
