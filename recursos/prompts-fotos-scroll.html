@@ -39,7 +39,7 @@
   <nav class="toc">
     <p>Recorrido</p>
     <ol>
-      <li><a href="#uso">Cómo usarlos</a></li>
+      <li><a href="#uso">Cómo montarlo en Magnific</a> · pasos 1–8</li>
       <li><a href="#minifigura">Prompt 1 · La minifigura cabezona</a></li>
       <li><a href="#mallorca">Prompt 2 · Tu cabeza como trofeo</a></li>
       <li><a href="#madrid">Prompt 3 · El gigante de la Puerta de Alcalá</a></li>
@@ -50,7 +50,7 @@
 
 <section id="uso">
   <p class="phase">Antes de empezar</p>
-  <h2>Cómo usarlos</h2>
+  <h2>Cómo montarlo en Magnific</h2>
   <hr class="rule">
 
   <div class="step">
@@ -70,21 +70,82 @@
 
   <div class="step">
     <span class="step-num">02</span>
-    <h3>Abre Magnific</h3>
+    <h3>Abre un Space en Magnific</h3>
     <div class="step-body">
-      <p>Los tres resultados de este recurso están hechos en Magnific, con su generador de imágenes. Crea un generador, conecta tus fotos (y el logo, para el prompt 1) como referencia, pega el prompt y elige 4:5.</p>
-      <figure class="figure">
-        <img src="../assets/img/prompts-fotos-scroll/flujo-magnific.webp" width="1600" height="1241" loading="lazy" alt="Lienzo de Magnific: las fotos de referencia y el logo conectados a los generadores de imágenes de cada prompt">
-        <figcaption>El lienzo de Magnific con el que se hicieron: las fotos de cara y el logo entran como referencia en cada generador.</figcaption>
-      </figure>
+      <p>Las tres imágenes están hechas en <strong>Spaces</strong>, el lienzo de nodos de Magnific. Crea un Space nuevo: es una pizarra en blanco donde cada pieza del trabajo (una foto, un prompt, una generación) es una tarjeta, un <em>nodo</em>, y las tarjetas se unen con cables.</p>
+      <p>Los nodos se añaden desde <strong>Spotlight</strong>, el buscador del lienzo: escribes el nombre del nodo y lo sueltas en la pizarra.</p>
     </div>
   </div>
 
   <div class="step">
     <span class="step-num">03</span>
-    <h3>Pega el prompt y genera en 4:5</h3>
+    <h3>Mete tus fotos y el logo como nodos</h3>
     <div class="step-body">
-      <p>El formato vertical 4:5 es el que ocupa más pantalla en el feed de Instagram. Los prompts ya lo piden, pero márcalo también en el selector de proporción del generador.</p>
+      <p>Busca <strong>Upload</strong> en Spotlight y sube una foto de cara. Repite con la segunda y, si vas a hacer el prompt 1, con el logo. Acabas con dos o tres tarjetas de imagen en la parte izquierda del lienzo: en la captura de abajo hay tres fotos de cara (<code>jaime-1</code>, <code>jaime-2</code> e <code>image</code>) y el logo, <code>racks-logo-negro</code>.</p>
+      <p>Si la foto ya la tienes en Magnific, usa el nodo <strong>Media</strong>, que tira de tu historial en vez de subir el archivo otra vez.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">04</span>
+    <h3>Añade un Image Generator y pega el prompt</h3>
+    <div class="step-body">
+      <p>Busca <strong>Image Generator</strong> en Spotlight y colócalo a la derecha de las fotos. El prompt se escribe directamente en la tarjeta: pega uno de los tres de este recurso tal cual, con su <em>Negative prompt</em> al final incluido.</p>
+      <p>Un generador por prompt. Si vas a hacer los tres, pon tres generadores.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">05</span>
+    <h3>Conecta las fotos al generador</h3>
+    <div class="step-body">
+      <p>Cada nodo tiene unos circulitos en los bordes, los <strong>puertos</strong>: los de la <strong>derecha</strong> son salidas y los de la <strong>izquierda</strong>, entradas. Pincha en el puerto de salida de tu foto, arrastra el cable y suéltalo en la entrada <strong>Reference</strong> del generador. Si el cable no engancha, es que has apuntado a una entrada de otro tipo: las de imagen se unen con imagen.</p>
+      <ul>
+        <li><strong>Las dos fotos de cara</strong> van a la entrada Reference de cada generador. Esa entrada admite varias imágenes a la vez, y con dos referencias el parecido mejora.</li>
+        <li><strong>El logo</strong> se conecta sólo al generador del prompt 1, que es el que lo pide en la camiseta.</li>
+        <li><strong>Una salida puede ir a todos los generadores que quieras:</strong> la misma foto alimenta los tres, sin subirla tres veces. Por eso en la captura salen tantos cables de cada foto.</li>
+      </ul>
+      <p>Para quitar un cable, pasa el ratón por encima y pulsa las tijeras.</p>
+      <figure class="figure">
+        <img src="../assets/img/prompts-fotos-scroll/flujo-magnific.webp" width="1600" height="1241" loading="lazy" alt="Lienzo de Magnific: a la izquierda los nodos de imagen con las fotos de cara y el logo; a la derecha los generadores de imágenes de cada prompt, unidos con cables a las fotos">
+        <figcaption>El Space con el que se hicieron. Izquierda: las fotos y el logo. Derecha: un Image Generator por imagen, con los cables entrando en su referencia.</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">06</span>
+    <h3>Ajusta la tarjeta: modelo, 4:5 y resolución</h3>
+    <div class="step-body">
+      <p>En la parte de abajo de la tarjeta del generador están los ajustes. Los de la captura:</p>
+      <dl>
+        <div class="field"><dt>Modelo</dt><dd><strong>Google Nano Banana</strong>, en el selector de modelo. Es el que se usó para las tres imágenes.</dd></div>
+        <div class="field"><dt>Proporción</dt><dd><strong>4:5</strong>. Es el vertical que más pantalla ocupa en el feed de Instagram. El prompt ya lo pide, pero lo que manda es este selector.</dd></div>
+        <div class="field"><dt>Resolución</dt><dd><strong>2K</strong>. Suficiente para publicar; 4K cuesta más créditos.</dd></div>
+        <div class="field"><dt>Generaciones</dt><dd><strong>×1</strong> para probar. Súbelo cuando el prompt ya funcione y quieras elegir entre varias.</dd></div>
+      </dl>
+      <p>El coste en créditos aparece en el botón de generar antes de pulsarlo, y cambia en directo al tocar el modelo o la resolución.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">07</span>
+    <h3>Genera</h3>
+    <div class="step-body">
+      <p>Selecciona el generador y pulsa <strong>Run</strong>. La imagen aparece en la propia tarjeta. Si vuelves a generar, la anterior no se pierde: las flechas de la tarjeta recorren todo el historial de ese nodo, cada imagen con los ajustes con los que se hizo.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">08</span>
+    <h3>Retoca encadenando otro generador</h3>
+    <div class="step-body">
+      <p>Si la imagen está casi bien, no la regeneres desde cero. Añade un segundo Image Generator, conecta la <strong>salida</strong> del primero a su <strong>Reference</strong> y escribe sólo el cambio:</p>
+      <div class="code code--prose">
+        <button class="copy" type="button">Copiar</button>
+        <pre>Haz esta imagen tal cual, sin cambiar nada, pero con los autobuses verdes.</pre>
+      </div>
+      <p>Es lo que se ve abajo a la derecha de la captura: el generador de Madrid alimenta a otro que sólo cambia el color de los autobuses. Lo mismo con el de Mallorca, arriba.</p>
     </div>
   </div>
 
