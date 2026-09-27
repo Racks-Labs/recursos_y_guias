@@ -134,7 +134,7 @@ Esqueleto mínimo:
 | `.phase` | Antetítulo de sección, sobre el `<h2>` |
 | `.step` + `.step-num` + `.step-body` | Paso numerado |
 | `.note` / `.warn` / `.ok` / `.caution` (+ `*-title`) | Aviso informativo, de peligro, de confirmación, de precaución |
-| `.code` + `.copy` + `<pre>` | Bloque de código con botón de copiar |
+| `.code` + `.copy` + `<pre>` | Bloque de código con botón de copiar; `.code--prose` ajusta la línea (prompts largos) |
 | `pre .c` / `pre .k` | Comentario / valor a sustituir dentro del código |
 | `.field` (`<dt>`/`<dd>`) | Ficha de campos y parámetros |
 | `.mode`, `.fork` (+ `.pick`) | Opciones; `.pick` marca la recomendada |

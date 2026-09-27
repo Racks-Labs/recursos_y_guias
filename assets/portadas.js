@@ -774,6 +774,46 @@
     c.setLineDash([]);
   };
 
+  /* --- Fotos: tu cara entra, sale la imagen que para el feed ---------- */
+  GRAFICOS.fotos = function (c, X, Y, S, U) {
+    trazo(c, U, 0.13);
+
+    /* la foto que subes: de frente, pequeña, sin tocar */
+    var px = X + S * 0.02, py = Y + S * 0.10, pw = S * 0.20, ph = pw * 5 / 4;
+    c.fillStyle = T.fondo;
+    c.fillRect(px, py, pw, ph);
+    caja(c, px, py, pw, ph);
+    c.fillStyle = ACENTO;
+    c.beginPath(); c.arc(px + pw / 2, py + ph * 0.40, pw * 0.20, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.arc(px + pw / 2, py + ph * 1.0, pw * 0.36, Math.PI, 0); c.closePath(); c.fill();
+
+    /* el prompt la lleva al 4:5 */
+    var fx = X + S * 0.42, fy = Y + S * 0.02, fw = S * 0.50, fh = fw * 5 / 4;
+    var ejeY = py + ph / 2;
+    c.beginPath(); c.moveTo(px + pw + S * 0.03, ejeY); c.lineTo(fx - S * 0.03, ejeY); c.stroke();
+    poli(c, [[fx - S * 0.08, ejeY - S * 0.04], [fx - S * 0.03, ejeY], [fx - S * 0.08, ejeY + S * 0.04]]);
+    c.stroke();
+
+    /* la imagen: cabeza enorme sobre un cuerpo de juguete diminuto */
+    caja(c, fx, fy, fw, fh, ACENTO);
+    var cx = fx + fw / 2, r = fw * 0.30;
+    c.fillStyle = T.fondo;
+    c.beginPath(); c.arc(cx, fy + fh * 0.36, r, 0, Math.PI * 2); c.fill();
+    var bw = fw * 0.16, by = fy + fh * 0.36 + r + fh * 0.015;
+    c.fillRect(cx - bw / 2, by, bw, fh * 0.12);                      /* torso */
+    c.fillRect(cx - bw / 2, by + fh * 0.13, bw * 0.46, fh * 0.13);   /* piernas */
+    c.fillRect(cx + bw * 0.04, by + fh * 0.13, bw * 0.46, fh * 0.13);
+    c.fillRect(cx - bw / 2 - fw * 0.05, by + fh * 0.01, fw * 0.04, fh * 0.09);  /* brazos */
+    c.fillRect(cx + bw / 2 + fw * 0.01, by - fh * 0.03, fw * 0.04, fh * 0.09);
+
+    /* el feed se para: las publicaciones de alrededor, apagadas */
+    c.globalAlpha = 0.45;
+    trazo(c, U, 0.09);
+    caja(c, fx, fy + fh + S * 0.05, fw, S * 0.10);
+    caja(c, px, py + ph + S * 0.08, pw, S * 0.22);
+    c.globalAlpha = 1;
+  };
+
   function grafico(c, r, x, y, w, h, U) {
     var dibujo = GRAFICOS[(r.portada || {}).grafico];
     if (!dibujo) return;

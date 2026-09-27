@@ -28,7 +28,7 @@
      resto      tercera línea, mediana
      grafico    'skills' | 'mods' | 'apps' | 'validacion' | 'gpu' | 'webs' |
                 'agentes' | 'hermes' | 'conceptos' | 'encargo' | 'pipeline' |
-                'ugc' | 'guiones'; la ilustración,
+                'ugc' | 'guiones' | 'fotos'; la ilustración,
                 que dibuja lo que se lleva el lector, no un adorno
      color      acento de la portada, elegido por el tema del recurso
      promesa    banda inferior; una línea por salto, *entre asteriscos* va en negrita
@@ -38,6 +38,24 @@
    ========================================================================== */
 
 window.RACKS_RESOURCES = [
+  {
+    slug: 'prompts-fotos-scroll',
+    titulo: '3 prompts para que tus fotos paren el scroll',
+    kicker: 'Prompts · Imagen con IA',
+    resumen: 'Sube una foto de tu cara a Nano Banana Pro o ChatGPT, pega el prompt y genera en 4:5. Tres ilusiones ópticas listas para copiar: minifigura cabezona, cabeza gigante en Mallorca y gigante sobre la Puerta de Alcalá.',
+    etiquetas: ['Nano Banana Pro', 'ChatGPT', 'Imagen', 'Prompts'],
+    estado: 'live',
+    fecha: '2026-09',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Recurso:',
+      destacado: '3 prompts para que tus fotos',
+      resto: 'paren el scroll',
+      grafico: 'fotos',
+      color: '#468af6',
+      promesa: 'SUBE *TU CARA*, PEGA EL PROMPT\nY GENERA *EN 4:5*'
+    }
+  },
   {
     slug: 'guiones-con-tu-voz',
     titulo: 'Treinta días de guiones con tu voz y la skill que los escribe',

@@ -362,6 +362,7 @@ pre{
 }
 pre .c{color:var(--mid-gray)}          /* comentario */
 pre .k{color:var(--academy-orange)}    /* valor a sustituir */
+.code--prose pre{white-space:pre-wrap;overflow-wrap:anywhere}  /* prompts largos: ajusta la línea */
 
 .copy{
   position:absolute;top:.55rem;right:.55rem;
