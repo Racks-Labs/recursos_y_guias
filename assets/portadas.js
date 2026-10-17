@@ -861,6 +861,69 @@
     c.stroke();
   };
 
+  /* --- Loops: seis agentes en la rueda, la Memoria en el centro --------
+     Cada agente, una caja en el anillo; el trabajo da la vuelta de uno a
+     otro. Todos leen del centro, que es lo que se monta primero. El último
+     de la vuelta, el Relevo, va punteado: solo entra cuando lo demás gira. */
+  GRAFICOS.loops = function (c, X, Y, S, U) {
+    var cx = X + S * 0.50, cy = Y + S * 0.50, R = S * 0.38;
+    var b = S * 0.15;                                  /* cada agente */
+    var pos = [0, 1, 2, 3, 4, 5].map(function (k) {
+      var a = -Math.PI / 2 + k * Math.PI / 3;
+      return [cx + Math.cos(a) * R, cy + Math.sin(a) * R];
+    });
+
+    /* del centro a cada agente: lo que leen de la Memoria */
+    c.globalAlpha = 0.45;
+    trazo(c, U, 0.09);
+    c.setLineDash([U * 0.34, U * 0.28]);
+    pos.forEach(function (p) {
+      c.beginPath(); c.moveTo(cx, cy); c.lineTo(p[0], p[1]); c.stroke();
+    });
+    c.setLineDash([]);
+    c.globalAlpha = 1;
+
+    /* la vuelta: de cada agente al siguiente, con su flecha */
+    trazo(c, U, 0.13);
+    pos.forEach(function (p, k) {
+      var n = pos[(k + 1) % 6];
+      var dx = n[0] - p[0], dy = n[1] - p[1], L = Math.sqrt(dx * dx + dy * dy);
+      var ux = dx / L, uy = dy / L, m = b * 0.72;
+      var x0 = p[0] + ux * m, y0 = p[1] + uy * m, x1 = n[0] - ux * m, y1 = n[1] - uy * m;
+      c.beginPath(); c.moveTo(x0, y0); c.lineTo(x1, y1); c.stroke();
+      var f = S * 0.05, g = S * 0.032;
+      poli(c, [[x1 - ux * f - uy * g, y1 - uy * f + ux * g], [x1, y1],
+               [x1 - ux * f + uy * g, y1 - uy * f - ux * g]]);
+      c.stroke();
+    });
+
+    /* los agentes: los cinco primeros con su salida; el Relevo, punteado */
+    pos.forEach(function (p, k) {
+      var x = p[0] - b / 2, y = p[1] - b / 2;
+      c.fillStyle = T.fondo;
+      c.fillRect(x, y, b, b);
+      if (k === 5) {
+        c.setLineDash([U * 0.34, U * 0.28]);
+        caja(c, x, y, b, b);
+        c.setLineDash([]);
+        return;
+      }
+      caja(c, x, y, b, b);
+      c.fillStyle = conAlfa(ACENTO, 0.45);
+      c.fillRect(x + b * 0.18, y + b * 0.24, b * 0.64, b * 0.12);
+      c.fillStyle = ACENTO;
+      c.fillRect(x + b * 0.18, y + b * 0.56, b * (0.30 + (k % 3) * 0.12), b * 0.18);
+    });
+
+    /* la Memoria: el archivo lleno, en el centro */
+    var m = S * 0.22;
+    caja(c, cx - m / 2, cy - m / 2, m, m, ACENTO);
+    c.fillStyle = T.fondo;
+    [0, 1, 2, 3].forEach(function (k) {
+      c.fillRect(cx - m * 0.32, cy - m * 0.28 + k * m * 0.17, m * (k === 3 ? 0.36 : 0.64), m * 0.07);
+    });
+  };
+
   function grafico(c, r, x, y, w, h, U) {
     var dibujo = GRAFICOS[(r.portada || {}).grafico];
     if (!dibujo) return;

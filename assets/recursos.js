@@ -28,7 +28,7 @@
      resto      tercera línea, mediana
      grafico    'skills' | 'mods' | 'apps' | 'validacion' | 'gpu' | 'webs' |
                 'agentes' | 'hermes' | 'conceptos' | 'encargo' | 'pipeline' |
-                'ugc' | 'guiones' | 'fotos' | 'metodo'; la ilustración,
+                'ugc' | 'guiones' | 'fotos' | 'metodo' | 'loops'; la ilustración,
                 que dibuja lo que se lleva el lector, no un adorno
      color      acento de la portada, elegido por el tema del recurso
      promesa    banda inferior; una línea por salto, *entre asteriscos* va en negrita
@@ -38,6 +38,24 @@
    ========================================================================== */
 
 window.RACKS_RESOURCES = [
+  {
+    slug: 'seis-agentes-empresa',
+    titulo: 'Los seis agentes de IA por los que paga una empresa',
+    kicker: 'Guía · Agentes para empresas',
+    resumen: 'El Buzón, la Calculadora, la Cinta, la Memoria, el Aviso y el Relevo: qué hace cada uno, un ejemplo concreto, lo que le quita de encima al dueño y lo que necesita para no liarla. Con el orden en que se montan.',
+    etiquetas: ['Agentes', 'Empresas', 'Automatización'],
+    estado: 'live',
+    fecha: '2026-10',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Guía:',
+      destacado: 'Los seis agentes de IA',
+      resto: 'por los que paga una empresa',
+      grafico: 'loops',
+      color: '#468af6',
+      promesa: 'UN *EJEMPLO* DE CADA UNO Y LO QUE\nLE QUITA DE ENCIMA *AL DUEÑO*'
+    }
+  },
   {
     slug: 'metodo-cerrar-clientes',
     titulo: 'El método con el que cerramos clientes de automatización',
