@@ -991,6 +991,63 @@
     });
   };
 
+  /* --- Radar: lo que se queda conectado a Claude y lo que se cae ------- */
+  GRAFICOS.radar = function (c, X, Y, S, U) {
+    var cx = X + S * 0.50, cy = Y + S * 0.50;
+
+    /* los anillos del radar, apagados */
+    trazo(c, U, 0.07);
+    c.globalAlpha = 0.35;
+    [0.22, 0.36, 0.48].forEach(function (r) {
+      c.beginPath(); c.arc(cx, cy, S * r, 0, Math.PI * 2); c.stroke();
+    });
+    c.globalAlpha = 1;
+
+    /* el centro: Claude, lleno */
+    var cd = S * 0.16;
+    caja(c, cx - cd / 2, cy - cd / 2, cd, cd, ACENTO);
+
+    /* las que tienen futuro: llenas y enchufadas al centro */
+    trazo(c, U, 0.11);
+    var vivas = [[-0.30, -0.28], [0.30, -0.30], [0.34, 0.08], [-0.34, 0.06]];
+    var vd = S * 0.09;
+    vivas.forEach(function (p) {
+      var x = cx + S * p[0], y = cy + S * p[1];
+      c.strokeStyle = ACENTO;
+      c.beginPath(); c.moveTo(x, y); c.lineTo(cx, cy); c.stroke();
+      c.fillStyle = T.fondo;
+      c.fillRect(x - vd / 2, y - vd / 2, vd, vd);
+      caja(c, x - vd / 2, y - vd / 2, vd, vd, conAlfa(ACENTO, 0.85));
+    });
+    /* el centro vuelve a pintarse encima de los cables */
+    caja(c, cx - cd / 2, cy - cd / 2, cd, cd, ACENTO);
+
+    /* las que se caen: huecas, desconectadas, hacia abajo y tachadas */
+    var caidas = [[-0.22, 0.34], [0.04, 0.42], [0.26, 0.36]];
+    caidas.forEach(function (p, k) {
+      var x = cx + S * p[0], y = cy + S * p[1];
+      c.globalAlpha = 0.5 - k * 0.1;
+      trazo(c, U, 0.09);
+      c.setLineDash([U * 0.3, U * 0.25]);
+      caja(c, x - vd / 2, y - vd / 2, vd, vd);
+      c.setLineDash([]);
+      c.beginPath();                                   /* la cruz */
+      c.moveTo(x - vd * 0.32, y - vd * 0.32); c.lineTo(x + vd * 0.32, y + vd * 0.32);
+      c.moveTo(x + vd * 0.32, y - vd * 0.32); c.lineTo(x - vd * 0.32, y + vd * 0.32);
+      c.stroke();
+      c.globalAlpha = 1;
+    });
+
+    /* y la flecha que baja: van saliendo del radar */
+    trazo(c, U, 0.09);
+    c.globalAlpha = 0.5;
+    var fx = X + S * 0.93, fy0 = cy + S * 0.18, fy1 = cy + S * 0.44;
+    c.beginPath(); c.moveTo(fx, fy0); c.lineTo(fx, fy1); c.stroke();
+    poli(c, [[fx - S * 0.03, fy1 - S * 0.04], [fx, fy1], [fx + S * 0.03, fy1 - S * 0.04]]);
+    c.stroke();
+    c.globalAlpha = 1;
+  };
+
   function grafico(c, r, x, y, w, h, U) {
     var dibujo = GRAFICOS[(r.portada || {}).grafico];
     if (!dibujo) return;

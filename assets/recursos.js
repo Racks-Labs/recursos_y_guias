@@ -28,7 +28,7 @@
      resto      tercera línea, mediana
      grafico    'skills' | 'mods' | 'apps' | 'validacion' | 'gpu' | 'webs' |
                 'agentes' | 'hermes' | 'conceptos' | 'encargo' | 'pipeline' |
-                'ugc' | 'guiones' | 'fotos' | 'metodo' | 'loops' | 'rodaje'; la ilustración,
+                'ugc' | 'guiones' | 'fotos' | 'metodo' | 'loops' | 'rodaje' | 'radar'; la ilustración,
                 que dibuja lo que se lleva el lector, no un adorno
      color      acento de la portada, elegido por el tema del recurso
      promesa    banda inferior; una línea por salto, *entre asteriscos* va en negrita
@@ -38,6 +38,24 @@
    ========================================================================== */
 
 window.RACKS_RESOURCES = [
+  {
+    slug: 'herramientas-ia-futuro',
+    titulo: 'Las herramientas de IA que siguen y las que puedes dejar de pagar',
+    kicker: 'Listado · Herramientas de IA',
+    resumen: 'Qué herramientas de IA tienen futuro, cuáles están en riesgo y cuáles puedes dar de baja hoy, con Claude en el centro: Higgsfield, ElevenLabs, Notion, Canva, Runway, Sora, Apple Intelligence y más. Con el motivo de cada veredicto, qué usar en su lugar y las fuentes.',
+    etiquetas: ['Claude', 'Herramientas', 'Conectores', 'Listado'],
+    estado: 'live',
+    fecha: '2026-10',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Listado:',
+      destacado: 'Las herramientas de IA que siguen',
+      resto: 'y las que puedes dejar de pagar',
+      grafico: 'radar',
+      color: '#10b77f',
+      promesa: 'FUTURO, EN RIESGO O *ACABADA*\nCON *CLAUDE EN EL CENTRO*'
+    }
+  },
   {
     slug: 'workflows-video-marcas',
     titulo: 'Los tres vídeos con IA que más venden a marcas',
