@@ -107,7 +107,7 @@ window.RACKS_RESOURCES = [
       resto: 'con Claude, que trabaja solo',
       grafico: 'pipeline',
       color: '#468af6',
-      promesa: 'LOS PROMPTS *PARA COPIAR* Y EL FLUJO ENTERO\nDE LA CARPETA DE MARCA A *NOTION*'
+      promesa: 'LO QUE USAMOS *EN NUESTRA EMPRESA*:\nDE LA CARPETA DE MARCA A *NOTION*'
     }
   },
   {
