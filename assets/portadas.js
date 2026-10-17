@@ -814,6 +814,53 @@
     c.globalAlpha = 1;
   };
 
+  /* --- Método: un día de trabajo comprimido en dos minutos, y el cierre - */
+  GRAFICOS.metodo = function (c, X, Y, S, U) {
+    trazo(c, U, 0.13);
+
+    /* el día de cálculos a mano: una barra larga, en ocho horas */
+    var bx = X + S * 0.02, by = Y + S * 0.08, bw = S * 0.96, bh = S * 0.14;
+    caja(c, bx, by, bw, bh);
+    c.fillStyle = conAlfa(ACENTO, 0.30);
+    c.fillRect(bx, by, bw, bh);
+    trazo(c, U, 0.07);
+    for (var h = 1; h < 8; h++) {
+      var hx = bx + bw * h / 8;
+      c.beginPath(); c.moveTo(hx, by); c.lineTo(hx, by + bh); c.stroke();
+    }
+
+    /* el embudo: el agente lo comprime */
+    trazo(c, U, 0.13);
+    var fy = by + bh + S * 0.05, fh = S * 0.22, cx = X + S * 0.30;
+    c.globalAlpha = 0.55;
+    poli(c, [[bx, fy], [cx - S * 0.03, fy + fh]]); c.stroke();
+    poli(c, [[bx + bw, fy], [cx + S * 0.03, fy + fh]]); c.stroke();
+    c.globalAlpha = 1;
+
+    /* los dos minutos: un bloque diminuto y lleno */
+    var mw = S * 0.08, my = fy + fh + S * 0.03;
+    caja(c, cx - mw / 2, my, mw, mw, ACENTO);
+
+    /* del bloque al cliente cerrado */
+    var ay = my + mw / 2, kx = X + S * 0.62;
+    c.beginPath(); c.moveTo(cx + mw / 2 + S * 0.03, ay); c.lineTo(kx - S * 0.03, ay); c.stroke();
+    poli(c, [[kx - S * 0.08, ay - S * 0.04], [kx - S * 0.03, ay], [kx - S * 0.08, ay + S * 0.04]]);
+    c.stroke();
+
+    /* el cliente: un documento firmado con su marca de aprobado */
+    var dw = S * 0.30, dh = S * 0.38, dx = kx, dy = ay - dh * 0.15;
+    c.fillStyle = T.fondo;
+    c.fillRect(dx, dy, dw, dh);
+    caja(c, dx, dy, dw, dh);
+    c.fillStyle = conAlfa(ACENTO, 0.45);
+    [0, 1, 2].forEach(function (k) {
+      c.fillRect(dx + S * 0.035, dy + S * 0.05 + k * S * 0.055, (dw - S * 0.07) * (k === 2 ? 0.6 : 1), S * 0.022);
+    });
+    trazo(c, U, 0.17);
+    poli(c, [[dx + dw * 0.30, dy + dh * 0.70], [dx + dw * 0.45, dy + dh * 0.84], [dx + dw * 0.74, dy + dh * 0.56]]);
+    c.stroke();
+  };
+
   function grafico(c, r, x, y, w, h, U) {
     var dibujo = GRAFICOS[(r.portada || {}).grafico];
     if (!dibujo) return;

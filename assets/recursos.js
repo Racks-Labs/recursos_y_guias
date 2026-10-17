@@ -28,7 +28,7 @@
      resto      tercera línea, mediana
      grafico    'skills' | 'mods' | 'apps' | 'validacion' | 'gpu' | 'webs' |
                 'agentes' | 'hermes' | 'conceptos' | 'encargo' | 'pipeline' |
-                'ugc' | 'guiones' | 'fotos'; la ilustración,
+                'ugc' | 'guiones' | 'fotos' | 'metodo'; la ilustración,
                 que dibuja lo que se lleva el lector, no un adorno
      color      acento de la portada, elegido por el tema del recurso
      promesa    banda inferior; una línea por salto, *entre asteriscos* va en negrita
@@ -38,6 +38,24 @@
    ========================================================================== */
 
 window.RACKS_RESOURCES = [
+  {
+    slug: 'metodo-cerrar-clientes',
+    titulo: 'El método con el que cerramos clientes de automatización',
+    kicker: 'Método · Negocio con agentes',
+    resumen: 'Cómo cerramos clientes de automatización con agentes en Racks: el caso del instalador eléctrico que pasó de un día de cálculos a 2 minutos, las cuatro fases del método y el filtro para saber si eres la persona que lo tiene que aplicar.',
+    etiquetas: ['Agentes', 'Negocio', 'Ventas'],
+    estado: 'live',
+    fecha: '2026-10',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Guía:',
+      destacado: 'El método con el que cerramos',
+      resto: 'clientes de automatización',
+      grafico: 'metodo',
+      color: '#f5911a',
+      promesa: 'DE *UN DÍA DE CÁLCULOS* A DOS MINUTOS\nY CÓMO SE *VENDE ESE TIEMPO*'
+    }
+  },
   {
     slug: 'prompts-fotos-scroll',
     titulo: '3 prompts para que tus fotos paren el scroll',
