@@ -924,6 +924,73 @@
     });
   };
 
+  /* --- Vídeos para marcas: un producto, tres ángulos, uno gana ----------
+     Lo que se lleva el lector en una imagen: la foto del cliente entra una
+     vez, salen tres verticales con el mismo producto encuadrado distinto y,
+     debajo, el test que dice cuál vende. */
+  GRAFICOS.rodaje = function (c, X, Y, S, U) {
+    /* el producto: un frasco con su tapón y su etiqueta, siempre el mismo */
+    function frasco(cx, base, h, color, giro) {
+      var w = h * 0.46;
+      c.save();
+      c.translate(cx, base);
+      c.rotate(giro || 0);
+      c.fillStyle = color;
+      c.fillRect(-w / 2, -h, w, h);                        /* cuerpo */
+      c.fillRect(-w * 0.22, -h * 1.2, w * 0.44, h * 0.2);  /* tapón */
+      c.fillStyle = color === T.fondo ? ACENTO : T.fondo;  /* etiqueta */
+      c.fillRect(-w * 0.32, -h * 0.62, w * 0.64, h * 0.26);
+      c.restore();
+    }
+
+    trazo(c, U, 0.13);
+
+    /* 1 · la foto del cliente: el producto tal cual, sin tocar */
+    var px = X + S * 0.02, py = Y + S * 0.18, pw = S * 0.20, ph = S * 0.20;
+    c.fillStyle = T.fondo;
+    c.fillRect(px, py, pw, ph);
+    caja(c, px, py, pw, ph);
+    frasco(px + pw / 2, py + ph * 0.86, ph * 0.56, ACENTO);
+
+    /* 2 · tres verticales 9:16, el mismo frasco con tres encuadres */
+    var fw = S * 0.18, fh = fw * 16 / 9, gap = S * 0.035;
+    var fx0 = X + S * 0.33, fy = Y + S * 0.12;
+
+    /* la foto entra en la fila de verticales */
+    var ejeY = py + ph / 2;
+    c.beginPath(); c.moveTo(px + pw + S * 0.025, ejeY); c.lineTo(fx0 - S * 0.025, ejeY); c.stroke();
+    poli(c, [[fx0 - S * 0.07, ejeY - S * 0.035], [fx0 - S * 0.025, ejeY], [fx0 - S * 0.07, ejeY + S * 0.035]]);
+    c.stroke();
+
+    var planos = [
+      { h: 0.30, base: 0.78, giro: 0 },      /* A · plano general */
+      { h: 0.52, base: 0.92, giro: -0.22 },  /* B · en la mano, inclinado */
+      { h: 0.80, base: 1.10, giro: 0 }       /* C · plano detalle */
+    ];
+    var gana = 1;
+    planos.forEach(function (p, k) {
+      var x = fx0 + k * (fw + gap);
+      c.save();
+      c.beginPath(); c.rect(x, fy, fw, fh); c.clip();
+      if (k === gana) { c.fillStyle = ACENTO; c.fillRect(x, fy, fw, fh); }
+      else { c.fillStyle = T.fondo; c.fillRect(x, fy, fw, fh); }
+      frasco(x + fw / 2, fy + fh * p.base, fh * p.h * 0.62, k === gana ? T.fondo : ACENTO, p.giro);
+      c.restore();
+      trazo(c, U, 0.13);
+      caja(c, x, fy, fw, fh);
+    });
+
+    /* 3 · el test: mismo presupuesto, tres barras, una se dispara */
+    var base = fy + fh + S * 0.25, alturas = [0.07, 0.17, 0.05];
+    trazo(c, U, 0.09);
+    c.beginPath(); c.moveTo(fx0 - S * 0.02, base); c.lineTo(fx0 + 3 * fw + 2 * gap + S * 0.02, base); c.stroke();
+    alturas.forEach(function (a, k) {
+      var x = fx0 + k * (fw + gap) + fw * 0.25, w = fw * 0.5, h = S * a;
+      if (k === gana) caja(c, x, base - h, w, h, ACENTO);
+      else { c.globalAlpha = 0.55; trazo(c, U, 0.09); caja(c, x, base - h, w, h); c.globalAlpha = 1; }
+    });
+  };
+
   function grafico(c, r, x, y, w, h, U) {
     var dibujo = GRAFICOS[(r.portada || {}).grafico];
     if (!dibujo) return;

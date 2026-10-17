@@ -28,7 +28,7 @@
      resto      tercera línea, mediana
      grafico    'skills' | 'mods' | 'apps' | 'validacion' | 'gpu' | 'webs' |
                 'agentes' | 'hermes' | 'conceptos' | 'encargo' | 'pipeline' |
-                'ugc' | 'guiones' | 'fotos' | 'metodo' | 'loops'; la ilustración,
+                'ugc' | 'guiones' | 'fotos' | 'metodo' | 'loops' | 'rodaje'; la ilustración,
                 que dibuja lo que se lleva el lector, no un adorno
      color      acento de la portada, elegido por el tema del recurso
      promesa    banda inferior; una línea por salto, *entre asteriscos* va en negrita
@@ -38,6 +38,24 @@
    ========================================================================== */
 
 window.RACKS_RESOURCES = [
+  {
+    slug: 'workflows-video-marcas',
+    titulo: 'Los tres vídeos con IA que más venden a marcas',
+    kicker: 'Guía · Vídeo con IA para marcas',
+    resumen: 'Los workflows con mayor retorno: arrancar con los archivos del cliente y Higgsfield conectado a ChatGPT o Claude, tomas de dron de una propiedad para anuncios inmobiliarios sin dron, y tres anuncios UGC del mismo producto para testear cuál vende. Con el prompt de cada uno listo para copiar.',
+    etiquetas: ['Higgsfield', 'ChatGPT', 'Claude', 'Vídeo'],
+    estado: 'live',
+    fecha: '2026-10',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Guía:',
+      destacado: 'Los tres vídeos con IA',
+      resto: 'que más venden a marcas',
+      grafico: 'rodaje',
+      color: '#9a72f8',
+      promesa: 'LOS WORKFLOWS *CON MAYOR ROI*\nCON EL PROMPT DE CADA UNO *LISTO PARA COPIAR*'
+    }
+  },
   {
     slug: 'seis-agentes-empresa',
     titulo: 'Los seis agentes de IA por los que paga una empresa',
