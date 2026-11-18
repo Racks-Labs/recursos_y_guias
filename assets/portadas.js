@@ -1048,6 +1048,62 @@
     c.globalAlpha = 1;
   };
 
+  /* --- DeepSeek: el agente, y el cerebro que le enchufas (con su llave) - */
+  GRAFICOS.cerebro = function (c, X, Y, S, U) {
+    /* el agente, a la izquierda: un marco con su prompt */
+    var ax = X + S * 0.02, ay = Y + S * 0.30, aw = S * 0.30, ah = S * 0.34;
+    trazo(c, U, 0.14);
+    caja(c, ax, ay, aw, ah);
+    poli(c, [[ax + aw * 0.20, ay + ah * 0.30], [ax + aw * 0.40, ay + ah * 0.46],
+             [ax + aw * 0.20, ay + ah * 0.62]]);
+    c.stroke();
+    c.fillStyle = ACENTO;
+    c.fillRect(ax + aw * 0.50, ay + ah * 0.52, aw * 0.30, ah * 0.11);
+
+    /* el chip: el modelo, con patillas por los cuatro lados */
+    var cs = S * 0.40, kx = X + S * 0.56, ky = Y + S * 0.27;
+    var pin = S * 0.035, pl = S * 0.06;
+    c.fillStyle = ACENTO;
+    for (var i = 0; i < 4; i++) {
+      var o = cs * (0.18 + i * 0.213) - pin / 2;
+      c.fillRect(kx + o, ky - pl, pin, pl);            /* arriba */
+      c.fillRect(kx + o, ky + cs, pin, pl);            /* abajo */
+      c.fillRect(kx + cs, ky + o, pl, pin);            /* derecha */
+      if (i !== 1 && i !== 2) c.fillRect(kx - pl, ky + o, pl, pin);  /* izquierda, deja hueco al cable */
+    }
+    caja(c, kx, ky, cs, cs);
+
+    /* dentro, los pesos: una rejilla que es tuya */
+    var n = 4, paso = cs * 0.62 / (n - 1), d = cs * 0.075;
+    for (var f = 0; f < n; f++) {
+      for (var k = 0; k < n; k++) {
+        c.globalAlpha = (f + k) % 3 === 0 ? 1 : 0.45;
+        c.fillRect(kx + cs * 0.19 + k * paso - d / 2, ky + cs * 0.19 + f * paso - d / 2, d, d);
+      }
+    }
+    c.globalAlpha = 1;
+
+    /* el cable del agente al chip */
+    var my = ay + ah / 2;
+    trazo(c, U, 0.14);
+    c.beginPath(); c.moveTo(ax + aw, my); c.lineTo(kx, my); c.stroke();
+    c.fillStyle = ACENTO;
+    c.fillRect(kx - S * 0.075, my - S * 0.035, S * 0.05, S * 0.07);   /* el enchufe */
+
+    /* y la llave colgando del cable: la API key que lo abre */
+    var lx = X + S * 0.42, ly = Y + S * 0.82, lr = S * 0.055;
+    trazo(c, U, 0.11);
+    c.setLineDash([U * 0.3, U * 0.25]);
+    c.beginPath(); c.moveTo(lx, my); c.lineTo(lx, ly - lr); c.stroke();
+    c.setLineDash([]);
+    c.beginPath(); c.arc(lx, ly, lr, 0, Math.PI * 2); c.stroke();
+    c.beginPath(); c.moveTo(lx + lr, ly); c.lineTo(lx + S * 0.28, ly); c.stroke();
+    c.beginPath();
+    c.moveTo(lx + S * 0.20, ly); c.lineTo(lx + S * 0.20, ly + S * 0.05);
+    c.moveTo(lx + S * 0.26, ly); c.lineTo(lx + S * 0.26, ly + S * 0.04);
+    c.stroke();
+  };
+
   function grafico(c, r, x, y, w, h, U) {
     var dibujo = GRAFICOS[(r.portada || {}).grafico];
     if (!dibujo) return;

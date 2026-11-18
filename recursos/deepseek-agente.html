@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+
+<title>Tu agente con DeepSeek por unos pocos dólares al mes · Recursos Racks Academy</title>
+<meta name="description" content="Cómo conectar DeepSeek V4.1 Flash a tu agente: la API key, Claude Code en diez minutos, cualquier agente compatible con OpenAI, lo que cuesta de verdad y qué significa que los pesos sean tuyos.">
+<meta property="og:title" content="Tu agente con DeepSeek por unos pocos dólares al mes">
+<meta property="og:description" content="La API key, Claude Code en diez minutos, cualquier agente compatible con OpenAI, lo que cuesta de verdad y qué significa que los pesos sean tuyos.">
+<meta property="og:type" content="article">
+
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/racks.css">
+<script>/* fija el modo antes del primer pintado */(function(){var h=document.documentElement,s=location.search;if(s.indexOf('embed=1')>-1)h.classList.add('is-embed');if(window.self!==window.top)h.classList.add('is-framed');if(s.indexOf('bg=transparent')>-1)h.classList.add('is-transparent');})();</script>
+<script defer src="../assets/racks.js"></script>
+</head>
+
+<body data-resource-id="deepseek-agente">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="watermark-r" aria-hidden="true">R</div>
+
+<header class="topbar" data-embed-hide>
+  <span class="topbar-mark" aria-hidden="true">R</span>
+  <span class="topbar-name">Racks Academy</span>
+  <span class="topbar-sep" aria-hidden="true">/</span>
+  <span class="topbar-here">Tu agente con DeepSeek</span>
+</header>
+
+<main class="shell" id="contenido">
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Guía · DeepSeek V4.1 Flash</p>
+  <h1>Ponle a tu agente<br>un cerebro <em>que es tuyo</em>.</h1>
+  <p class="standfirst">Cómo conectar DeepSeek V4.1 Flash, el modelo abierto de DeepSeek, a tu agente: la API key, Claude Code en diez minutos, cualquier agente compatible con OpenAI, lo que cuesta de verdad y qué significa que los pesos sean tuyos. Verificado contra la documentación oficial de DeepSeek y su ficha en Hugging Face en noviembre de 2026.</p>
+
+  <nav class="toc">
+    <p>Recorrido</p>
+    <ol>
+      <li><a href="#que-es">Qué es V4.1 Flash y por qué importa</a></li>
+      <li><a href="#clave">La API key</a> · pasos 1–3</li>
+      <li><a href="#claude-code">En Claude Code</a> · pasos 4–6</li>
+      <li><a href="#otros">En otros agentes</a> · pasos 7–8</li>
+      <li><a href="#precio">Lo que cuesta</a></li>
+      <li><a href="#pesos">Ser independiente: los pesos abiertos</a></li>
+      <li><a href="#tareas">Cinco tareas para estrenarlo</a></li>
+      <li><a href="#diagnostico">Diagnóstico</a></li>
+    </ol>
+  </nav>
+</header>
+
+<section id="que-es">
+  <p class="phase">Punto de partida</p>
+  <h2>Qué es V4.1 Flash y por qué importa</h2>
+  <hr class="rule">
+
+  <p>Un agente son dos cosas: las herramientas (terminal, archivos, navegador, mensajería) y el <strong>modelo</strong> que piensa y decide qué hacer con ellas. Casi todos los agentes te dejan cambiar el modelo, y DeepSeek V4.1 Flash es ahora mismo de las opciones más interesantes por tres motivos:</p>
+
+  <ul>
+    <li><strong>Es abierto.</strong> Los pesos están publicados en Hugging Face con licencia MIT: puedes descargarlos, alojarlos donde quieras y usarlos en un negocio.</li>
+    <li><strong>Está hecho para agentes.</strong> La versión de octubre (V4.1-Flash-1017) termina las tareas antes y responde más corto que la anterior, y sube con fuerza en las pruebas de agentes.</li>
+    <li><strong>Es barato.</strong> Por API cuesta una fracción de lo que cuestan los modelos cerrados de primera línea. Los números, <a href="#precio">más abajo</a>.</li>
+  </ul>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Prueba</th><th>V4.1 Flash (oct.)</th><th>V4.1 Flash (antes)</th><th>Qué mide</th></tr></thead>
+      <tbody>
+        <tr><td>Humanity's Last Exam, sin herramientas</td><td><strong>42,6</strong></td><td>36,8</td><td>Preguntas de nivel experto: el examen más difícil para una IA</td></tr>
+        <tr><td>Terminal-Bench 4.0</td><td><strong>42,3</strong></td><td>31,2</td><td>Tareas reales en terminal. DeepSeek lo midió dentro de Claude Code</td></tr>
+        <tr><td>Automation-Bench</td><td><strong>60,5</strong></td><td>54,8</td><td>Automatizaciones de principio a fin</td></tr>
+        <tr><td>DeepSWE v1.1</td><td><strong>77,0</strong></td><td>74,2</td><td>Arreglar fallos en proyectos de software reales</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Además entiende imágenes, admite <strong>un millón de tokens de contexto</strong> (cabe un proyecto entero o cientos de páginas) y funciona con o sin modo de razonamiento.</p>
+
+  <div class="note">
+    <span class="note-title">Sobre «sin censura»</span>
+    <p>Lo que te da un modelo abierto es <strong>control</strong>: tú decides dónde corre, qué instrucciones de sistema lleva y quién ve tus datos. Lo que no cambia es el entrenamiento: el modelo trae sus propios límites de serie, lo uses por API o en tu servidor. Si alguien te promete otra cosa, desconfía.</p>
+  </div>
+</section>
+
+<section id="clave">
+  <p class="phase">Fase 1</p>
+  <h2>La API key</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Crea tu cuenta y recarga saldo</h3>
+    <div class="step-body">
+      <p>Entra en <a href="https://platform.deepseek.com" target="_blank" rel="noopener">platform.deepseek.com</a>, regístrate y añade saldo. DeepSeek funciona con prepago y descuenta de lo que hayas recargado. Para probarlo con un agente durante semanas, con unos pocos dólares sobra.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>Genera la clave</h3>
+    <div class="step-body">
+      <p>En <a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">API keys</a>, crea una nueva y cópiala en el momento: no se vuelve a mostrar.</p>
+
+      <div class="warn">
+        <span class="warn-title">Cuidado</span>
+        <p>La clave es dinero. No la pegues en chats, capturas ni repositorios. Si se te escapa, bórrala en esa misma página y crea otra.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">03</span>
+    <h3>Apunta los tres datos que vas a usar</h3>
+    <div class="step-body">
+      <dl>
+        <div class="field"><dt>Modelo</dt><dd><code>deepseek-flash</code>. Ahora mismo lo sirve V4.1-Flash-1017.</dd></div>
+        <div class="field"><dt>Dirección, formato OpenAI</dt><dd><code>https://api.deepseek.com</code></dd></div>
+        <div class="field"><dt>Dirección, formato Anthropic</dt><dd><code>https://api.deepseek.com/anthropic</code></dd></div>
+      </dl>
+      <p>Esa doble dirección es la clave de todo: DeepSeek habla el mismo «idioma» que OpenAI y que Anthropic, así que cualquier agente pensado para GPT o para Claude puede usarlo cambiando solo la dirección y la clave.</p>
+    </div>
+  </div>
+</section>
+
+<section id="claude-code">
+  <p class="phase">Fase 2</p>
+  <h2>En Claude Code</h2>
+  <hr class="rule">
+
+  <p>Es la vía más rápida y la que DeepSeek documenta oficialmente. Claude Code no cambia (herramientas, comandos, skills), pero el que piensa es DeepSeek.</p>
+
+  <div class="step">
+    <span class="step-num">04</span>
+    <h3>Instala Claude Code, si no lo tienes</h3>
+    <div class="step-body">
+      <p>Necesitas Node.js 18 o superior y, en Windows, además Git for Windows.</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>npm install -g @anthropic-ai/claude-code
+claude --version</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">05</span>
+    <h3>Apúntalo a DeepSeek</h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre><span class="c"># Mac y Linux. Sustituye TU_CLAVE por tu API key</span>
+export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
+export ANTHROPIC_AUTH_TOKEN=<span class="k">TU_CLAVE</span>
+export ANTHROPIC_MODEL=deepseek-flash[1m]
+export ANTHROPIC_DEFAULT_OPUS_MODEL=deepseek-flash[1m]
+export ANTHROPIC_DEFAULT_SONNET_MODEL=deepseek-flash[1m]
+export ANTHROPIC_DEFAULT_HAIKU_MODEL=deepseek-flash
+export CLAUDE_CODE_SUBAGENT_MODEL=deepseek-flash
+export CLAUDE_CODE_EFFORT_LEVEL=max
+export CLAUDE_CODE_AUTO_COMPACT_WINDOW=786432</pre>
+      </div>
+
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre><span class="c"># Windows, PowerShell</span>
+$env:ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic"
+$env:ANTHROPIC_AUTH_TOKEN="<span class="k">TU_CLAVE</span>"
+$env:ANTHROPIC_MODEL="deepseek-flash[1m]"
+$env:ANTHROPIC_DEFAULT_OPUS_MODEL="deepseek-flash[1m]"
+$env:ANTHROPIC_DEFAULT_SONNET_MODEL="deepseek-flash[1m]"
+$env:ANTHROPIC_DEFAULT_HAIKU_MODEL="deepseek-flash"
+$env:CLAUDE_CODE_SUBAGENT_MODEL="deepseek-flash"
+$env:CLAUDE_CODE_EFFORT_LEVEL="max"
+$env:CLAUDE_CODE_AUTO_COMPACT_WINDOW="786432"</pre>
+      </div>
+
+      <p>Así <strong>todos</strong> los modelos que pide Claude Code (el principal, los subagentes y el rápido) van a <code>deepseek-flash</code>, con el millón de tokens de contexto activado.</p>
+
+      <div class="caution">
+        <span class="caution-title">Ojo con «Opus»</span>
+        <p>Si se te queda algún nombre sin cambiar, DeepSeek lo traduce solo: lo que empiece por <code>claude-opus</code> va a <code>deepseek-v4-pro</code>, que cuesta varias veces más, y lo que empiece por <code>claude-sonnet</code> o <code>claude-haiku</code> va a Flash. Por eso se fijan las tres variables.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">06</span>
+    <h3>Arranca y compruébalo</h3>
+    <div class="step-body">
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>cd <span class="k">/ruta/a/tu-proyecto</span>
+claude</pre>
+      </div>
+
+      <div class="ok">
+        <span class="ok-title">Bien</span>
+        <p>Claude Code arranca sin pedirte iniciar sesión en Anthropic y responde. En el panel de DeepSeek, el apartado de uso empieza a sumar tokens: esa es la prueba de que piensa DeepSeek.</p>
+      </div>
+
+      <p>Los <code>export</code> solo duran mientras esa terminal está abierta. Si quieres dejarlo fijo, pégalos al final de <code>~/.zshrc</code> (Mac) o <code>~/.bashrc</code> (Linux). Si vas a alternar entre Claude y DeepSeek, mejor guárdalos en un archivo aparte y cárgalo solo cuando quieras DeepSeek: <code>source ~/deepseek.env</code>.</p>
+    </div>
+  </div>
+</section>
+
+<section id="otros">
+  <p class="phase">Fase 3</p>
+  <h2>En otros agentes</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">07</span>
+    <h3>OpenCode: viene de serie</h3>
+    <div class="step-body">
+      <p class="flow">opencode → /connect → deepseek → pegar la clave → elegir Flash</p>
+      <p>DeepSeek recomienda OpenCode 1.18.30 o superior.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">08</span>
+    <h3>Cualquier agente que acepte un proveedor compatible con OpenAI</h3>
+    <div class="step-body">
+      <p>Hermes, OpenClaw, n8n, Cline y la mayoría de agentes tienen un apartado para añadir un proveedor propio («Custom endpoint», «OpenAI compatible»). Siempre piden lo mismo:</p>
+      <dl>
+        <div class="field"><dt>Base URL</dt><dd><code>https://api.deepseek.com</code>, o <code>https://api.deepseek.com/anthropic</code> si el agente pide formato Anthropic.</dd></div>
+        <div class="field"><dt>API key</dt><dd>Tu clave de DeepSeek.</dd></div>
+        <div class="field"><dt>Modelo</dt><dd><code>deepseek-flash</code></dd></div>
+      </dl>
+
+      <p>Para comprobar la clave fuera del agente, esta llamada tiene que devolverte un saludo:</p>
+      <div class="code">
+        <button class="copy" type="button">Copiar</button>
+        <pre>curl https://api.deepseek.com/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <span class="k">TU_CLAVE</span>" \
+  -d '{"model":"deepseek-flash","messages":[{"role":"user","content":"Hola"}]}'</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="precio">
+  <p class="phase">Números</p>
+  <h2>Lo que cuesta</h2>
+  <hr class="rule">
+
+  <p>Precio en dólares por millón de tokens, según la página oficial de precios:</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th></th><th>Horas valle</th><th>Horas punta</th></tr></thead>
+      <tbody>
+        <tr><td>Entrada que ya está en caché</td><td>0,003</td><td>0,006</td></tr>
+        <tr><td>Entrada nueva</td><td>0,15</td><td>0,30</td></tr>
+        <tr><td>Salida</td><td>0,60</td><td>1,20</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Las horas punta son de 01:00 a 04:00 y de 06:00 a 10:00 UTC, de lunes a viernes (en España, la madrugada y primera hora de la mañana). El resto del tiempo, fines de semana incluidos, se paga la mitad.</p>
+
+  <div class="note">
+    <span class="note-title">Por qué la caché importa tanto</span>
+    <p>Un agente reenvía una y otra vez el mismo contexto: instrucciones, archivos, historial. Lo que DeepSeek ya tiene en caché cuesta unas cincuenta veces menos que lo nuevo, así que en sesiones largas de agente la factura baja mucho más de lo que sugiere la tabla.</p>
+  </div>
+</section>
+
+<section id="pesos">
+  <p class="phase">El paso siguiente</p>
+  <h2>Ser independiente: los pesos abiertos</h2>
+  <hr class="rule">
+
+  <p>Usar la API es cómodo, pero sigues dependiendo de DeepSeek. Lo que hace distinto a este modelo es que <strong>los pesos están publicados</strong> en <a href="https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017" target="_blank" rel="noopener">Hugging Face</a> con licencia MIT. Eso abre tres caminos:</p>
+
+  <div class="fork">
+    <h3>La API de DeepSeek <span class="tag">para empezar</span></h3>
+    <p>Lo de las fases 1 a 3. Barato y sin montar nada. Tus peticiones pasan por los servidores de DeepSeek.</p>
+  </div>
+
+  <div class="fork pick">
+    <h3>Otro proveedor que lo aloje <span class="tag">si te importa el control</span></h3>
+    <p>Como los pesos son libres, otros proveedores de inferencia pueden servir el mismo modelo. Tú eliges dónde viven tus datos y, si uno falla o sube precios, cambias de proveedor sin cambiar de modelo ni de agente.</p>
+  </div>
+
+  <div class="fork">
+    <h3>Tu propio servidor</h3>
+    <p>Descargas los pesos y lo corres tú. Control total: nadie más ve nada.</p>
+  </div>
+
+  <div class="warn">
+    <span class="warn-title">Seamos realistas con el servidor propio</span>
+    <p>«Flash» no significa pequeño: son 552.000 millones de parámetros, y la guía oficial de inferencia lo reparte entre <strong>8 GPU</strong> de servidor. No cabe en un portátil ni en un ordenador de sobremesa normal; es para alquilar máquinas con GPU o para una empresa con infraestructura. Para casi todo el mundo, la independencia real es la segunda opción.</p>
+  </div>
+</section>
+
+<section id="tareas">
+  <p class="phase">A trabajar</p>
+  <h2>Cinco tareas para estrenarlo</h2>
+  <hr class="rule">
+
+  <p>Copia cualquiera de estas peticiones en tu agente ya conectado a DeepSeek.</p>
+
+  <div class="step">
+    <span class="step-num">T1</span>
+    <h3>Ordenar tus archivos</h3>
+    <div class="step-body">
+      <div class="code code--prose">
+        <button class="copy" type="button">Copiar</button>
+        <pre>Revisa la carpeta Descargas, agrupa los archivos por tipo y por proyecto y propón una estructura de carpetas. No muevas ni borres nada hasta que te dé el visto bueno.</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">T2</span>
+    <h3>Leer un documento larguísimo</h3>
+    <div class="step-body">
+      <div class="code code--prose">
+        <button class="copy" type="button">Copiar</button>
+        <pre>Lee este contrato entero y dame mis obligaciones, los plazos, las penalizaciones y las cláusulas que me conviene negociar, citando el apartado de cada una.</pre>
+      </div>
+      <p>Con un millón de tokens de contexto, el documento entra de una vez, sin trocearlo.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">T3</span>
+    <h3>Entender una captura o un gráfico</h3>
+    <div class="step-body">
+      <div class="code code--prose">
+        <button class="copy" type="button">Copiar</button>
+        <pre>Te paso una captura del panel de ventas. Dime qué ha cambiado respecto al mes pasado y qué tres cosas debería mirar primero.</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">T4</span>
+    <h3>Una herramienta a medida</h3>
+    <div class="step-body">
+      <div class="code code--prose">
+        <button class="copy" type="button">Copiar</button>
+        <pre>Hazme una página web sencilla que calcule el presupuesto de un cliente a partir de horas de trabajo, precio por hora y materiales, con el IVA incluido. Que funcione abriendo el archivo, sin instalar nada.</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">T5</span>
+    <h3>Investigar antes de decidir</h3>
+    <div class="step-body">
+      <div class="code code--prose">
+        <button class="copy" type="button">Copiar</button>
+        <pre>Busca en internet cinco alternativas a [herramienta que pagas], compara precio y funciones en una tabla, enlaza la fuente de cada dato y dime cuál me recomiendas y por qué.</pre>
+      </div>
+      <p>En Claude Code la búsqueda web funciona con DeepSeek: el agente decide cuándo buscar y DeepSeek no cobra la búsqueda, solo los tokens del modelo.</p>
+    </div>
+  </div>
+</section>
+
+<section id="diagnostico">
+  <p class="phase">Si algo falla</p>
+  <h2>Diagnóstico</h2>
+  <hr class="rule">
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Síntoma</th><th>Arreglo</th></tr></thead>
+      <tbody>
+        <tr><td>Claude Code te pide iniciar sesión en Anthropic</td><td>Los <code>export</code> no se han aplicado en esa terminal. Vuelve a lanzarlos (o <code>source ~/.zshrc</code>) y abre <code>claude</code> desde la misma ventana.</td></tr>
+        <tr><td>Error 401</td><td>La clave está mal copiada o se ha borrado. Genera otra en el panel.</td></tr>
+        <tr><td>Error 402 o «saldo insuficiente»</td><td>Se ha acabado el saldo prepago. Recarga en el panel.</td></tr>
+        <tr><td>Error 400 por el nombre del modelo</td><td>Ese nombre no existe. Usa <code>deepseek-flash</code>; el antiguo <code>deepseek-v4-flash</code> también se acepta y va al modelo nuevo.</td></tr>
+        <tr><td>La factura sale más alta de lo esperado</td><td>Algún nombre <code>claude-opus</code> se está traduciendo a <code>deepseek-v4-pro</code>. Comprueba que las variables <code>ANTHROPIC_DEFAULT_*</code> apuntan a Flash.</td></tr>
+        <tr><td>Tu agente no tiene opción para DeepSeek</td><td>Busca «proveedor personalizado», «OpenAI compatible» o «custom endpoint» y usa los tres datos del <a href="#clave">paso 3</a>.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  Verificado contra la documentación oficial de la API de DeepSeek (api-docs.deepseek.com), su página de precios y la ficha de DeepSeek-V4.1-Flash-1017 en Hugging Face · noviembre de 2026 · Los precios y los nombres de modelo cambian: ante la duda, manda la documentación oficial.<br>
+  ¿Qué es un agente y cómo se le pide bien? Escribe AGENTES en cualquier reel. ¿Qué herramientas tienen futuro? Escribe HERRAMIENTA.
+</footer>
+
+</div>
+</main>
+
+</body>
+</html>

@@ -28,7 +28,8 @@
      resto      tercera línea, mediana
      grafico    'skills' | 'mods' | 'apps' | 'validacion' | 'gpu' | 'webs' |
                 'agentes' | 'hermes' | 'conceptos' | 'encargo' | 'pipeline' |
-                'ugc' | 'guiones' | 'fotos' | 'metodo' | 'loops' | 'rodaje' | 'radar'; la ilustración,
+                'ugc' | 'guiones' | 'fotos' | 'metodo' | 'loops' | 'rodaje' | 'radar' |
+                'cerebro'; la ilustración,
                 que dibuja lo que se lleva el lector, no un adorno
      color      acento de la portada, elegido por el tema del recurso
      promesa    banda inferior; una línea por salto, *entre asteriscos* va en negrita
@@ -38,6 +39,24 @@
    ========================================================================== */
 
 window.RACKS_RESOURCES = [
+  {
+    slug: 'deepseek-agente',
+    titulo: 'Tu agente con DeepSeek por unos pocos dólares al mes',
+    kicker: 'Guía · DeepSeek V4.1 Flash',
+    resumen: 'Cómo conectar DeepSeek V4.1 Flash, el modelo abierto de DeepSeek, a tu agente: la API key, Claude Code en diez minutos, OpenCode y cualquier agente compatible con OpenAI, lo que cuesta de verdad y qué significa que los pesos sean tuyos. Con cinco tareas para estrenarlo.',
+    etiquetas: ['DeepSeek', 'Claude Code', 'Agentes', 'Modelos abiertos'],
+    estado: 'live',
+    fecha: '2026-11',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Guía:',
+      destacado: 'Tu agente con DeepSeek',
+      resto: 'por unos pocos dólares al mes',
+      grafico: 'cerebro',
+      color: '#fbba23',
+      promesa: 'UN CEREBRO *ABIERTO* PARA TU AGENTE\nEN *CLAUDE CODE EN DIEZ MINUTOS*'
+    }
+  },
   {
     slug: 'herramientas-ia-futuro',
     titulo: 'Las herramientas de IA que siguen y las que puedes dejar de pagar',
