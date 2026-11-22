@@ -29,7 +29,7 @@
      grafico    'skills' | 'mods' | 'apps' | 'validacion' | 'gpu' | 'webs' |
                 'agentes' | 'hermes' | 'conceptos' | 'encargo' | 'pipeline' |
                 'ugc' | 'guiones' | 'fotos' | 'metodo' | 'loops' | 'rodaje' | 'radar' |
-                'cerebro'; la ilustración,
+                'cerebro' | 'reparto'; la ilustración,
                 que dibuja lo que se lleva el lector, no un adorno
      color      acento de la portada, elegido por el tema del recurso
      promesa    banda inferior; una línea por salto, *entre asteriscos* va en negrita
@@ -39,6 +39,24 @@
    ========================================================================== */
 
 window.RACKS_RESOURCES = [
+  {
+    slug: 'skill-reel-5-piezas',
+    titulo: 'Saca cinco piezas de cada reel que funciona',
+    kicker: 'Skill · Contenido',
+    resumen: 'Skill para Claude que convierte la transcripción de un reel, TikTok o vídeo en un carrusel, un post de texto, un email, una secuencia de stories y un guion nuevo, con el calendario para publicarlas sin que se pisen. Lista para copiar o descargar como SKILL.md.',
+    etiquetas: ['Claude', 'Skills', 'Contenido', 'Reels'],
+    estado: 'live',
+    fecha: '2026-11',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Skill:',
+      destacado: 'Saca cinco piezas',
+      resto: 'de cada reel que funciona',
+      grafico: 'reparto',
+      color: '#9a72f8',
+      promesa: 'UN VÍDEO QUE YA FUNCIONÓ\nCONVERTIDO EN *CINCO FORMATOS*'
+    }
+  },
   {
     slug: 'deepseek-agente',
     titulo: 'Tu agente con DeepSeek por unos pocos dólares al mes',

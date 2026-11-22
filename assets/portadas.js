@@ -1104,6 +1104,87 @@
     c.stroke();
   };
 
+  /* --- Un reel → cinco piezas: el vídeo que funcionó, repartido ---------
+     A la izquierda el reel vertical, relleno: es la idea ya validada. De él
+     salen cinco ramas, una por formato, cada una con su forma reconocible:
+     el carrusel apilado, el post en líneas, el sobre, las stories en
+     segmentos y un reel nuevo, vacío, por grabar. */
+  GRAFICOS.reparto = function (c, X, Y, S, U) {
+    /* el reel original */
+    var rw = S * 0.24, rh = rw * 16 / 9;
+    var rx = X + S * 0.02, ry = Y + (S - rh) / 2;
+    caja(c, rx, ry, rw, rh, ACENTO);
+    c.fillStyle = T.fondo;
+    poli(c, [[rx + rw * 0.40, ry + rh * 0.42], [rx + rw * 0.64, ry + rh * 0.50],
+             [rx + rw * 0.40, ry + rh * 0.58]], true);
+    c.fill();
+
+    /* las cinco ramas, desde el canto derecho del reel */
+    var ox = rx + rw, oy = ry + rh / 2;
+    var bx = X + S * 0.47, px = X + S * 0.56, alto = S * 0.15;
+    var filas = [0, 1, 2, 3, 4].map(function (k) { return Y + S * 0.10 + k * S * 0.20; });
+    trazo(c, U, 0.12);
+    c.beginPath(); c.moveTo(ox, oy); c.lineTo(bx - S * 0.06, oy); c.stroke();
+    filas.forEach(function (fy) {
+      c.beginPath();
+      c.moveTo(bx - S * 0.06, oy);
+      c.lineTo(bx, fy);
+      c.lineTo(px - S * 0.025, fy);
+      c.stroke();
+    });
+
+    var top = function (k) { return filas[k] - alto / 2; };
+    trazo(c, U, 0.12);
+
+    /* 1 · carrusel: tres cuadrados apilados */
+    var q = alto * 0.86;
+    for (var i = 2; i >= 0; i--) {
+      var qx = px + i * S * 0.035, qy = top(0) + (2 - i) * alto * 0.07;
+      c.fillStyle = T.fondo; c.fillRect(qx, qy, q, q);
+      caja(c, qx, qy, q, q);
+    }
+    c.fillStyle = conAlfa(ACENTO, 0.45);
+    c.fillRect(px + q * 0.18, top(0) + alto * 0.14 + q * 0.30, q * 0.64, q * 0.12);
+
+    /* 2 · post de texto: la primera línea gruesa, el resto finas */
+    c.fillStyle = ACENTO;
+    c.fillRect(px, top(1) + alto * 0.08, S * 0.36, alto * 0.16);
+    c.fillStyle = conAlfa(ACENTO, 0.45);
+    [0.40, 0.62, 0.84].forEach(function (f, k) {
+      c.fillRect(px, top(1) + alto * f, S * (k === 2 ? 0.20 : 0.30), alto * 0.08);
+    });
+
+    /* 3 · email: el sobre */
+    var ew = S * 0.24, eh = alto * 0.92, ey = top(2) + alto * 0.04;
+    caja(c, px, ey, ew, eh);
+    poli(c, [[px, ey], [px + ew / 2, ey + eh * 0.56], [px + ew, ey]]);
+    c.stroke();
+
+    /* 4 · stories: cinco segmentos de progreso y la primera, llena */
+    var sw = S * 0.064, sg = S * 0.012;
+    for (var k = 0; k < 5; k++) {
+      c.fillStyle = k === 0 ? ACENTO : conAlfa(ACENTO, 0.35);
+      c.fillRect(px + k * (sw + sg), top(3) + alto * 0.05, sw, alto * 0.08);
+    }
+    caja(c, px, top(3) + alto * 0.24, S * 0.36, alto * 0.70);
+    c.beginPath();
+    c.arc(px + S * 0.18, top(3) + alto * 0.59, alto * 0.18, 0, Math.PI * 2);
+    c.stroke();
+
+    /* 5 · el reel nuevo: vertical, vacío, con su gancho arriba */
+    var nw = alto * 0.56, nh = alto;
+    caja(c, px, top(4), nw, nh);
+    c.fillStyle = ACENTO;
+    c.fillRect(px + nw * 0.16, top(4) + nh * 0.14, nw * 0.68, nh * 0.10);
+    trazo(c, U, 0.12);
+    c.setLineDash([U * 0.3, U * 0.25]);
+    c.beginPath();
+    c.moveTo(px + nw + S * 0.04, top(4) + nh / 2);
+    c.lineTo(px + S * 0.36, top(4) + nh / 2);
+    c.stroke();
+    c.setLineDash([]);
+  };
+
   function grafico(c, r, x, y, w, h, U) {
     var dibujo = GRAFICOS[(r.portada || {}).grafico];
     if (!dibujo) return;
