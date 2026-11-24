@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Edita tus vídeos con Claude sin abrir Premiere · Recursos Racks Academy</title>
+<meta name="description" content="Los 5 flujos que usamos para editar vídeo con Claude Code, con los prompts listos para copiar: montaje, reencuadre automático, carruseles, anuncios y versiones.">
+<meta property="og:title" content="Edita tus vídeos con Claude sin abrir Premiere">
+<meta property="og:description" content="Los 5 flujos que usamos para editar, con los prompts listos para copiar. Y el caso real de los anuncios del Racks Friday.">
+<meta property="og:type" content="article">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/racks.css">
+<script>/* fija el modo antes del primer pintado */(function(){var h=document.documentElement,s=location.search;if(s.indexOf('embed=1')>-1)h.classList.add('is-embed');if(window.self!==window.top)h.classList.add('is-framed');if(s.indexOf('bg=transparent')>-1)h.classList.add('is-transparent');})();</script>
+<script defer src="../assets/racks.js"></script>
+</head>
+<body data-resource-id="edicion-video-claude">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="watermark-r" aria-hidden="true">R</div>
+
+<header class="topbar" data-embed-hide>
+  <span class="topbar-mark" aria-hidden="true">R</span>
+  <span class="topbar-name">Racks Academy</span>
+  <span class="topbar-sep" aria-hidden="true">/</span>
+  <span class="topbar-here">Edición de vídeo con Claude</span>
+</header>
+
+<main class="shell" id="contenido">
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Guía gratuita · Racks · Guía de edición</p>
+  <h1>Edición<br>de vídeo<br>con <em>Claude</em>.</h1>
+  <p class="standfirst">Los 5 flujos que usamos para editar, con los prompts listos para copiar.</p>
+
+  <nav class="toc">
+    <p>Recorrido</p>
+    <ol>
+      <li><a href="#antes">Antes de empezar</a> · lo que necesitas</li>
+      <li><a href="#flujo-01">Flujo 01</a> · Editar vídeos sin abrir Premiere</li>
+      <li><a href="#flujo-02">Flujo 02</a> · Centrar tus vídeos automáticamente</li>
+      <li><a href="#flujo-03">Flujo 03</a> · 10 carruseles en 1 hora</li>
+      <li><a href="#flujo-04">Flujo 04</a> · Anuncios montados solos</li>
+      <li><a href="#flujo-05">Flujo 05</a> · 10 versiones de un vídeo</li>
+      <li><a href="#caso">Caso real</a> · los anuncios del Racks Friday</li>
+      <li><a href="#revision">Antes de publicar</a> · revisa esto</li>
+    </ol>
+  </nav>
+</header>
+
+<section id="antes">
+  <p class="phase">Antes de empezar</p>
+  <h2>Lo que necesitas (y nada más)</h2>
+  <hr class="rule">
+
+  <dl>
+    <div class="field"><dt>Claude Code</dt><dd>El Claude que trabaja dentro de tu ordenador: abre tus archivos, ejecuta programas y guarda los resultados.</dd></div>
+    <div class="field"><dt>Una carpeta por vídeo</dt><dd>Las tomas, el guion, la música y el logo juntos. Claude trabaja sobre esa carpeta.</dd></div>
+    <div class="field"><dt>ffmpeg y Python</dt><dd>Las herramientas gratuitas que cortan, montan y exportan. Claude te las instala.</dd></div>
+    <div class="field"><dt>Tu marca</dt><dd>Colores, tipografía y logo. Se lo das una vez y lo reutiliza en todo.</dd></div>
+  </dl>
+
+  <div class="launch">
+    <p class="launch-label">Primer prompt · para dejarlo todo listo</p>
+    <div class="code">
+      <pre>Quiero editar vídeo desde aquí. Instala lo que haga falta (ffmpeg, Python y Whisper para transcribir), comprueba que funciona y dime qué has instalado.</pre>
+      <button class="copy">Copiar</button>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="note-title">Cómo usar la guía</span>
+    <p>Copia el prompt de cada flujo y cambia lo que va en naranja por lo tuyo. Pide siempre una prueba corta antes del vídeo entero.</p>
+  </div>
+</section>
+
+<section id="flujo-01">
+  <p class="phase">Flujo 01 / 05</p>
+  <h2>Editar vídeos sin abrir Premiere</h2>
+  <hr class="rule">
+
+  <div class="step"><span class="step-num">01</span><h3>Mete todas las tomas y el guion en una carpeta.</h3></div>
+  <div class="step"><span class="step-num">02</span><h3>Pide a Claude que transcriba cada toma, la compare con el guion y se quede con la buena.</h3></div>
+  <div class="step"><span class="step-num">03</span><h3>Deja que quite silencios, muletillas y frases repetidas.</h3></div>
+  <div class="step"><span class="step-num">04</span><h3>Añade subtítulos palabra a palabra, reencuadre vertical y música de fondo.</h3></div>
+
+  <p class="launch-label">Prompt para copiar</p>
+  <div class="code">
+    <pre>Monta un reel vertical con las tomas de esta carpeta siguiendo <span class="k">guion.md</span>. Quédate con la mejor toma de cada frase, quita silencios y muletillas, subtitula palabra a palabra en <span class="k">amarillo</span> y añade <span class="k">musica.mp3</span> baja, sin tapar la voz.</pre>
+    <button class="copy">Copiar</button>
+  </div>
+
+  <div class="note">
+    <span class="note-title">Truco</span>
+    <p>Pide la música a unos −18 dB bajo la voz y que suba en los momentos sin habla. Pide también el <code>.srt</code> por si quieres los subtítulos aparte.</p>
+  </div>
+</section>
+
+<section id="flujo-02">
+  <p class="phase">Flujo 02 / 05</p>
+  <h2>Centrar tus vídeos automáticamente</h2>
+  <hr class="rule">
+
+  <div class="step"><span class="step-num">01</span><h3>Pásale el vídeo grabado en horizontal.</h3></div>
+  <div class="step"><span class="step-num">02</span><h3>Claude localiza tu cara y la sigue fotograma a fotograma.</h3></div>
+  <div class="step"><span class="step-num">03</span><h3>Suaviza el recorrido para que el encuadre no tiemble.</h3></div>
+  <div class="step"><span class="step-num">04</span><h3>Exporta en 9:16, 4:5 y 1:1 con la cara siempre centrada.</h3></div>
+
+  <p class="launch-label">Prompt para copiar</p>
+  <div class="code">
+    <pre><span class="k">video.mp4</span> está grabado en horizontal. Sigue mi cara fotograma a fotograma, suaviza el movimiento y exporta tres versiones (<span class="k">9:16, 4:5 y 1:1</span>) con la cara siempre centrada. Antes, sácame 3 fotogramas de prueba para ver el encuadre.</pre>
+    <button class="copy">Copiar</button>
+  </div>
+
+  <div class="note">
+    <span class="note-title">Truco</span>
+    <p>Si salen dos personas, dile a quién seguir («la persona de la izquierda en el segundo 3»). Y si los textos van arriba, pide que deje la cara un poco más abajo.</p>
+  </div>
+</section>
+
+<section id="flujo-03">
+  <p class="phase">Flujo 03 / 05</p>
+  <h2>10 carruseles en 1 hora</h2>
+  <hr class="rule">
+
+  <div class="step"><span class="step-num">01</span><h3>Crea una vez una plantilla con tu marca: colores, tipografía y logo.</h3></div>
+  <div class="step"><span class="step-num">02</span><h3>Pásale los 10 temas o guiones que quieres publicar.</h3></div>
+  <div class="step"><span class="step-num">03</span><h3>Claude escribe el texto de cada slide y los prompts para las imágenes.</h3></div>
+  <div class="step"><span class="step-num">04</span><h3>Generas las imágenes y Claude monta y exporta todo a 1080 × 1350.</h3></div>
+
+  <p class="launch-label">Prompt para copiar</p>
+  <div class="code">
+    <pre>Con la plantilla de <span class="k">marca/</span>, prepara <span class="k">10</span> carruseles de <span class="k">6</span> slides con estos temas: <span class="k">[lista]</span>. Escribe el texto de cada slide, dame los prompts de imagen y, cuando meta las fotos en <span class="k">visuales/</span>, exporta todo en JPG a 1080 × 1350, numerado y por carpetas.</pre>
+    <button class="copy">Copiar</button>
+  </div>
+
+  <div class="note">
+    <span class="note-title">Truco</span>
+    <p>El primer lote es el lento porque montas la plantilla. A partir del segundo, solo cambias textos e imágenes.</p>
+  </div>
+</section>
+
+<section id="flujo-04">
+  <p class="phase">Flujo 04 / 05</p>
+  <h2>Anuncios montados solos</h2>
+  <hr class="rule">
+
+  <div class="step"><span class="step-num">01</span><h3>Pásale el guion del anuncio, el logo y la música.</h3></div>
+  <div class="step"><span class="step-num">02</span><h3>Claude lo divide en escenas: texto, duración y animación de cada una.</h3></div>
+  <div class="step"><span class="step-num">03</span><h3>Programa las animaciones (textos, contadores, tarjetas) y las convierte en vídeo.</h3></div>
+  <div class="step"><span class="step-num">04</span><h3>Corta al ritmo de la música y cierra con el logo animado.</h3></div>
+
+  <p class="launch-label">Prompt para copiar</p>
+  <div class="code">
+    <pre>Convierte <span class="k">guion.md</span> en un anuncio vertical de <span class="k">15 s</span>. Divide el guion en escenas en un archivo escenas.json, anima cada escena con los colores de <span class="k">marca/</span>, corta al ritmo de <span class="k">musica.mp3</span> y termina con el logo. Exporta en MP4.</pre>
+    <button class="copy">Copiar</button>
+  </div>
+
+  <div class="note">
+    <span class="note-title">Truco</span>
+    <p>Como todo sale de <code>escenas.json</code>, si cambia un precio o una fecha solo tocas ese dato y el anuncio se vuelve a generar en segundos.</p>
+  </div>
+</section>
+
+<section id="flujo-05">
+  <p class="phase">Flujo 05 / 05</p>
+  <h2>10 versiones de un vídeo</h2>
+  <hr class="rule">
+
+  <div class="step"><span class="step-num">01</span><h3>Parte de un vídeo ya terminado.</h3></div>
+  <div class="step"><span class="step-num">02</span><h3>Claude escribe 3 ganchos distintos para los primeros segundos.</h3></div>
+  <div class="step"><span class="step-num">03</span><h3>Combina ganchos, formatos (9:16, 1:1, 16:9) y estilos (B-roll o ilustración).</h3></div>
+  <div class="step"><span class="step-num">04</span><h3>Exporta cada versión con un nombre claro para comparar resultados.</h3></div>
+
+  <p class="launch-label">Prompt para copiar</p>
+  <div class="code">
+    <pre>A partir de <span class="k">final.mp4</span>, escribe <span class="k">3</span> ganchos distintos para los primeros 3 segundos y monta <span class="k">10</span> versiones combinando gancho, formato (<span class="k">9:16, 1:1 y 16:9</span>) y estilo. Nombra cada archivo gancho_formato_estilo.mp4.</pre>
+    <button class="copy">Copiar</button>
+  </div>
+
+  <div class="note">
+    <span class="note-title">Truco</span>
+    <p>Sube las versiones como anuncios con el mismo presupuesto. A los pocos días sabrás qué gancho retiene más, y ese es el que repites.</p>
+  </div>
+</section>
+
+<section id="caso">
+  <p class="phase">Caso real</p>
+  <h2>Así montamos el Racks Friday</h2>
+  <hr class="rule">
+
+  <p>El flujo 04 aplicado a una campaña real. Cada frase del guion se convierte en una escena descrita en un archivo:</p>
+
+  <div class="code">
+    <pre>// «Regalamos más de un millón»
+{
+  "escena": "contador",
+  "de": 0, "a": 1000000,
+  "dura": 2.4,
+  "titulo": "RACKS FRIDAY",
+  "sello": "EN SALDO PARA FORMARTE"
+}</pre>
+    <button class="copy">Copiar</button>
+  </div>
+
+  <div class="ok">
+    <span class="ok-title">Lo que sale de ese archivo</span>
+    <ul>
+      <li>El contador sube solo hasta el millón.</li>
+      <li>Las tarjetas de saldo (150, 300 y 500) salen de una lista: cambias una cifra y se regenera.</li>
+      <li>El cierre escribe la palabra clave letra a letra, con el cursor pulsando.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="revision">
+  <p class="phase">Antes de publicar</p>
+  <h2>Revisa esto antes de subirlo</h2>
+  <hr class="rule">
+
+  <ul class="lead-list">
+    <li>Los subtítulos no tienen erratas y van al ritmo de la voz.</li>
+    <li>Ningún texto tapa la cara ni se sale de la zona segura de Instagram.</li>
+    <li>La música se oye, pero nunca por encima de la voz.</li>
+    <li>El gancho se entiende sin sonido en los primeros 3 segundos.</li>
+    <li>Exportado en MP4 (H.264), 30 fps y en el formato de la red donde va.</li>
+  </ul>
+
+  <p class="launch-label">Prompt de revisión</p>
+  <div class="code">
+    <pre>Revisa <span class="k">final.mp4</span>: saca un fotograma cada 2 segundos y comprueba que ningún texto tapa la cara ni se sale de la zona segura de Instagram. Lee los subtítulos y dime si hay erratas.</pre>
+    <button class="copy">Copiar</button>
+  </div>
+</section>
+
+<section id="cierre">
+  <p class="phase">¿Te ha servido?</p>
+  <h2>Cuéntanos qué has montado</h2>
+  <hr class="rule">
+  <p>Etiquétanos en lo que edites con esta guía y síguenos para más flujos con Claude: <strong>@racks.group</strong>.</p>
+</section>
+
+<footer>
+  Guía de edición · RACKS Group · @racks.group<br>
+  Pide siempre una prueba corta antes del vídeo entero.
+</footer>
+
+</div>
+</main>
+</body>
+</html>

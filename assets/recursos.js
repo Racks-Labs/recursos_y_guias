@@ -29,7 +29,7 @@
      grafico    'skills' | 'mods' | 'apps' | 'validacion' | 'gpu' | 'webs' |
                 'agentes' | 'hermes' | 'conceptos' | 'encargo' | 'pipeline' |
                 'ugc' | 'guiones' | 'fotos' | 'metodo' | 'loops' | 'rodaje' | 'radar' |
-                'cerebro' | 'reparto'; la ilustración,
+                'cerebro' | 'reparto' | 'montaje'; la ilustración,
                 que dibuja lo que se lleva el lector, no un adorno
      color      acento de la portada, elegido por el tema del recurso
      promesa    banda inferior; una línea por salto, *entre asteriscos* va en negrita
@@ -39,6 +39,24 @@
    ========================================================================== */
 
 window.RACKS_RESOURCES = [
+  {
+    slug: 'edicion-video-claude',
+    titulo: 'Edita tus vídeos con Claude sin abrir Premiere',
+    kicker: 'Guía · Edición de vídeo',
+    resumen: 'Los 5 flujos que usamos para editar con Claude Code, con los prompts listos para copiar: montar un reel desde las tomas, centrar la cara en vertical, 10 carruseles en una hora, anuncios montados solos y 10 versiones de un vídeo. Con el caso real del Racks Friday y la revisión antes de publicar.',
+    etiquetas: ['Claude Code', 'Vídeo', 'ffmpeg', 'Prompts'],
+    estado: 'live',
+    fecha: '2026-11',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Guía:',
+      destacado: 'Edita tus vídeos con Claude',
+      resto: 'sin abrir Premiere',
+      grafico: 'montaje',
+      color: '#f5911a',
+      promesa: 'LOS *5 FLUJOS* QUE USAMOS PARA EDITAR\nCON LOS *PROMPTS LISTOS* PARA COPIAR'
+    }
+  },
   {
     slug: 'skill-reel-5-piezas',
     titulo: 'Saca cinco piezas de cada reel que funciona',

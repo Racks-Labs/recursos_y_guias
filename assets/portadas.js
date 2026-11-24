@@ -1185,6 +1185,83 @@
     c.setLineDash([]);
   };
 
+  /* --- Edición de vídeo con Claude: de la toma al vertical, sin Premiere --
+     Arriba, la toma horizontal con la cara a un lado; a su derecha, el
+     vertical que sale de ella con la cara ya centrada y sus subtítulos.
+     Abajo, la línea de tiempo que monta Claude: tomas cortadas, los huecos
+     de silencio fuera, y la música por debajo de la voz. */
+  GRAFICOS.montaje = function (c, X, Y, S, U) {
+    function cara(cx, cy, r, color) {
+      c.fillStyle = color;
+      c.beginPath(); c.arc(cx, cy, r, 0, Math.PI * 2); c.fill();
+      c.beginPath(); c.arc(cx, cy + r * 2.6, r * 1.8, Math.PI, 0); c.closePath(); c.fill();
+    }
+
+    /* la toma horizontal, con el recorte vertical marcado en discontinua */
+    var hx = X + S * 0.02, hy = Y + S * 0.10, hw = S * 0.52, hh = hw * 9 / 16;
+    trazo(c, U, 0.13);
+    caja(c, hx, hy, hw, hh);
+    c.save(); c.beginPath(); c.rect(hx, hy, hw, hh); c.clip();
+    cara(hx + hw * 0.66, hy + hh * 0.40, S * 0.032, conAlfa(ACENTO, 0.55));
+    c.restore();
+    var vw = hh * 9 / 16, vx = hx + hw * 0.66 - vw / 2;
+    trazo(c, U, 0.10);
+    c.setLineDash([U * 0.3, U * 0.22]);
+    caja(c, vx, hy, vw, hh);
+    c.setLineDash([]);
+
+    /* la flecha hacia el vertical */
+    var fy = hy + hh / 2, f0 = hx + hw + S * 0.03, f1 = X + S * 0.66;
+    trazo(c, U, 0.13);
+    c.beginPath(); c.moveTo(f0, fy); c.lineTo(f1, fy); c.stroke();
+    poli(c, [[f1 - S * 0.04, fy - S * 0.035], [f1, fy], [f1 - S * 0.04, fy + S * 0.035]]);
+    c.stroke();
+
+    /* el vertical, relleno, con la cara centrada y el subtítulo */
+    var pw = S * 0.26, ph = pw * 16 / 9, px = X + S * 0.70, py = Y + S * 0.02;
+    caja(c, px, py, pw, ph, ACENTO);
+    c.save(); c.beginPath(); c.rect(px, py, pw, ph); c.clip();
+    cara(px + pw / 2, py + ph * 0.36, S * 0.048, T.fondo);
+    c.restore();
+    c.fillStyle = T.fondo;
+    c.fillRect(px + pw * 0.14, py + ph * 0.74, pw * 0.42, ph * 0.045);
+    c.fillRect(px + pw * 0.60, py + ph * 0.74, pw * 0.26, ph * 0.045);
+
+    /* la línea de tiempo: pista de vídeo con cortes, pista de música */
+    var tx = X + S * 0.02, tw = S * 0.62, ty = Y + S * 0.56, th = S * 0.10;
+    var clips = [[0, 0.22], [0.27, 0.48], [0.53, 0.78], [0.83, 1]];
+    trazo(c, U, 0.12);
+    clips.forEach(function (k, i) {
+      var x = tx + tw * k[0], w = tw * (k[1] - k[0]);
+      if (i % 2) { c.fillStyle = conAlfa(ACENTO, 0.45); c.fillRect(x, ty, w, th); }
+      caja(c, x, ty, w, th);
+    });
+    /* la música, baja: barras cortas bajo la voz */
+    var ay = ty + th + S * 0.10, n = 22, bw = tw / n;
+    c.fillStyle = conAlfa(ACENTO, 0.55);
+    for (var i = 0; i < n; i++) {
+      var h = S * (0.018 + 0.03 * Math.abs(Math.sin(i * 1.7)));
+      c.fillRect(tx + i * bw + bw * 0.2, ay - h / 2, bw * 0.6, h);
+    }
+    /* el cabezal de reproducción */
+    var cx = tx + tw * 0.62;
+    trazo(c, U, 0.13);
+    c.beginPath(); c.moveTo(cx, ty - S * 0.05); c.lineTo(cx, ay + S * 0.06); c.stroke();
+    c.fillStyle = ACENTO;
+    poli(c, [[cx - S * 0.025, ty - S * 0.08], [cx + S * 0.025, ty - S * 0.08], [cx, ty - S * 0.045]], true);
+    c.fill();
+
+    /* y el prompt que lo hace todo: el cursor de la terminal */
+    var my = Y + S * 0.92;
+    trazo(c, U, 0.13);
+    poli(c, [[X + S * 0.02, my - S * 0.04], [X + S * 0.06, my], [X + S * 0.02, my + S * 0.04]]);
+    c.stroke();
+    c.fillStyle = conAlfa(ACENTO, 0.45);
+    c.fillRect(X + S * 0.10, my - S * 0.012, S * 0.40, S * 0.024);
+    c.fillStyle = ACENTO;
+    c.fillRect(X + S * 0.53, my - S * 0.035, S * 0.025, S * 0.07);
+  };
+
   function grafico(c, r, x, y, w, h, U) {
     var dibujo = GRAFICOS[(r.portada || {}).grafico];
     if (!dibujo) return;
