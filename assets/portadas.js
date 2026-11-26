@@ -1262,6 +1262,223 @@
     c.fillRect(X + S * 0.53, my - S * 0.035, S * 0.025, S * 0.07);
   };
 
+  /* --- Predictor de viralidad: la nota y el segundo en que se van ---------
+     Arriba, el marcador sobre 100 con la aguja en zona alta. Abajo, la curva
+     de retención del reel con el punto exacto donde cae, marcado. */
+  GRAFICOS.termometro = function (c, X, Y, S, U) {
+    var gx = X + S * 0.5, gy = Y + S * 0.42, r = S * 0.30;
+    /* el arco en diez tramos, cada vez más intenso */
+    for (var i = 0; i < 10; i++) {
+      var a0 = Math.PI + i * Math.PI / 10 + 0.025, a1 = Math.PI + (i + 1) * Math.PI / 10 - 0.025;
+      c.strokeStyle = conAlfa(ACENTO, 0.25 + i * 0.075);
+      c.lineWidth = S * 0.06; c.lineCap = 'butt'; c.setLineDash([]);
+      c.beginPath(); c.arc(gx, gy, r, a0, a1); c.stroke();
+    }
+    /* la aguja, en el 85 */
+    var ang = Math.PI + Math.PI * 0.85;
+    trazo(c, U, 0.18);
+    c.beginPath(); c.moveTo(gx, gy); c.lineTo(gx + Math.cos(ang) * r * 0.82, gy + Math.sin(ang) * r * 0.82); c.stroke();
+    c.fillStyle = ACENTO; c.beginPath(); c.arc(gx, gy, S * 0.03, 0, Math.PI * 2); c.fill();
+
+    /* la curva de retención */
+    var bx = X + S * 0.08, bw = S * 0.84, by = Y + S * 0.58, bh = S * 0.34;
+    trazo(c, U, 0.10);
+    c.beginPath(); c.moveTo(bx, by); c.lineTo(bx, by + bh); c.lineTo(bx + bw, by + bh); c.stroke();
+    var pts = [[0, 0.05], [0.12, 0.14], [0.30, 0.22], [0.42, 0.26], [0.50, 0.55], [0.62, 0.62], [0.80, 0.68], [1, 0.74]];
+    trazo(c, U, 0.15);
+    poli(c, pts.map(function (p) { return [bx + bw * p[0], by + bh * p[1]]; })); c.stroke();
+    /* el segundo exacto: la caída, marcada */
+    var dx = bx + bw * 0.46;
+    trazo(c, U, 0.10); c.setLineDash([U * 0.3, U * 0.22]);
+    c.beginPath(); c.moveTo(dx, by - S * 0.02); c.lineTo(dx, by + bh); c.stroke(); c.setLineDash([]);
+    c.fillStyle = ACENTO; c.beginPath(); c.arc(dx, by + bh * 0.40, S * 0.028, 0, Math.PI * 2); c.fill();
+  };
+
+  /* --- Email que convierte: se abre, se lee y se pulsa -------------------
+     El sobre abierto con la carta saliendo: un asunto en grueso, pocas
+     líneas, un solo botón. Y el cursor justo encima, haciendo clic. */
+  GRAFICOS.sobre = function (c, X, Y, S, U) {
+    var ex = X + S * 0.12, ew = S * 0.76, ey = Y + S * 0.56, eh = S * 0.38;
+    /* la solapa abierta, por detrás de todo */
+    trazo(c, U, 0.13);
+    poli(c, [[ex, ey], [ex + ew / 2, ey - eh * 0.50], [ex + ew, ey]]); c.stroke();
+    /* la carta, saliendo del sobre */
+    var lx = ex + ew * 0.10, lw = ew * 0.80, ly = Y + S * 0.04, lh = S * 0.66;
+    c.fillStyle = T.fondo; c.fillRect(lx, ly, lw, lh);
+    caja(c, lx, ly, lw, lh);
+    c.fillStyle = ACENTO; c.fillRect(lx + lw * 0.10, ly + lh * 0.09, lw * 0.62, lh * 0.065);
+    c.fillStyle = conAlfa(ACENTO, 0.45);
+    [0.23, 0.30, 0.37].forEach(function (f, k) { c.fillRect(lx + lw * 0.10, ly + lh * f, lw * (k === 2 ? 0.45 : 0.78), lh * 0.03); });
+    /* el único CTA */
+    var cbx = lx + lw * 0.10, cby = ly + lh * 0.48, cbw = lw * 0.46, cbh = lh * 0.10;
+    c.fillStyle = ACENTO; c.fillRect(cbx, cby, cbw, cbh);
+    /* el frente del sobre, que tapa el pie de la carta */
+    c.fillStyle = T.fondo; c.fillRect(ex, ey, ew, eh);
+    trazo(c, U, 0.13);
+    caja(c, ex, ey, ew, eh);
+    poli(c, [[ex, ey], [ex + ew / 2, ey + eh * 0.55], [ex + ew, ey]]); c.stroke();
+    /* el cursor, haciendo clic sobre el botón */
+    var px = cbx + cbw * 0.78, py = cby + cbh * 0.55, k = S * 0.0021;
+    var flecha = [[0, 0], [0, 46], [12, 35], [20, 54], [28, 50], [20, 32], [36, 32]];
+    c.fillStyle = T.fondo; c.strokeStyle = ACENTO; c.lineWidth = Math.max(2, U * 0.10);
+    poli(c, flecha.map(function (p) { return [px + p[0] * k, py + p[1] * k]; }), true); c.fill(); c.stroke();
+    trazo(c, U, 0.10);
+    [[-1, -0.6], [-0.2, -1.15], [0.65, -0.75]].forEach(function (d) {
+      c.beginPath(); c.moveTo(px + d[0] * S * 0.035, py + d[1] * S * 0.035);
+      c.lineTo(px + d[0] * S * 0.07, py + d[1] * S * 0.07); c.stroke();
+    });
+  };
+
+  /* --- Humanizador: del bloque de IA al texto de una persona -------------
+     A la izquierda, líneas todas iguales, sembradas de rayas largas: así se
+     reconoce el texto de IA. A la derecha, el mismo texto con frases cortas
+     y largas mezcladas, y sin rayas. */
+  GRAFICOS.humanizar = function (c, X, Y, S, U) {
+    var bw = S * 0.36, lh = S * 0.04, gap = S * 0.075, y0 = Y + S * 0.18;
+    var ax = X + S * 0.02, bx = X + S * 0.62;
+    /* el bloque de IA: siete líneas idénticas, con su raya en medio */
+    for (var i = 0; i < 7; i++) {
+      var y = y0 + i * gap;
+      c.fillStyle = conAlfa(ACENTO, 0.35);
+      c.fillRect(ax, y, bw * 0.42, lh); c.fillRect(ax + bw * 0.58, y, bw * 0.42, lh);
+      c.fillStyle = ACENTO; c.fillRect(ax + bw * 0.45, y + lh * 0.25, bw * 0.10, lh * 0.5);  /* la raya — */
+    }
+    trazo(c, U, 0.11);
+    caja(c, ax - S * 0.02, y0 - S * 0.04, bw + S * 0.04, gap * 7 + S * 0.02);
+    /* la flecha */
+    var fy = y0 + gap * 3 + lh / 2;
+    trazo(c, U, 0.14);
+    c.beginPath(); c.moveTo(X + S * 0.43, fy); c.lineTo(X + S * 0.56, fy); c.stroke();
+    poli(c, [[X + S * 0.52, fy - S * 0.035], [X + S * 0.56, fy], [X + S * 0.52, fy + S * 0.035]]); c.stroke();
+    /* el texto humano: longitudes que cambian, una frase muy corta, una opinión en grueso */
+    var largos = [0.92, 0.30, 1, 0.74, 0.18, 0.86, 0.55];
+    largos.forEach(function (f, k) {
+      c.fillStyle = k === 3 ? ACENTO : conAlfa(ACENTO, 0.6);
+      c.fillRect(bx, y0 + k * gap - (k === 3 ? lh * 0.25 : 0), bw * f, k === 3 ? lh * 1.5 : lh);
+    });
+    /* la firma: una línea a mano por debajo */
+    trazo(c, U, 0.13);
+    c.beginPath();
+    var sy = y0 + gap * 7 + S * 0.06;
+    c.moveTo(bx, sy);
+    c.bezierCurveTo(bx + bw * 0.15, sy - S * 0.06, bx + bw * 0.25, sy + S * 0.05, bx + bw * 0.40, sy - S * 0.01);
+    c.bezierCurveTo(bx + bw * 0.55, sy - S * 0.06, bx + bw * 0.65, sy + S * 0.04, bx + bw * 0.85, sy - S * 0.02);
+    c.stroke();
+  };
+
+  /* --- Ideas en 10 minutos: la entrevista y las veinte ideas -------------
+     El micrófono, porque todo sale de lo que cuentas. A la derecha, las
+     veinte ideas en rejilla, con las tres mejores marcadas. */
+  GRAFICOS.entrevista = function (c, X, Y, S, U) {
+    var mx = X + S * 0.16, my = Y + S * 0.22, mw = S * 0.16, mh = S * 0.28;
+    trazo(c, U, 0.14);
+    c.beginPath();
+    c.moveTo(mx - mw / 2, my + mw / 2);
+    c.arc(mx, my + mw / 2, mw / 2, Math.PI, 0);
+    c.lineTo(mx + mw / 2, my + mh - mw / 2);
+    c.arc(mx, my + mh - mw / 2, mw / 2, 0, Math.PI);
+    c.closePath(); c.stroke();
+    c.fillStyle = conAlfa(ACENTO, 0.45);
+    for (var r = 0; r < 3; r++) c.fillRect(mx - mw * 0.28, my + mh * (0.30 + r * 0.14), mw * 0.56, mh * 0.05);
+    c.beginPath(); c.arc(mx, my + mh * 0.62, mw * 0.85, 0.15 * Math.PI, 0.85 * Math.PI); c.stroke();
+    c.beginPath(); c.moveTo(mx, my + mh * 0.62 + mw * 0.85); c.lineTo(mx, Y + S * 0.82); c.stroke();
+    c.beginPath(); c.moveTo(mx - S * 0.08, Y + S * 0.82); c.lineTo(mx + S * 0.08, Y + S * 0.82); c.stroke();
+    /* las ondas de voz hacia la rejilla */
+    trazo(c, U, 0.11);
+    [0.06, 0.11].forEach(function (d) {
+      c.beginPath(); c.arc(mx + mw * 0.6, my + mh * 0.35, S * d + mw * 0.3, -0.35 * Math.PI, 0.35 * Math.PI); c.stroke();
+    });
+    /* veinte ideas, cuatro columnas por cinco filas; las tres mejores, llenas */
+    var gx = X + S * 0.44, gy = Y + S * 0.08, cw = S * 0.12, ch = S * 0.13, sx = S * 0.025, sy = S * 0.035;
+    var top = [1, 6, 14];
+    trazo(c, U, 0.10);
+    for (var k = 0; k < 20; k++) {
+      var x = gx + (k % 4) * (cw + sx), y = gy + Math.floor(k / 4) * (ch + sy);
+      if (top.indexOf(k) > -1) { caja(c, x, y, cw, ch, ACENTO); }
+      else {
+        caja(c, x, y, cw, ch);
+        c.fillStyle = conAlfa(ACENTO, 0.35);
+        c.fillRect(x + cw * 0.18, y + ch * 0.30, cw * 0.64, ch * 0.10);
+        c.fillRect(x + cw * 0.18, y + ch * 0.55, cw * 0.40, ch * 0.10);
+      }
+    }
+  };
+
+  /* --- Validador 2.0: el panel de cinco clientes simulados ---------------
+     Cinco bustos distintos, cada uno con su respuesta encima: sí, no o
+     quizá. Debajo, el recuento que da el veredicto. */
+  GRAFICOS.panel = function (c, X, Y, S, U) {
+    var n = 5, paso = S * 0.19, x0 = X + S * 0.12, cy = Y + S * 0.46, r = S * 0.045;
+    var resp = ['si', 'no', 'quiza', 'si', 'no'];
+    var escala = [1, 0.9, 1.08, 0.95, 1.02];
+    resp.forEach(function (v, k) {
+      var cx = x0 + k * paso, rr = r * escala[k];
+      var lleno = v === 'si';
+      c.fillStyle = lleno ? ACENTO : conAlfa(ACENTO, 0.35);
+      c.beginPath(); c.arc(cx, cy, rr, 0, Math.PI * 2); c.fill();
+      c.beginPath(); c.arc(cx, cy + rr * 2.75, rr * 1.9, Math.PI, 0); c.closePath(); c.fill();
+      /* la respuesta, en un bocadillo encima */
+      var by = Y + S * 0.15, bs = S * 0.13;
+      trazo(c, U, 0.11);
+      caja(c, cx - bs / 2, by, bs, bs * 0.82);
+      poli(c, [[cx - bs * 0.12, by + bs * 0.82], [cx, by + bs * 1.0], [cx + bs * 0.12, by + bs * 0.82]]); c.stroke();
+      var mx = cx, my = by + bs * 0.41, m = bs * 0.22;
+      trazo(c, U, 0.15);
+      if (v === 'si') { poli(c, [[mx - m, my], [mx - m * 0.25, my + m * 0.7], [mx + m, my - m * 0.7]]); c.stroke(); }
+      else if (v === 'no') {
+        c.beginPath(); c.moveTo(mx - m * 0.75, my - m * 0.75); c.lineTo(mx + m * 0.75, my + m * 0.75);
+        c.moveTo(mx + m * 0.75, my - m * 0.75); c.lineTo(mx - m * 0.75, my + m * 0.75); c.stroke();
+      } else {
+        c.beginPath(); c.arc(mx, my - m * 0.35, m * 0.45, Math.PI * 1.1, Math.PI * 0.45); c.lineTo(mx, my + m * 0.4); c.stroke();
+        c.fillStyle = ACENTO; c.beginPath(); c.arc(mx, my + m * 0.85, U * 0.12, 0, Math.PI * 2); c.fill();
+      }
+    });
+    /* el recuento: cinco casillas, dos llenas */
+    var tw = S * 0.11, tg = S * 0.025, tx = X + (S - (tw * 5 + tg * 4)) / 2, ty = Y + S * 0.80;
+    trazo(c, U, 0.11);
+    for (var i = 0; i < 5; i++) {
+      if (i < 2) caja(c, tx + i * (tw + tg), ty, tw, S * 0.05, ACENTO);
+      else caja(c, tx + i * (tw + tg), ty, tw, S * 0.05);
+    }
+  };
+
+  /* --- Tutor personalizado: aprender y no olvidarlo ----------------------
+     La curva del olvido rota por los repasos: mañana, a los tres días y a
+     la semana. Cada repaso la sube, y cada vez cae más despacio. */
+  GRAFICOS.tutor = function (c, X, Y, S, U) {
+    var ax = X + S * 0.08, aw = S * 0.86, ay = Y + S * 0.14, ah = S * 0.60;
+    trazo(c, U, 0.11);
+    c.beginPath(); c.moveTo(ax, ay - S * 0.03); c.lineTo(ax, ay + ah); c.lineTo(ax + aw, ay + ah); c.stroke();
+    /* los repasos, en los días 1, 3 y 7 de una escala de 10 */
+    var dias = [0, 1, 3, 7], fin = 10, caidas = [0.55, 0.32, 0.17, 0.08];
+    var dx = function (d) { return ax + aw * (0.02 + 0.96 * d / fin); };
+    var dy = function (v) { return ay + ah * (1 - v); };
+    trazo(c, U, 0.15);
+    c.beginPath();
+    dias.forEach(function (d0, k) {
+      var d1 = k < dias.length - 1 ? dias[k + 1] : fin;
+      for (var t = 0; t <= 24; t++) {
+        var d = d0 + (d1 - d0) * t / 24;
+        var v = 0.95 - caidas[k] * (1 - Math.exp(-(d - d0) * 1.6 / Math.max(1, d1 - d0)));
+        if (k === 0 && t === 0) c.moveTo(dx(d), dy(v)); else c.lineTo(dx(d), dy(v));
+      }
+    });
+    c.stroke();
+    /* los puntos de repaso y su marca en el eje */
+    dias.slice(1).forEach(function (d) {
+      c.fillStyle = ACENTO; c.beginPath(); c.arc(dx(d), dy(0.95), S * 0.025, 0, Math.PI * 2); c.fill();
+      trazo(c, U, 0.10); c.setLineDash([U * 0.3, U * 0.22]);
+      c.beginPath(); c.moveTo(dx(d), dy(0.95) + S * 0.03); c.lineTo(dx(d), ay + ah); c.stroke(); c.setLineDash([]);
+    });
+    /* debajo, el mapa del tema: bloques de lo básico a lo avanzado */
+    var bx = ax, by = Y + S * 0.84, bw = S * 0.12, bg = S * 0.026;
+    for (var i = 0; i < 6; i++) {
+      var h = S * (0.03 + i * 0.012);
+      if (i < 2) caja(c, bx + i * (bw + bg), by + S * 0.10 - h, bw, h, ACENTO);
+      else { trazo(c, U, 0.10); caja(c, bx + i * (bw + bg), by + S * 0.10 - h, bw, h); }
+    }
+  };
+
   function grafico(c, r, x, y, w, h, U) {
     var dibujo = GRAFICOS[(r.portada || {}).grafico];
     if (!dibujo) return;

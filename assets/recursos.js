@@ -29,7 +29,8 @@
      grafico    'skills' | 'mods' | 'apps' | 'validacion' | 'gpu' | 'webs' |
                 'agentes' | 'hermes' | 'conceptos' | 'encargo' | 'pipeline' |
                 'ugc' | 'guiones' | 'fotos' | 'metodo' | 'loops' | 'rodaje' | 'radar' |
-                'cerebro' | 'reparto' | 'montaje'; la ilustración,
+                'cerebro' | 'reparto' | 'montaje' |
+                'termometro' | 'sobre' | 'humanizar' | 'entrevista' | 'panel' | 'tutor'; la ilustración,
                 que dibuja lo que se lleva el lector, no un adorno
      color      acento de la portada, elegido por el tema del recurso
      promesa    banda inferior; una línea por salto, *entre asteriscos* va en negrita
@@ -39,6 +40,114 @@
    ========================================================================== */
 
 window.RACKS_RESOURCES = [
+  {
+    slug: 'skill-predictor-viralidad',
+    titulo: 'Predice si tu reel va a funcionar antes de publicarlo',
+    kicker: 'Skill · Reels',
+    resumen: 'Skill para Claude que puntúa sobre 100 el guion o la transcripción de un reel antes de publicarlo, señala el segundo exacto en el que se irá la gente y lo reescribe con un gancho mejor, un bucle abierto y un CTA que genere comentarios.',
+    etiquetas: ['Claude', 'Skills', 'Reels', 'Guiones'],
+    estado: 'live',
+    fecha: '2026-11',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Skill:',
+      destacado: 'Predice si tu reel va a funcionar',
+      resto: 'antes de publicarlo',
+      grafico: 'termometro',
+      color: '#f5911a',
+      promesa: 'TU GUION, *PUNTUADO SOBRE 100*\nY REESCRITO PARA *RETENER MÁS*'
+    }
+  },
+  {
+    slug: 'skill-email-que-convierte',
+    titulo: 'Reescribe tus emails para que hagan clic',
+    kicker: 'Skill · Email',
+    resumen: 'Skill para Claude que puntúa tu email de venta, newsletter o secuencia en siete puntos, señala las tres frases que más conversión matan y te lo devuelve reescrito, con cinco asuntos alternativos y una versión corta para hacer test A/B.',
+    etiquetas: ['Claude', 'Skills', 'Email', 'Copywriting'],
+    estado: 'live',
+    fecha: '2026-11',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Skill:',
+      destacado: 'Reescribe tus emails',
+      resto: 'para que hagan clic',
+      grafico: 'sobre',
+      color: '#468af6',
+      promesa: 'MÁS GENTE *LO ABRE*, LO LEE\nY *HACE CLIC*'
+    }
+  },
+  {
+    slug: 'skill-humanizador',
+    titulo: 'Haz que tus textos con IA suenen a ti',
+    kicker: 'Skill · Escritura',
+    resumen: 'Skill para Claude que detecta las marcas de un texto escrito con IA —las rayas, el «no es solo X, es Y», los tríos, las palabras de siempre— y lo reescribe para que suene a persona y a tu voz, con lo que ha cambiado y una nota de «cuánto suena a IA» antes y después.',
+    etiquetas: ['Claude', 'Skills', 'Escritura', 'Copywriting'],
+    estado: 'live',
+    fecha: '2026-11',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Skill:',
+      destacado: 'Haz que tus textos con IA',
+      resto: 'suenen a ti',
+      grafico: 'humanizar',
+      color: '#9a72f8',
+      promesa: 'SIN *MARCAS DE IA*\nY CON *TU VOZ*'
+    }
+  },
+  {
+    slug: 'skill-ideas-10-minutos',
+    titulo: '20 ideas de contenido que solo tú puedes contar',
+    kicker: 'Skill · Ideas de contenido',
+    resumen: 'Skill para Claude que te entrevista durante unos diez minutos, con diez preguntas de una en una, y saca de tus respuestas veinte ideas de contenido con su gancho y su formato. Marca las tres con más potencial y escribe el guion de la primera.',
+    etiquetas: ['Claude', 'Skills', 'Contenido', 'Ideas'],
+    estado: 'live',
+    fecha: '2026-11',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Skill:',
+      destacado: '20 ideas de contenido',
+      resto: 'que solo tú puedes contar',
+      grafico: 'entrevista',
+      color: '#fbba23',
+      promesa: 'DIEZ PREGUNTAS SOBRE *TU EXPERIENCIA*\nY *VEINTE IDEAS* QUE SALEN DE AHÍ'
+    }
+  },
+  {
+    slug: 'skill-validacion-producto-v2',
+    titulo: 'Pon tu producto delante de cinco clientes antes de lanzarlo',
+    kicker: 'Skill · Producto',
+    resumen: 'Versión 2.0 del validador de producto: Claude simula a cinco clientes distintos de tu avatar, les pregunta si lo comprarían y a qué precio, puntúa dolor, dinero, competencia, diferencia y canal, y te da un veredicto y un plan de validación en 48 horas con clientes reales.',
+    etiquetas: ['Claude', 'Skills', 'Producto', 'Validación'],
+    estado: 'live',
+    fecha: '2026-11',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Skill:',
+      destacado: 'Pon tu producto delante de cinco clientes',
+      resto: 'antes de lanzarlo',
+      grafico: 'panel',
+      color: '#10b77f',
+      promesa: 'CINCO CLIENTES SIMULADOS\nY UN *PLAN DE 48 HORAS* CON CLIENTES REALES'
+    }
+  },
+  {
+    slug: 'skill-aprendizaje-personalizado',
+    titulo: 'Aprende cualquier tema con un tutor a tu medida',
+    kicker: 'Skill · Aprendizaje',
+    resumen: 'Skill para Claude que lo convierte en un tutor particular: diagnostica lo que sabes, divide el tema en bloques, explica con ejemplos de tu mundo, te hace practicar de memoria y te deja preguntas de repaso para mañana, dentro de tres días y dentro de una semana.',
+    etiquetas: ['Claude', 'Skills', 'Aprendizaje'],
+    estado: 'live',
+    fecha: '2026-11',
+    portada: {
+      coleccion: 'Colección Racks',
+      prefijo: 'Skill:',
+      destacado: 'Aprende cualquier tema',
+      resto: 'con un tutor a tu medida',
+      grafico: 'tutor',
+      color: '#468af6',
+      promesa: 'DIAGNÓSTICO, *PRÁCTICA ACTIVA*\nY *REPASO ESPACIADO*'
+    }
+  },
   {
     slug: 'edicion-video-claude',
     titulo: 'Edita tus vídeos con Claude sin abrir Premiere',

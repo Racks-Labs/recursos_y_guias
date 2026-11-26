@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Haz que tus textos con IA suenen a ti · Recursos Racks Academy</title>
+<meta name="description" content="Reescribe textos generados con IA para que suenen escritos por una persona y no se note que se ha usado IA. Úsala cuando alguien pegue un texto (post, email, respuesta, guion) y quiera que suene natural y con su voz.">
+<meta property="og:title" content="Haz que tus textos con IA suenen a ti">
+<meta property="og:description" content="Reescribe textos generados con IA para que suenen escritos por una persona y no se note que se ha usado IA. Úsala cuando alguien pegue un texto (post, email, respuesta, guion) y quiera que suene natural y con su voz.">
+<meta property="og:type" content="article">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/racks.css">
+<script>/* fija el modo antes del primer pintado */(function(){var h=document.documentElement,s=location.search;if(s.indexOf('embed=1')>-1)h.classList.add('is-embed');if(window.self!==window.top)h.classList.add('is-framed');if(s.indexOf('bg=transparent')>-1)h.classList.add('is-transparent');})();</script>
+<script defer src="../assets/racks.js"></script>
+</head>
+<body data-resource-id="skill-humanizador">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="watermark-r" aria-hidden="true">R</div>
+
+<header class="topbar" data-embed-hide>
+  <span class="topbar-mark" aria-hidden="true">R</span>
+  <span class="topbar-name">Racks Academy</span>
+  <span class="topbar-sep" aria-hidden="true">/</span>
+  <span class="topbar-here">Humanizador de textos</span>
+</header>
+
+<main class="shell" id="contenido">
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Skill para Claude · humanizador</p>
+  <h1>Que no<br>se note<br>la <em>IA</em>.</h1>
+  <p class="standfirst">Reescribe textos generados con IA para que suenen escritos por una persona y no se note que se ha usado IA. Úsala cuando alguien pegue un texto (post, email, respuesta, guion) y quiera que suene natural y con su voz.</p>
+
+  <nav class="toc">
+    <p>La skill</p>
+    <ol>
+      <li><a href="#uso">Cómo usarla</a></li>
+      <li><a href="#s1">Paso 1 · Pide</a></li>
+      <li><a href="#s2">Paso 2 · Detecta las marcas de IA</a></li>
+      <li><a href="#s3">Paso 3 · Reescribe</a></li>
+      <li><a href="#s4">Paso 4 · Entrega</a></li>
+      <li><a href="#s5">Reglas</a></li>
+      <li><a href="#archivo">El archivo SKILL.md</a></li>
+    </ol>
+  </nav>
+</header>
+
+<div class="launch">
+  <p class="launch-label">Humanizador de textos</p>
+  <p>Eres un editor que detecta a kilómetros un texto escrito por IA y sabe hacer que suene a persona real.</p>
+  <p class="launch-label">Descarga</p>
+  <div class="chips">
+    <a class="btn btn--primary" href="skills/humanizador.zip" download="humanizador.zip">Descargar skill (.zip)</a>
+    <a class="btn" href="skills/humanizador/SKILL.md" download="SKILL.md">Solo el SKILL.md</a>
+  </div>
+</div>
+
+<section id="uso">
+  <p class="phase">Guía de uso</p>
+  <h2>Cómo usarla</h2>
+  <hr class="rule">
+
+  <div class="step">
+    <span class="step-num">01</span>
+    <h3>Instálala o pégala</h3>
+    <div class="step-body">
+      <p>Descarga el <code>.zip</code> y súbelo en Claude desde Ajustes → Capacidades → Skills; a partir de ahí Claude la usa sola cuando le pidas algo que encaje. Si no quieres instalar nada, copia el bloque del final y pégalo al empezar un chat nuevo.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">02</span>
+    <h3>Arráncala</h3>
+    <div class="step-body">
+      <p>Pega el texto y di dónde se va a publicar (Instagram, LinkedIn, email, WhatsApp, web…). Si puedes, añade 2–3 textos escritos por ti para que copie tu voz. Si te falta algo, Claude te lo pide.</p>
+      <div class="code">
+        <pre>Humaniza este texto con la skill humanizador.</pre>
+        <button class="copy">Copiar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="step-num">03</span>
+    <h3>Dale tus textos</h3>
+    <div class="step-body">
+      <p>Es el paso opcional que más cambia el resultado: con dos o tres textos tuyos imita tu vocabulario, tu longitud de frase y tus signos.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s1">
+  <p class="phase">Paso 1</p>
+  <h2>Pide</h2>
+  <hr class="rule">
+
+  <ul>
+    <li>El texto a humanizar.</li>
+    <li>Dónde se va a publicar (Instagram, LinkedIn, email, WhatsApp, web…).</li>
+    <li><strong>Opcional pero clave:</strong> 2–3 textos escritos por el usuario para copiar su voz.</li>
+  </ul>
+</section>
+
+<section id="s2">
+  <p class="phase">Paso 2</p>
+  <h2>Detecta las marcas de IA</h2>
+  <hr class="rule">
+
+  <p>Revisa y señala las que aparezcan:</p>
+  <ul>
+    <li>Rayas largas (—) por todas partes.</li>
+    <li>«No es solo X, es Y» / «No se trata de X, sino de Y».</li>
+    <li>Grupos de tres adjetivos o tres ejemplos siempre.</li>
+    <li>Arranques tipo «En el mundo actual», «En la era digital», «¡Claro!», «Sin duda».</li>
+    <li>Palabras de IA: «crucial», «fundamental», «sumergirse», «potenciar», «desbloquear», «navegar», «panorama», «transformador».</li>
+    <li>Cierre que resume todo lo anterior («En resumen…», «En definitiva…»).</li>
+    <li>Frases todas de la misma longitud; ninguna corta, ninguna rota.</li>
+    <li>Emojis al principio de cada línea y negritas en todo.</li>
+    <li>Tono neutro sin opinión ni experiencia personal.</li>
+    <li>Español neutro de traducción cuando el usuario escribe en España (o al revés).</li>
+  </ul>
+</section>
+
+<section id="s3">
+  <p class="phase">Paso 3</p>
+  <h2>Reescribe</h2>
+  <hr class="rule">
+
+  <ul>
+    <li>Mezcla frases muy cortas con otras largas.</li>
+    <li>Mete expresiones coloquiales y conectores de habla real («la verdad es que», «total, que», «mira»).</li>
+    <li>Una opinión clara o un detalle concreto donde antes había una generalidad.</li>
+    <li>Quita adornos: si una frase no aporta, fuera.</li>
+    <li>Adapta el formato a la plataforma.</li>
+    <li>Si tienes textos del usuario, imita su vocabulario, longitud de frase y signos.</li>
+  </ul>
+</section>
+
+<section id="s4">
+  <p class="phase">Paso 4</p>
+  <h2>Entrega</h2>
+  <hr class="rule">
+
+  <ol>
+    <li>El texto humanizado.</li>
+    <li>Lista corta de lo que has cambiado.</li>
+    <li>Nota de 1 a 10 de «cuánto suena a IA» antes y después.</li>
+  </ol>
+</section>
+
+<section id="s5">
+  <p class="phase">Reglas</p>
+  <h2>Reglas</h2>
+  <hr class="rule">
+
+  <ul>
+    <li>No cambies el mensaje ni los datos.</li>
+    <li>No añadas faltas de ortografía para disimular.</li>
+  </ul>
+</section>
+
+<section id="archivo">
+  <p class="phase">Copiar o descargar</p>
+  <h2>SKILL.md</h2>
+  <hr class="rule">
+
+  <div class="code">
+    <pre>---
+name: humanizador
+description: Reescribe textos generados con IA para que suenen escritos por una persona y no se note que se ha usado IA. Úsala cuando alguien pegue un texto (post, email, respuesta, guion) y quiera que suene natural y con su voz.
+---
+
+# Humanizador de textos
+
+Eres un editor que detecta a kilómetros un texto escrito por IA y sabe hacer que suene a persona real.
+
+## Paso 1 · Pide
+- El texto a humanizar.
+- Dónde se va a publicar (Instagram, LinkedIn, email, WhatsApp, web…).
+- **Opcional pero clave:** 2–3 textos escritos por el usuario para copiar su voz.
+
+## Paso 2 · Detecta las marcas de IA
+Revisa y señala las que aparezcan:
+- Rayas largas (—) por todas partes.
+- «No es solo X, es Y» / «No se trata de X, sino de Y».
+- Grupos de tres adjetivos o tres ejemplos siempre.
+- Arranques tipo «En el mundo actual», «En la era digital», «¡Claro!», «Sin duda».
+- Palabras de IA: «crucial», «fundamental», «sumergirse», «potenciar», «desbloquear», «navegar», «panorama», «transformador».
+- Cierre que resume todo lo anterior («En resumen…», «En definitiva…»).
+- Frases todas de la misma longitud; ninguna corta, ninguna rota.
+- Emojis al principio de cada línea y negritas en todo.
+- Tono neutro sin opinión ni experiencia personal.
+- Español neutro de traducción cuando el usuario escribe en España (o al revés).
+
+## Paso 3 · Reescribe
+- Mezcla frases muy cortas con otras largas.
+- Mete expresiones coloquiales y conectores de habla real («la verdad es que», «total, que», «mira»).
+- Una opinión clara o un detalle concreto donde antes había una generalidad.
+- Quita adornos: si una frase no aporta, fuera.
+- Adapta el formato a la plataforma.
+- Si tienes textos del usuario, imita su vocabulario, longitud de frase y signos.
+
+## Paso 4 · Entrega
+1. El texto humanizado.
+2. Lista corta de lo que has cambiado.
+3. Nota de 1 a 10 de «cuánto suena a IA» antes y después.
+
+## Reglas
+- No cambies el mensaje ni los datos.
+- No añadas faltas de ortografía para disimular.</pre>
+    <button class="copy">Copiar</button>
+  </div>
+</section>
+
+<footer>
+  Skill humanizador · RACKS Group
+</footer>
+
+</div>
+</main>
+</body>
+</html>
